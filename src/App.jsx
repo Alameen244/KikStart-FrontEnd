@@ -11,8 +11,13 @@ function App() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
+
+
           </Route>
-          <Route element={<AuthLayout />}></Route>
+          <Route element={<AuthLayout />}>
+            
+
+          </Route>
         </Routes>
       </Router>
     </>
