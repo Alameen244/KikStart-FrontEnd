@@ -1,10 +1,14 @@
 import Button from '@mui/material/Button'
-import React from 'react'
+import Typography from '@mui/material/Typography'
+
 
 const Home = () => {
   return (
     <div>
-      Home
+      <Typography variant='h1' align='center' sx={{
+
+      }}>Why Us</Typography>
+      <Typography variant='body1'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, reprehenderit.</Typography>
     </div>
   )
 }
