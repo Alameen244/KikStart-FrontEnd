@@ -1,12 +1,13 @@
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 const Para = (props) => {
   return (
-    <div>
+    <Box>
       <Typography variant="body1" sx={{}}>
         {props.para}{" "}
       </Typography>
-    </div>
+    </Box>
   );
 };
 
