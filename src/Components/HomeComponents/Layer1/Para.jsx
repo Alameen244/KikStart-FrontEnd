@@ -4,8 +4,12 @@ import Typography from "@mui/material/Typography";
 const Para = (props) => {
   return (
     <Box>
-      <Typography variant="body1" sx={{}}>
-        {props.para}{" "}
+      <Typography
+        variant="body1"
+        textAlign={props.align === "center" ? "center" : "left"}
+        sx={{}}
+      >
+        {props.para}
       </Typography>
     </Box>
   );

@@ -8,15 +8,10 @@ const Layer1 = () => {
   return (
     <Container
       sx={{
-              // bgcolor: "#FFFAFA",
-          bgcolor:'yellow'
+              bgcolor: "#FFFAFA",
       }}
       maxWidth="lg"
       >
-         <Headings heading="hi" subHeading="hello" />
-          <Headings heading="hitggh" subHeading="helldhhdhsho" />
-          <MainButton text="click me" />
-          testing.....................
 
     </Container>
   );
