@@ -12,7 +12,7 @@ export const theme = createTheme({
       dark: '#000000',
       contrastText: '#fff',
     },
-    dark: '#2B2B2B', // secondary Heading
+    dark: '#2B2B2B', // for Headings
     semiDark: '#494949',//paragraph
     navBlack:'#000000',
     myRed:'#ED1C24'
