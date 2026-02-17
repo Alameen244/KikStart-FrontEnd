@@ -1,11 +1,11 @@
-import React from 'react'
-import Headings from '../Layer1/Headings'
+import Box from "@mui/material/Box"
+
 
 const Layer5 = () => {
   return (
-    <div>
+    <Box>
 
-    </div>
+    </Box>
   )
 }
 
