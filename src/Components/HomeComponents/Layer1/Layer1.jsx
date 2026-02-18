@@ -11,7 +11,8 @@ const Layer1 = () => {
               bgcolor: "#FFFAFA",
       }}
       maxWidth="lg"
-      >
+    >
+     
 
     </Container>
   );
