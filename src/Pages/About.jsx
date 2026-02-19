@@ -1,12 +1,12 @@
-import React from 'react'
-import Home from './Home'
 
+import CommonLayer from '../Components/AboutComponents/Layer1/CommonLayer'
 const About = () => {
   return (
     <div>
-          About
+         <CommonLayer heading="About Us" subHeading="Home/ About Us" />
     </div>
   )
 }
 
 export default About
+

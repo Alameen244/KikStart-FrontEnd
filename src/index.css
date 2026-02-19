@@ -12,3 +12,8 @@
 img{
     max-width: 100%;
 }
+html,body{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+   

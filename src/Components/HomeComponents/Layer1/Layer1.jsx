@@ -12,6 +12,7 @@ import lStar from "../../../Uploads/lStar.png";
 import curveArrow from "../../../Uploads/curveArrow.png";
 import butterfly from "../../../Uploads/butterfly.png";
 import wave from "../../../Uploads/wave.png";
+import miniStar from "../../../Uploads/miniStar.png";
 
 const Layer1 = () => {
   return (
@@ -69,7 +70,7 @@ const Layer1 = () => {
               sx={{
                 position: "absolute",
                 top: "-75px",
-                left: "-81px",
+                left: "-127px",
               }}
             />
             <Box
@@ -90,6 +91,27 @@ const Layer1 = () => {
                 position: "absolute",
                 bottom: "-90px",
                 right: "-60px",
+              }}
+
+            />
+             <Box
+              component="img"
+              src={miniStar}
+              alt="miniStar"
+              sx={{
+                position: "absolute",
+                top: "-7%",
+                right: "41%",
+              }}
+            />
+             <Box
+              component="img"
+              src={miniStar}
+              alt="miniStar"
+              sx={{
+                position: "absolute",
+                bottom: "-26%",
+                right: "103%",
               }}
             />
           </Grid>
@@ -142,6 +164,7 @@ const Layer1 = () => {
                 right: "41%",
               }}
             />
+
           </Grid>
         </Grid>
       </Container>
