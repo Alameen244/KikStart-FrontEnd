@@ -7,7 +7,7 @@ const Para = (props) => {
       <Typography
         variant="body1"
         textAlign={props.align === "center" ? "center" : "left"}
-        sx={{}}
+        sx={{marginTop:"20px"}}
       >
         {props.para}
       </Typography>
