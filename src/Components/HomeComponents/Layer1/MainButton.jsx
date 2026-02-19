@@ -14,6 +14,7 @@ const MainButton = (props) => {
           fontSize: "16px",
           fontWeight: "light",
           px: "35px",
+          py:"20PX"
         }}
       >
         {props.text}
