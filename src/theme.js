@@ -44,6 +44,11 @@ export const theme = createTheme({
       fontFamily: 'Noto Sans',
       fontWeight: '400',
       fontSize: "20px"
+    },
+    subtitle2: { //footer headings
+      fontFamily: 'PT Sans',
+      fontWeight: 'bold',
+      fontSize: "20px"
     }
   }
 });
