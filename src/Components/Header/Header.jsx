@@ -56,7 +56,7 @@ function Header() {
           {/* LEFT SIDE → LOGO */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
-              noWrap
+              nowrap="true"
               component="img"
               src={kikstart}
               href="#app-bar-with-responsive-menu"
@@ -67,7 +67,7 @@ function Header() {
 
             {/* MOBILE LOGO */}
             <Box
-              noWrap
+              nowrap="true"
               component="img"
               src={kikstart}
               href="#app-bar-with-responsive-menu"
