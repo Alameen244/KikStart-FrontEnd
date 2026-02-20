@@ -28,7 +28,7 @@ import Button from "@mui/material/Button";
     color: "text.secondary",
     bgcolor:
     "&.active": {
-      color: "primary",
+      color: "primary"
       fontWeight: 600,
     },
   }}
