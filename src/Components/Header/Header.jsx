@@ -11,7 +11,8 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 import MenuItem from "@mui/material/MenuItem";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import kikstart from "./Images/KIKSTART.png";
 
 const pages = [
@@ -42,6 +43,7 @@ function Header() {
         maxWidth: "xl",
         margin: "auto",
         p: { xs: "10px 0", md: "20px 0 40px" },
+        boxShadow: "none",
       }}
     >
       <Container maxWidth="xl">
@@ -56,25 +58,37 @@ function Header() {
           {/* LEFT SIDE → LOGO */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
-              nowrap="true"
-              component="img"
-              src={kikstart}
-              href="#app-bar-with-responsive-menu"
+              component={Link}
+              to="/"
               sx={{
                 display: { xs: "none", md: "flex" },
               }}
-            />
-
+            >
+              <Box
+                component="img"
+                src={kikstart}
+                alt="logo"
+                sx={{ cursor: "pointer" }}
+              />
+            </Box>
             {/* MOBILE LOGO */}
             <Box
-              nowrap="true"
-              component="img"
-              src={kikstart}
-              href="#app-bar-with-responsive-menu"
+              component={NavLink}
+              to="/app-bar-with-responsive-menu"
               sx={{
                 display: { xs: "flex", md: "none" },
+                textDecoration: "none",
               }}
-            />
+            >
+              <Box
+                component="img"
+                src={kikstart}
+                alt="kikstart-logo"
+                sx={{
+                  cursor: "pointer",
+                }}
+              />
+            </Box>
           </Box>
 
           {/* RIGHT SIDE → MENU + FUTURE BUTTONS */}
@@ -133,7 +147,7 @@ function Header() {
                       },
                       "&.hover": {
                         bgcolor: "rgba(0, 0, 0, 0.08)",
-                      }
+                      },
                     }}
                   >
                     <Typography
@@ -177,8 +191,8 @@ function Header() {
                       color: "myRed",
                     },
                     "&.hover": {
-                        bgcolor: "rgba(0, 0, 0, 0.08)",
-                      }
+                      bgcolor: "rgba(0, 0, 0, 0.08)",
+                    },
                   }}
                 >
                   {page.label}
@@ -198,9 +212,11 @@ function Header() {
               <Button
                 variant="contained"
                 color="secondary"
+                component={RouterLink}
+                to="/subs"
                 sx={{
                   borderRadius: "50px",
-                  px: { xs: 1.5, md: 3 }, // responsive padding
+                  px: { xs: 1.5, md: 3 },
                   py: { xs: 0.8, md: 1.5 },
                   fontSize: { xs: "10px", md: "14px" },
                   whiteSpace: "nowrap",

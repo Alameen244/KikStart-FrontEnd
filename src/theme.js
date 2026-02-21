@@ -14,8 +14,8 @@ export const theme = createTheme({
     },
     dark: '#2B2B2B', // for Headings
     semiDark: '#494949',//paragraph
-    navBlack:'#000000',
-    myRed:'#ED1C24'
+    navBlack: '#000000',
+    myRed: '#ED1C24'
   },
   typography: {
     h1: { // for main Heading
@@ -49,6 +49,6 @@ export const theme = createTheme({
       fontFamily: 'PT Sans',
       fontWeight: 'bold',
       fontSize: "20px"
-    }
+    },
   }
 });
