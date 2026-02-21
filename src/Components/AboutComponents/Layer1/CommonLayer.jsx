@@ -39,7 +39,7 @@ const CommonLayer = (props) => {
           alt="star"
           sx={{
             position: "absolute",
-            top: "59px",
+            top: "-66px",
             right: "30%",
           }}
         />
@@ -59,8 +59,8 @@ const CommonLayer = (props) => {
           alt="cloud"
           sx={{
             position: "absolute",
-            top: "15%",
-            left: "4%",
+            top: "-72%",
+            left: "7%",
           }}
         />
         <Box
@@ -69,7 +69,7 @@ const CommonLayer = (props) => {
           alt="star"
           sx={{
             position: "absolute",
-            bottom: "31%",
+            bottom: "-105%",
             right: "-2%",
           }}
         />
