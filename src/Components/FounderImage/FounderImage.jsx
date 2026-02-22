@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import icon from "./images/icon.png";
+import icon from "../../assets/icon.png";
 
 const FounderImage = (props) => {
   return (
