@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import SubscriptionCard from "./SubscriptionCard";
+import SubscriptionCard from "../SubscriptionCard/SubscriptionCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 

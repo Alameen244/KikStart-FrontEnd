@@ -8,7 +8,7 @@ import lStar from "../../../Uploads/lStar.png";
 import cloud from "../../../Uploads/cloud.png";
 import wave from "../../../Uploads/wave.png";
 
-const CommonLayer = (props) => {
+const Banner = (props) => {
   return (
     <Container
       maxWidth="xl"
@@ -99,4 +99,4 @@ const CommonLayer = (props) => {
   );
 };
 
-export default CommonLayer;
+export default Banner;

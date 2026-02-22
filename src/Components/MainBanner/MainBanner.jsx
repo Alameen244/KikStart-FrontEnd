@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Big from "../../../Uploads/Big.png";
-import Para from "./Para";
-import MainButton from "./MainButton";
+import Para from "../Para/Para";
+import MainButton from "../RedButton/MainButton";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -14,13 +14,13 @@ import butterfly from "../../../Uploads/butterfly.png";
 import wave from "../../../Uploads/wave.png";
 import miniStar from "../../../Uploads/miniStar.png";
 
-const Layer1 = () => {
+const MainBanner = () => {
   return (
     <Container
       sx={{
         bgcolor: "#FFFAFA",
         position: "relative",
-         p: "120px 0 350px"
+        p: "120px 0 350px",
       }}
       maxWidth="xl"
     >
@@ -30,10 +30,10 @@ const Layer1 = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap:12
+            gap: 12,
           }}
         >
-          <Grid item size={{ lg: 4.5 }}  sx={{ position: "relative" }}>
+          <Grid item size={{ lg: 4.5 }} sx={{ position: "relative" }}>
             <Typography variant="h3" color="myRed">
               PLAY LIKE A PRO
             </Typography>
@@ -92,9 +92,8 @@ const Layer1 = () => {
                 bottom: "-90px",
                 right: "-60px",
               }}
-
             />
-             <Box
+            <Box
               component="img"
               src={miniStar}
               alt="miniStar"
@@ -104,7 +103,7 @@ const Layer1 = () => {
                 right: "41%",
               }}
             />
-             <Box
+            <Box
               component="img"
               src={miniStar}
               alt="miniStar"
@@ -164,7 +163,6 @@ const Layer1 = () => {
                 right: "41%",
               }}
             />
-
           </Grid>
         </Grid>
       </Container>
@@ -173,18 +171,14 @@ const Layer1 = () => {
         src={wave}
         alt="wave"
         sx={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 0,
           left: 0,
-          width:'calc(100% + 1px)'
-
+          width: "calc(100% + 1px)",
         }}
       />
-
-
     </Container>
-
   );
 };
 
-export default Layer1;
+export default MainBanner;

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import icon from "./images/icon.png";
 
-const Image = (props) => {
+const FounderImage = (props) => {
   return (
     <Box
       sx={{
@@ -24,4 +24,4 @@ const Image = (props) => {
   );
 };
 
-export default Image;
+export default FounderImage;
