@@ -30,7 +30,7 @@ const Layer1 = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            gap:12
           }}
         >
           <Grid item size={{ lg: 4.5 }}  sx={{ position: "relative" }}>
@@ -69,8 +69,8 @@ const Layer1 = () => {
               alt="cloud"
               sx={{
                 position: "absolute",
-                top: "-75px",
-                left: "-127px",
+                top: "-96px",
+                left: "-78px",
               }}
             />
             <Box
@@ -140,8 +140,8 @@ const Layer1 = () => {
               alt="star"
               sx={{
                 position: "absolute",
-                top: "193px",
-                right: "-191px",
+                top: "170px",
+                right: "-280px",
               }}
             />
             <Box
