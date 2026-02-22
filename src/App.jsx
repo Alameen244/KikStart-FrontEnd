@@ -7,6 +7,7 @@ import About from "./Pages/About";
 import InterestedSchools from "./Pages/InterestedSchools";
 import Programs from "./Pages/Programs";
 import Details from "./Pages/Details";
+import Subscription from './Pages/Subscription'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/schools" element={<InterestedSchools/>} />
             <Route path="/programs" element={<Programs/>} />
             <Route path="/become-a-coach" element={<Details/>} />
+            <Route path="/subs" element={<Subscription />} />
 
 
 
