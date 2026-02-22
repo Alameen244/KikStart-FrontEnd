@@ -33,7 +33,7 @@ const Layer3 = () => {
       card_para:"Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at interdum eu viverra."
     }
   ]
-   
+
   return (
     <Container
       maxWidth="lg"
@@ -49,12 +49,12 @@ const Layer3 = () => {
 
       <Box sx={{ display: 'grid', gap: 3, gridTemplateColumns: 'repeat(4, 1fr)' ,marginTop:"30px"}}>
         {
-        data.map((items,index) => (
+        data.map((items) => (
           <Card   image = {items.image}  imgAlign = "center" cardHeading = {items.card_heading} cardPara = {items.card_para} align = "center"  />
         ))
       }
       </Box>
-      
+
     </Container>
   )
 }
