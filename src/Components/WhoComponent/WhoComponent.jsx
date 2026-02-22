@@ -1,12 +1,12 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import bigimg from "./images/bigimage.png";
-import smallimg from "./images/smallimg.png";
-import ImageAfterImage from "../../HomeComponents/Layer2/ImageAfterImage";
-import Headings from "../../HomeComponents/Layer1/Headings";
-import Para from "../../HomeComponents/Layer1/Para";
+import bigimg from "../../assets/bigimage.png";
+import smallimg from "../../assets/smallimg.png";
+import ImageAfterImage from "../HomeComponents/Layer2/ImageAfterImage";
+import Headings from "../HomeComponents/Layer1/Headings";
+import Para from "../Para/Para";
 
-const Layer2 = () => {
+const WhoComponent = () => {
   return (
     <Container maxWidth="lg" sx={{ pt: "40px" }}>
       <Grid container spacing={8}>
@@ -30,4 +30,4 @@ Curabitur suspendisse tellus placerat libero ut."
   );
 };
 
-export default Layer2;
+export default WhoComponent;

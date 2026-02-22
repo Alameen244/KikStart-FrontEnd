@@ -6,7 +6,7 @@ import Para from "../Layer1/Para";
 import Typography from "@mui/material/Typography";
 import stars from "../../../Uploads/shooting stars.png";
 
-const Layer5 = () => {
+const Slider= () => {
   return (
     <Container
       maxWidth="lg"
@@ -89,4 +89,4 @@ const Layer5 = () => {
   );
 };
 
-export default Layer5;
+export default Slider;

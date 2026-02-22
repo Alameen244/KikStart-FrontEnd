@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import tick from "./images/tick.png";
+import tick from "../../assets/tick.png";
 
 const SubscriptionCard = (props) => {
   // props -> level , desc , price , duration , t1 ,t2 ,t3 ,t4 ,t5 ,t6

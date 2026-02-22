@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, NavLink } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import kikstart from "./Images/KIKSTART.png";
+import kikstart from "../../assets/KIKSTART.png";
 
 const pages = [
   { label: "About Us", path: "/about" },

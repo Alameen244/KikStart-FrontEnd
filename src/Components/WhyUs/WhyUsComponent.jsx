@@ -6,10 +6,10 @@ import img1 from '../HomeComponents/Layer3/images/Group (1).png';
 import img2 from '../HomeComponents/Layer3/images/Frame.png';
 import img3 from '../HomeComponents/Layer3/images/Frame (1).png';
 import img4 from '../HomeComponents/Layer3/images/Group (2).png';
-import img5 from './images/img5.png';
-import img6 from './images/img6.png';
-import img7 from './images/img7.png';
-import img8 from './images/img8.png';
+import img5 from '../../assets/img5.png';
+import img6 from '../../assets/img6.png';
+import img7 from '../../assets/img7.png';
+import img8 from '../../assets/img8.png';
 import Card from "../HomeComponents/Layer3/Card";
 
 const WhyUsComponent = () => {
