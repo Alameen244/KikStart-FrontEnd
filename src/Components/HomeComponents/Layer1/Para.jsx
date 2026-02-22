@@ -8,7 +8,7 @@ const Para = (props) => {
         variant="body1"
         textAlign={props.align === "center" ? "center" : "left"}
         sx={{
-          marginTop: "20px",
+          marginTop: "10px",
           whiteSpace: "pre-line",
           lineHeight:"26px"
         }}

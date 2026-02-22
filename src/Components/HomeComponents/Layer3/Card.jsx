@@ -3,7 +3,8 @@ import Typography from "@mui/material/Typography";
 import Para from "../Layer1/Para";
 function Card(props) {
   return (
-    <Box sx={{ boxShadow: 2, padding: " 15px 10px", borderRadius: "15px" }}>
+    <Box sx={{ boxShadow: 2, padding: " 15px 10px", borderRadius: "15px"}}>
+      <Box sx={{}}>
       <Box
         sx={{
           display: "flex",
@@ -19,6 +20,9 @@ function Card(props) {
           alt="card image"
           sx={{
             objectFit: "cover",
+            bgcolor: "#FFF8F8",
+            borderRadius: "50%",
+            p:"20px"
           }}
         />
       </Box>
@@ -27,7 +31,7 @@ function Card(props) {
         textAlign={props.align === "center" ? "center" : "left"}
         sx={{
           fontWeight: "bold",
-          margin: "15px 0",
+          marginTop: "15px",
           fontSize: {
             xs: "16px", // mobile
             md: "20px", // desktop
@@ -39,11 +43,14 @@ function Card(props) {
       <Box
         sx={{
           padding: "10px",
-          margin: "15px 0",
+          marginBottom: "15px",
+          fontSize:'13px'
         }}
       >
         <Para para={props.cardPara} align="center" />
       </Box>
+      </Box>
+
     </Box>
   );
 }
