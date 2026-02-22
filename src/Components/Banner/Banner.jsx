@@ -2,11 +2,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import miniStar from "../../../Uploads/miniStar.png";
-import star from "../../../Uploads/star.png";
-import bigStar from "../../../Uploads/bigStar.png";
-import lStar from "../../../Uploads/lStar.png";
-import cloud from "../../../Uploads/cloud.png";
-import wave from "../../../Uploads/wave.png";
+import star from "../../assets/star.png";
+import bigStar from "../../assets/bigStar.png";
+import lStar from "../../assets/lStar.png";
+import cloud from "../../assets/cloud.png";
+import wave from "../../assets/wave.png";
 
 const Banner = (props) => {
   return (

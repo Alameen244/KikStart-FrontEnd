@@ -1,13 +1,14 @@
 import Container from "@mui/material/Container";
 import Headings from "../Layer1/Headings";
-import girlImage from "../../../Uploads/Girl.png";
+import girlImage from "../../assets/Girl.png";
 import Box from "@mui/material/Box";
 import Para from "../Layer1/Para";
 import Typography from "@mui/material/Typography";
-import stars from "../../../Uploads/shooting stars.png";
+import stars from "../../assets/shooting.png";
 
 const Slider= () => {
   return (
+
     <Container
       maxWidth="lg"
       sx={{

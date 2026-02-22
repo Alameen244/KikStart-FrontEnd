@@ -5,14 +5,14 @@ import MainButton from "../RedButton/MainButton";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import cloud from "../../../Uploads/cloud.png";
-import star from "../../../Uploads/star.png";
-import bigStar from "../../../Uploads/bigStar.png";
-import lStar from "../../../Uploads/lStar.png";
-import curveArrow from "../../../Uploads/curveArrow.png";
-import butterfly from "../../../Uploads/butterfly.png";
-import wave from "../../../Uploads/wave.png";
-import miniStar from "../../../Uploads/miniStar.png";
+import cloud from "../../assets/cloud.png";
+import star from "../../assets/star.png";
+import bigStar from "../../assets/bigStar.png";
+import lStar from "../../assets/lStar.png";
+import curveArrow from "../../assets/curveArrow.png";
+import butterfly from "../../assets/butterfly.png";
+import wave from "../../assets/wave.png";
+import miniStar from "../../assets/miniStar.png";
 
 const MainBanner = () => {
   return (
@@ -182,3 +182,4 @@ const MainBanner = () => {
 };
 
 export default MainBanner;
+
