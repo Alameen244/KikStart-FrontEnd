@@ -1,14 +1,14 @@
 import React from 'react'
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Headings from '../Layer1/Headings';
-import Para from '../Layer1/Para';
+import Headings from '../../Heading/Headings';
+import Para from '../../Para/Para';
 import Card from './Card';
 import img1 from './images/Group (1).png';
 import img2 from './images/Frame.png';
 import img3 from './images/Frame (1).png';
 import img4 from './images/Group (2).png';
-import MainButton from '../Layer1/MainButton';
+import MainButton from '../../RedButton/MainButton';
 const Layer3 = () => {
 
   const data = [

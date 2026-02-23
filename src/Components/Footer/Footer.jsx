@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import kikstart from "../Header/Images/KIKSTART.png";
+import kikstart from "../../assets/KIKSTART.png";
 import sms from "../../assets/sms.png";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";

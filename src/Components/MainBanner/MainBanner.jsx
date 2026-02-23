@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import Big from "../../../Uploads/Big.png";
+import Big from "../../assets/Big.png";
 import Para from "../Para/Para";
 import MainButton from "../RedButton/MainButton";
 import Grid from "@mui/material/Grid";

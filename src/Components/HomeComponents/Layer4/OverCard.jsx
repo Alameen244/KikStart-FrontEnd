@@ -1,16 +1,16 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import React from 'react'
+
 
 function OverCard(props) {
   return (
     <Box
       sx={{
-        position: "relative",   
+        position: "relative",
         width: "100%",
       }}
     >
-      
+
       <Box
         component="img"
         src={props.image}
@@ -20,7 +20,7 @@ function OverCard(props) {
         }}
       />
 
-      
+
       <Box
         sx={{
           position: "absolute",
@@ -29,7 +29,7 @@ function OverCard(props) {
           width: "100%",
           padding: "20px",
           borderRadius : "0 0 35px 35px"
-          
+
         }}
       >
         <Typography variant="h5" color="white">

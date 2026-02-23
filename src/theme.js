@@ -17,4 +17,9 @@ export const theme = createTheme({
     navBlack: '#000000',
     myRed: '#ED1C24'
   },
+  breakpoints: {
+    values: {
+      lg: 1160
+     }
+  }
 });

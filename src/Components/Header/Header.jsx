@@ -40,13 +40,12 @@ function Header() {
       position="static"
       sx={{
         bgcolor: "#FFFAFA",
-        maxWidth: "xl",
         margin: "auto",
         p: { xs: "10px 0", md: "20px 0 40px" },
         boxShadow: "none",
       }}
     >
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar
           disableGutters
           sx={{
