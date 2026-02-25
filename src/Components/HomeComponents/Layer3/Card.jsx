@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Para from "../../Para/Para";
+import Para from '../../Para/Para';
 function Card(props) {
   return (
     <Box sx={{ boxShadow: 2, padding: " 15px 10px", borderRadius: "15px" }}>

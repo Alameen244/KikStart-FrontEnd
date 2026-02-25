@@ -1,30 +1,29 @@
 import Container from '@mui/material/Container'
-import React, { useState } from 'react'
-import Headings from '../Layer1/Headings'
+import Headings from '../../Heading/Headings';
 import img1 from "./images/Rectangle 13.png"
 import img2 from "./images/Rectangle 13 (1).png"
 import img3 from "./images/Rectangle 13 (2).png"
 import OverCard from './overCard'
 import Box from '@mui/material/Box'
-import MainButton from '../Layer1/MainButton'
+import MainButton from '../../RedButton/MainButton'
 
 function Layer4() {
-    
-    
+
+
     const data = [
         {
             image : img1,
-            
+
             para : "Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at interdum eu..."
         },
         {
             image : img2,
-            
+
             para : "Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at interdum eu..."
         },
         {
             image : img3,
-            
+
             para : "Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at interdum eu..."
         }
     ]
@@ -38,7 +37,7 @@ function Layer4() {
                 ))
             }
         </Box>
-        <Box 
+        <Box
       sx={{
         display:"flex",
         alignItems:"center",

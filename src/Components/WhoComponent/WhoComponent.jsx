@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import bigimg from "../../assets/bigimage.png";
 import smallimg from "../../assets/smallimg.png";
 import ImageAfterImage from "../HomeComponents/Layer2/ImageAfterImage";
-import Headings from "../HomeComponents/Layer1/Headings";
+import Headings from "../Heading/Headings";
 import Para from "../Para/Para";
 
 const WhoComponent = () => {

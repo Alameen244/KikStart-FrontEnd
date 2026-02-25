@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Para from "../HomeComponents/Layer1/Para";
+import Para from "../Para/Para";
 import img1 from '../HomeComponents/Layer3/images/Group (1).png';
 import img2 from '../HomeComponents/Layer3/images/Frame.png';
 import img3 from '../HomeComponents/Layer3/images/Frame (1).png';

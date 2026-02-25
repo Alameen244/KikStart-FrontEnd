@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Headings from "../HomeComponents/Layer1/Headings";
+import Headings from "../Heading/Headings";
 import Para from "../Para/Para";
 import Image from "../FounderImage/FounderImage";
 import founder from "../../assets/boy.png";

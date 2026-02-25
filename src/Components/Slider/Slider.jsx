@@ -1,8 +1,8 @@
 import Container from "@mui/material/Container";
-import Headings from "../Layer1/Headings";
+import Headings from "../Heading/Headings";
 import girlImage from "../../assets/Girl.png";
 import Box from "@mui/material/Box";
-import Para from "../Layer1/Para";
+import Para from "../Para/Para";
 import Typography from "@mui/material/Typography";
 import stars from "../../assets/shooting.png";
 
