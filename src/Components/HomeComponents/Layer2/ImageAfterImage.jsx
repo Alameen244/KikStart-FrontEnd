@@ -1,49 +1,51 @@
-import Box from '@mui/material/Box'
-import React from 'react'
-import star from './images/Group.png'
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import star from "./images/Group.png";
+
+const Wrapper = styled(Box)({
+    position: "relative",
+    height: "565px",
+    width:"528px"
+});
+
+const BigImageWrapper = styled(Box)({
+ width: "375px",
+  height: "473px",
+});
+
+const BigImage = styled(Box)({
+maxWidth: "100%",
+});
+
+const SmallImageWrapper = styled(Box)({
+  position: "absolute",
+  bottom: "0px",
+    right: "32px",
+   width: "246px",
+  height: "254px",
+});
+
+const SmallImage = styled(Box)({
+    maxWidth: "100%",
+});
+
+const StarImage = styled(Box)({
+  position: "absolute",
+  right: "0px",
+  top: "123px",
+  zIndex: -1,
+});
+
 export default function ImageAfterImage(props) {
   return (
-    
-        <Box sx={{
-        position:"relative",
-        height:"564px"
-    }}>
-        <Box>
-            <Box
-            component="img"
-            src = {props.bigImage}
-            sx = {{
-                
-            }}
-        />
-        </Box>
-        <Box sx={{position:"absolute",
-                bottom:"-10px",
-                right:"70px"}}>
-            <Box
-            component="img"
-            src={props.smallImage}
-            sx={{
-                
-            }}
-        
-        />
-        
-        </Box>
-        <Box
-        
-        component="img"
-        src={star}
-        sx={{
-            position:"absolute",
-            right:"21px",
-            top:"16%",
-            zIndex:-1
-
-        }}
-        
-        />
-    </Box>
-    
-  )
+    <Wrapper>
+      <BigImageWrapper>
+        <BigImage component="img" src={props.bigImage} />
+      </BigImageWrapper>
+      <SmallImageWrapper>
+        <SmallImage component="img" src={props.smallImage} />
+      </SmallImageWrapper>
+      <StarImage component="img" src={star} />
+    </Wrapper>
+  );
 }
