@@ -1,21 +1,25 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
+
+const Wrapper = styled(Box)({});
+
+const StyledTypography = styled(Typography)(({ align }) => ({
+  whiteSpace: "pre-line",
+  lineHeight: "26px",
+  textAlign: align === "center" ? "center" : "left",
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: "15px",
+  color: "#494949",
+}));
 
 const Para = (props) => {
   return (
-    <Box>
-      <Typography
-        variant="body1"
-        textAlign={props.align === "center" ? "center" : "left"}
-        sx={{
-          marginTop: "10px",
-          whiteSpace: "pre-line",
-          lineHeight:"26px"
-        }}
-      >
-        {props.para}
-      </Typography>
-    </Box>
+    <Wrapper>
+      <StyledTypography align={props.align}>{props.para}</StyledTypography>
+    </Wrapper>
   );
 };
 
