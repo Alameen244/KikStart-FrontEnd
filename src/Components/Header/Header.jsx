@@ -28,7 +28,7 @@ const pages = [
 const StyledAppBar = styled(AppBar)(() => ({
   backgroundColor: "#FFFAFA",
   margin: "auto",
-  paddingTop: "28px",
+  padding: "28px 0",
   boxShadow: "none",
   position: "static",
 }));

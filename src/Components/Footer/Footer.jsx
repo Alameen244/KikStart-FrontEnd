@@ -16,11 +16,6 @@ const FooterWrapper = styled(Box)(({ theme }) => ({
   margin: "0 auto",
 }));
 
-const GridWrapper = styled(Grid)({
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  padding: "81px 0",
-});
 const Logo = styled(Box)({
   display: "block",
 });
@@ -155,21 +150,34 @@ const WaveImage = styled(Box)({
   top: "0px",
   left: "0px",
 });
-const LogoGrid = styled(Grid)({});
-const QuickLinksGrid = styled(Grid)({});
-const LegalGrid = styled(Grid)({
-  display: "flex",
-  flexDirection: "column",
+const GridWrapper = styled(Grid)({
+  alignItems: "flex-start",
+  justifyContent: "space-between",
+  padding: "103px 0 81px",
 });
-const NewsletterGrid = styled(Grid)({});
+
+
+const LeftGrid = styled(Grid)({
+  transform: "translateY(-19px)",
+});
+const QuickLinksGrid = styled(Grid)({
+
+});
+const LegalGrid = styled(Grid)({
+
+});
+const NewsletterGrid = styled(Grid)({
+  maxWidth:"256px"
+});
 
 const Footer = () => {
   return (
-      <FooterWrapper component="footer">
-        <WaveImage component="img" src={wave} alt="wave" />
-        <Container maxWidth="lg">
-          <GridWrapper container spacing={6} columns={13}>
-            <LogoGrid size={{ xs: 12, md: 4, lg: 4 }}>
+    <FooterWrapper component="footer">
+      <WaveImage component="img" src={wave} alt="wave" />
+      <Container maxWidth="lg" disableGutters>
+        <GridWrapper container spacing={0} columns={12}>
+
+            <LeftGrid size={{ lg: 4 }}>
               <Logo component="img" src={kikstart} alt="kikstart logo" />
 
               <Description>
@@ -181,18 +189,21 @@ const Footer = () => {
                 <Box component="img" src={sms} alt="sms" />
                 info@KikStartKids.com
               </EmailRow>
-            </LogoGrid>
+            </LeftGrid>
 
-            <QuickLinksGrid size={{ xs: 6, md: 2, lg: 2 }}>
-              <HeadingText color="dark">Quick Links</HeadingText>
 
-              <LinkText>About Us</LinkText>
-              <LinkText>Programs</LinkText>
-              <LinkText>Contact Us</LinkText>
-              <LinkText>Faqs</LinkText>
+            <QuickLinksGrid size={{ lg: 2}} >
+
+                <HeadingText color="dark">Quick Links</HeadingText>
+
+                <LinkText>About Us</LinkText>
+                <LinkText>Programs</LinkText>
+                <LinkText>Contact Us</LinkText>
+                <LinkText>Faqs</LinkText>
+
             </QuickLinksGrid>
 
-            <LegalGrid size={{ xs: 6, md: 2, lg: 3 }}>
+            <LegalGrid size={{ lg: 2 }}>
               <HeadingText color="dark">Legal</HeadingText>
 
               <LinkText>About Us</LinkText>
@@ -200,7 +211,7 @@ const Footer = () => {
               <LinkText>Privacy Policy</LinkText>
             </LegalGrid>
 
-            <NewsletterGrid size={{ xs: 12, md: 3, lg: 4 }}>
+            <NewsletterGrid size={{ lg: 3}}>
               <HeadingText>Newsletter</HeadingText>
 
               <NewsletterText color="semiDark">
@@ -213,9 +224,10 @@ const Footer = () => {
                 </EmailSubmitButton>
               </EmailInputWrapper>
             </NewsletterGrid>
-          </GridWrapper>
-        </Container>
-      </FooterWrapper>
+
+        </GridWrapper>
+      </Container>
+    </FooterWrapper>
   );
 };
 

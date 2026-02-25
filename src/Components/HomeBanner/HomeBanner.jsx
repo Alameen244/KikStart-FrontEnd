@@ -23,7 +23,7 @@ const BannerWrapper = styled(Box)({
 
 const OuterContainer = styled(Container)({
   position: "relative",
-  padding: "169px 0 155px",
+  padding: "95px 0 86px",
 });
 
 const GridWrapper = styled(Grid)({
