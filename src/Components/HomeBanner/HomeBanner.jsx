@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Big from "../../assets/Big.png";
 import Para from "../Para/Para";
-import MainButton from "../RedButton/MainButton";
+import MainButton from "../RedButton/RedButton";
 import cloud from "../../assets/cloud.png";
 import star from "../../assets/star.png";
 import bigStar from "../../assets/bigStar.png";
@@ -70,19 +70,19 @@ const ParaWrapper = styled(Box)({
 });
 
 const ImageWrapper = styled(Box)({
-    position: 'relative',
-  width: '100%',
-  overflow: 'visible',
-   display: 'flex',
-})
-const BigImage = styled(Box)(({theme }) =>({
-   width: 'clamp(320px, 50vw, 704px)',
-  height: 'auto',
-  display: 'block',
-  maxWidth: 'none',
-  transform: 'translateX(81.5px)',
-  [theme.breakpoints.down('md')]: {
-    margin: '0 auto', // center on tablet/mobile
+  position: "relative",
+  width: "100%",
+  overflow: "visible",
+  display: "flex",
+});
+const BigImage = styled(Box)(({ theme }) => ({
+  width: "clamp(320px, 50vw, 704px)",
+  height: "auto",
+  display: "block",
+  maxWidth: "none",
+  transform: "translateX(81.5px)",
+  [theme.breakpoints.down("md")]: {
+    margin: "0 auto", // center on tablet/mobile
   },
   //  position:'absolute',
   // maxWidth: "704px",

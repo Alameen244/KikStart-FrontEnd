@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 
 const Wrapper = styled(Box)({});
 
-const StyledButton = styled(Button)({
+const StyledButton = styled(Button)(({ bgcolor , theme }) => ({
   borderRadius: "50px",
   paddingLeft: "25px",
   paddingRight: "25px",
@@ -14,16 +14,25 @@ const StyledButton = styled(Button)({
   fontWeight: 500,
   fontSize: "16px",
   color: "#FFFFFF",
-});
+  backgroundColor:
+    bgcolor === "primary"
+      ? theme.palette.primary.main
+      : bgcolor === "secondary"
+      ? theme.palette.secondary.main
+      : bgcolor,
 
-const MainButton = (props) => {
+
+}));
+
+
+const RedButton = (props) => {
   return (
     <Wrapper>
-      <StyledButton variant="contained" color={props.bgColor}>
+      <StyledButton variant="contained" bgcolor={props.bgColor}>
         {props.text}
       </StyledButton>
     </Wrapper>
   );
 };
 
-export default MainButton;
+export default RedButton;

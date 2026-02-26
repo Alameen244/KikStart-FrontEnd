@@ -5,88 +5,117 @@ import Box from "@mui/material/Box";
 import Para from "../Para/Para";
 import Typography from "@mui/material/Typography";
 import stars from "../../assets/shooting.png";
+import { styled } from "@mui/material/styles";
+import Threestar from "../../assets/3star.png";
+import icon from "../../assets/icon.png";
+const SliderWrapper = styled(Box)({
+  paddingBottom:"44px",
+});
 
-const Slider= () => {
+const StyledContainer = styled(Container)({
+  position: "relative",
+});
+
+const ImageWrapper = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+});
+
+const GirlImage = styled(Box)({
+  objectFit: "cover",
+});
+
+const ParaWrapper = styled(Box)({
+  padding: "28px 0 ",
+});
+
+const Name = styled(Typography)({
+  textAlign: "center",
+  /* Cameron Williamson */
+
+  fontFamily: "PT Sans",
+  fontStyle: "normal",
+  fontWeight: 700,
+  fontSize: 20,
+
+  textTransform: "capitalize",
+
+  color: "#2B2B2B",
+});
+
+const Role = styled(Typography)({
+  textAlign: "center",
+  /* Coach */
+
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: 15,
+  /* identical to box height, or 173% */
+
+  color: "#ED1C24",
+});
+
+const StarsWrapper = styled(Box)({
+  position: "absolute",
+  top: "68px",
+  right: "-50px",
+});
+
+const ThreeStarsWrapper = styled(Box)({
+  position: "absolute",
+  top: "89px",
+  left: "80px",
+
+});
+
+const SliderContentWrapper = styled(Box)({
+  maxWidth: "732px",
+  margin: " 31px auto 0px",
+
+});
+const IconWrapper = styled(Box)({
+  position: "absolute",
+  bottom: "22px",
+  left: "-26px",
+});
+
+const Slider = () => {
   return (
-
-    <Container
-      maxWidth="lg"
-      sx={{
-        paddingTop: "28px",
-        paddingBottom: "25px",
-        position: "relative",
-      }}
-    >
-      <Headings
-        heading="Whats Our Client Say"
-        subHeading="TESTIMONIALS"
-        align="center"
-      />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "50px 0",
-        }}
-      >
-        <Box
-          component="img"
-          src={girlImage}
-          sx={{
-            objectFit: "cover",
-          }}
-           className=" drop-shadow-xl/25 hover:drop-shadow-xl/50 hover:drop-shadow-indigo-500 transition-transform duration-300 hover:scale-110"
-        />
-      </Box>
-      <Box
-        sx={{
-          marginBottom: "50px",
-        }}
-      >
-        <Para
-          para="Lorem ipsum dolor sit amet consectetur. Tortor sed ipsum tortor in et. Arcu tortor phasellus elementum sed natoque pellentesque in elit imperdiet. Sit nisi turpis arcu malesuada purus semper. Bibendum urna dolor at ut tincidunt. Scelerisque dictumst sed."
+    <SliderWrapper>
+      <StyledContainer maxWidth="lg">
+        <Headings
+          heading="Whats Our Client Say"
+          subHeading="TESTIMONIALS"
           align="center"
         />
-      </Box>
-      <Box>
-        <Typography
-          color="dark"
-          sx={{
-            fontFamily: "PT Sans",
-            fontWeigth: "bold",
-            fontSize: "20px",
-            textAlign: "center",
-          }}
-        >
-          Cameron Williamson
-        </Typography>
-        <Typography
-          color="myRed"
-          sx={{
-            fontFamily: "Noto Sans",
-            fontWeigth: "bold",
-            fontSize: "15px",
-            textAlign: "center",
-          }}
-        >
-          Coach
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          top: "72px",
-          right: 0,
-        }}
-      >
-        <Box
-          component="img"
-          src={stars}
-          alt="shooting stars"
-          className=" hover:drop-shadow-xs hover:drop-shadow-cyan-500/50"
-        />
-      </Box>
-    </Container>
+        <SliderContentWrapper>
+          <ImageWrapper>
+            <GirlImage component="img" src={girlImage} alt="girlImage" />
+          </ImageWrapper>
+          <ParaWrapper>
+            <Para
+              para="Lorem ipsum dolor sit amet consectetur. Tortor sed ipsum tortor in et. Arcu tortor phasellus elementum sed natoquepellentesque in elit imperdiet. Sit nisi turpis arcu malesuada purus semper. Bibendum urna dolor at ut tincidunt.Scelerisque dictumst sed."
+              align="center"
+            />
+          </ParaWrapper>
+          <Box>
+            <Name color="dark">Cameron Williamson</Name>
+            <Role color="myRed">Coach</Role>
+          </Box>
+
+        </SliderContentWrapper>
+            <StarsWrapper>
+          <Box component="img" src={stars} alt="shooting stars" />
+        </StarsWrapper>
+        <ThreeStarsWrapper>
+          <Box component="img" src={Threestar} alt="three stars" />
+        </ThreeStarsWrapper>
+        <IconWrapper>
+          <Box component="img" src={icon} alt="icon" />
+        </IconWrapper>
+      </StyledContainer>
+    </SliderWrapper>
   );
 };
 
