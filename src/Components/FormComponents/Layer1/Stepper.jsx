@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/material/styles";
 import { FaBaby, FaGraduationCap, FaPenNib, FaIdBadge } from "react-icons/fa";
 
 const steps = [
@@ -8,100 +9,82 @@ const steps = [
   { label: "Program Details", icon: <FaIdBadge /> },
 ];
 
+const StepperWrapper = styled("div")({
+  paddingTop: "20px",
+  width: "203px",
+  fontFamily: "Arial, sans-serif",
+  paddingRight: "40px",
+});
+
+const StepRow = styled("div")({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+});
+
+const StepLabel = styled("div")({
+  fontFamily: "PT Sans",
+  fontSize: "16px",
+  fontWeight: "700",
+  color: "#2B2B2B",
+  paddingTop: "10px",
+});
+
+const IconColumn = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
+
+const StepIcon = styled("div", {
+  shouldForwardProp: (prop) => prop !== "isActive" && prop !== "isCompleted",
+})(({ isActive, isCompleted }) => ({
+  width: "32px",
+  height: "32px",
+  borderRadius: "50%",
+  backgroundColor: isCompleted ? "#FF5C5C" : isActive ? "#FFF0F0" : "#eeeeee",
+  color: isCompleted ? "#ffffff" : isActive ? "#FF5C5C" : "#777",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "14px",
+  zIndex: 1,
+}));
+
+const StepLine = styled("div", {
+  shouldForwardProp: (prop) => prop !== "isCompleted",
+})(({ isCompleted }) => ({
+  width: "2px",
+  height: "32px",
+  backgroundColor: isCompleted ? "#FF5C5C" : "#e5e5e5",
+  marginTop: "4px",
+}));
+
 const Stepper = ({ activeStep = 0 }) => {
   return (
-    <div style={styles.container}>
+    <StepperWrapper>
       {steps.map((step, index) => {
         const isActive = index === activeStep;
         const isCompleted = index < activeStep;
 
         return (
-          <div key={index} style={styles.row}>
-            {/* Left text */}
-            <div style={styles.label}>{step.label}</div>
+          <StepRow key={index}>
+            <StepLabel>{step.label}</StepLabel>
 
-            {/* Right icon + line */}
-            <div style={styles.iconColumn}>
-              <div
-                style={{
-                  ...styles.icon,
-                  ...(isActive ? styles.activeIcon : {}),
-                  ...(isCompleted ? styles.completedIcon : {}),
-                }}
-              >
+            <IconColumn>
+              <StepIcon isActive={isActive} isCompleted={isCompleted}>
                 {step.icon}
-              </div>
+              </StepIcon>
 
               {index !== steps.length - 1 && (
-                <div
-                  style={{
-                    ...styles.line,
-                    ...(isCompleted ? styles.completedLine : {}),
-                  }}
-                />
+                <StepLine isCompleted={isCompleted} />
               )}
-            </div>
-          </div>
+            </IconColumn>
+          </StepRow>
         );
       })}
-    </div>
+    </StepperWrapper>
   );
 };
 
-const styles = {
-  container: {
-    paddingTop: "20px",
-    width: "203px",
-    fontFamily: "Arial, sans-serif",
-    paddingRight: "40px",
-  },
-  row: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  label: {
-    fontFamily: "PT Sans",
-    fontSize: "16px",
-    fontWeight: "700",
-    color: "#2B2B2B",
-    paddingTop: "10px",
-  },
-  iconColumn: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  icon: {
-    width: "32px",
-    height: "32px",
-    borderRadius: "50%",
-    backgroundColor: "#eeeeee",
-    color: "#777",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "14px",
-    zIndex: 1,
-  },
-  activeIcon: {
-    backgroundColor: "#FFF0F0",
-    color: "#FF5C5C",
-  },
-  completedIcon: {
-    backgroundColor: "#FF5C5C",
-    color: "#ffffff",
-  },
-  line: {
-    width: "2px",
-    height: "32px",
-    backgroundColor: "#e5e5e5",
-    marginTop: "4px",
-  },
-  completedLine: {
-    backgroundColor: "#FF5C5C",
-  },
-};
-
 export default Stepper;
-//try

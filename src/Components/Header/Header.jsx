@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import { Link, NavLink } from "react-router-dom";
 import kikstart from "../../assets/KIKSTART.png";
-import RedButton from "../RedButton/MainButton";
+import RedButton from "../RedButton/RedButton";
 const pages = [
   { label: "About Us", path: "/about" },
   { label: "Programs", path: "/programs" },

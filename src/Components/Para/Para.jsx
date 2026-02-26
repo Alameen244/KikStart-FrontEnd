@@ -6,13 +6,13 @@ const Wrapper = styled(Box)({});
 
 const StyledTypography = styled(Typography)(({ align }) => ({
   whiteSpace: "pre-line",
-  lineHeight: "26px",
   textAlign: align === "center" ? "center" : "left",
   fontFamily: "Noto Sans",
   fontStyle: "normal",
   fontWeight: 400,
   fontSize: "15px",
   color: "#494949",
+  letterSpacing:"0%"
 }));
 
 const Para = (props) => {

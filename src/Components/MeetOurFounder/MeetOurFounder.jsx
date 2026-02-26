@@ -1,20 +1,30 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import Headings from "../Heading/Headings";
 import Para from "../Para/Para";
 import Image from "../FounderImage/FounderImage";
 import founder from "../../assets/boy.png";
+
+const MeetOurFounderWrapper = styled(Box)({
+  paddingBottom: "100.8px",
+});
+
+const StyledContainer = styled(Container)({
+
+});
+
+const StyledGrid = styled(Grid)({
+  display: "flex",
+  alignItems: "center",
+});
+
 const MeetOurFounder = () => {
   return (
-    <Container maxWidth="lg" sx={{ p: "105px 0 70px" }}>
-      <Grid
-        container
-        spacing={20}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+    <MeetOurFounderWrapper>
+      <StyledContainer maxWidth="lg">
+      <StyledGrid container spacing={'93.3px'}>
         <Grid
           item
           size={{
@@ -36,8 +46,9 @@ Ut fermentum elementum amet elementum arcu suspendisse. Vitae lectus penatibus e
         >
           <Image image={founder} />
         </Grid>
-      </Grid>
-    </Container>
+      </StyledGrid>
+    </StyledContainer>
+    </MeetOurFounderWrapper>
   );
 };
 

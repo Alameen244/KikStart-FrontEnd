@@ -1,5 +1,92 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import React from "react";
+import { styled } from "@mui/material/styles";
+
+const PageWrapper = styled("div")({
+  width: "650px",
+  padding: "0px 20px 0px 60px",
+  borderLeft: "1px solid #E5E5E5",
+});
+
+const HeaderWrapper = styled("div")({});
+
+const FormWrapper = styled("div")({
+  width: "580px",
+});
+
+const FieldWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  border: "1px solid #DEE2E6",
+  borderRadius: "12px",
+  padding: "16px",
+  marginBottom: "16px",
+});
+
+const LocationFieldWrapper = styled(FieldWrapper)({
+  position: "relative",
+});
+
+const FieldLabel = styled("label")({});
+
+const FieldInput = styled("input")({
+  outline: "0",
+  border: "0",
+});
+
+const LocationInput = styled(FieldInput)({
+  paddingRight: "40px",
+});
+
+const TargetIconWrapper = styled("div")({
+  position: "absolute",
+  right: "20px",
+  top: "50%",
+  transform: "translateY(-50%)",
+  cursor: "pointer",
+});
+
+const UploadRow = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  border: "1px solid #DEE2E6",
+  borderRadius: "12px",
+  padding: "16px",
+  marginBottom: "16px",
+});
+
+const UploadTitle = styled("p")({
+  marginBottom: "0",
+});
+
+const UploadSubTitle = styled("p")({
+  color: "#9CA3AF",
+});
+
+const UploadButton = styled("label")({
+  border: "1px solid #DEE2E6",
+  borderRadius: "12px",
+  padding: "8px 16px",
+  cursor: "pointer",
+  marginLeft: "auto",
+  "&:hover": {
+    backgroundColor: "#F3F4F6",
+  },
+});
+
+const HiddenFileInput = styled("input")({
+  display: "none",
+});
+
+const NextButton = styled("button")({
+  backgroundColor: "#EF4444",
+  color: "#FFFFFF",
+  padding: "8px 16px",
+  borderRadius: "50px",
+  border: "0",
+  "&:hover": {
+    backgroundColor: "#DC2626",
+  },
+});
 
 const TargetIcon = () => (
   <svg
@@ -20,75 +107,70 @@ const TargetIcon = () => (
     <line x1="18" y1="12" x2="22" y2="12" />
   </svg>
 );
+
 const ChildrenForm = () => {
   return (
-    <div style={{width:"650px", padding:"0px 20px 0px 60px" ,borderLeft:"1px solid #E5E5E5"}}>
-      <div>
+    <PageWrapper>
+      <HeaderWrapper>
         <h2>Children Details</h2>
         <p>Lorem ipsum dolor sit amet consectetur</p>
-      </div>
-      <div className='w-580px'>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''>Full Name</label>
-          <input type="text" className='outline-0' />
-        </div>
-        <div className="d-flex flex-column border rounded-xl p-3 mb-3 position-relative">
-          <label>Location</label>
+      </HeaderWrapper>
 
-          <input
-            type="text"
-            className="outline-0"
-            style={{ paddingRight: "40px" }}
-          />
+      <FormWrapper>
+        <FieldWrapper>
+          <FieldLabel>Full Name</FieldLabel>
+          <FieldInput type="text" />
+        </FieldWrapper>
 
-          <div
-            style={{
-              position: "absolute",
-              right: "20px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              cursor: "pointer"
-            }}
-          >
+        <LocationFieldWrapper>
+          <FieldLabel>Location</FieldLabel>
+          <LocationInput type="text" />
+          <TargetIconWrapper>
             <TargetIcon />
-          </div>
-        </div>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''>Age</label>
-          <input type="text" className='outline-0' />
-        </div>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''>Food Habit</label>
-          <input type="text" className='outline-0' />
-        </div>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''>Have Any Type of Allergy?</label>
-          <input type="dropdown" className='outline-0' />
-        </div>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''>Allergy Details</label>
-          <input type="text" className='outline-0' />
-        </div>
-        <div className= 'd-flex flex-column border rounded-xl p-3 mb-3'>
-          <label className=''> Any Prolong Details</label>
-          <input type="text" className='outline-0' />
-        </div>
-        <div className='d-flex items-center border rounded-xl p-3 mb-3'>
-          <div>
-            <p className="mb-0">Profile Image</p>
-            <p className="text-gray-400">
-              Upload image Within size of 5MB
-            </p>
-          </div>
-          <label className="border rounded-xl px-4 py-2 cursor-pointer hover:bg-gray-100" style={{marginLeft: "auto"}}>
-            UPLOAD
-            <input type="file" className="hidden" />
-          </label>
-        </div>
-      </div>
-      <button className="bg-red-500 text-white px-4 py-2 hover:bg-red-600" style={{borderRadius:'50px'}}>Next</button>
-    </div>
-  )
-}
+          </TargetIconWrapper>
+        </LocationFieldWrapper>
 
-export default ChildrenForm
+        <FieldWrapper>
+          <FieldLabel>Age</FieldLabel>
+          <FieldInput type="text" />
+        </FieldWrapper>
+
+        <FieldWrapper>
+          <FieldLabel>Food Habit</FieldLabel>
+          <FieldInput type="text" />
+        </FieldWrapper>
+
+        <FieldWrapper>
+          <FieldLabel>Have Any Type of Allergy?</FieldLabel>
+          <FieldInput type="dropdown" />
+        </FieldWrapper>
+
+        <FieldWrapper>
+          <FieldLabel>Allergy Details</FieldLabel>
+          <FieldInput type="text" />
+        </FieldWrapper>
+
+        <FieldWrapper>
+          <FieldLabel>Any Prolong Details</FieldLabel>
+          <FieldInput type="text" />
+        </FieldWrapper>
+
+        <UploadRow>
+          <div>
+            <UploadTitle>Profile Image</UploadTitle>
+            <UploadSubTitle>Upload image Within size of 5MB</UploadSubTitle>
+          </div>
+
+          <UploadButton>
+            UPLOAD
+            <HiddenFileInput type="file" />
+          </UploadButton>
+        </UploadRow>
+      </FormWrapper>
+
+      <NextButton>Next</NextButton>
+    </PageWrapper>
+  );
+};
+
+export default ChildrenForm;
