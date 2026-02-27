@@ -94,6 +94,8 @@ const BigImage = styled(Box)(({ theme }) => ({
 const WaveImage = styled(Box)({
   width: "100%",
   height: "auto",
+  transform:"translateY(4px)"
+
 });
 
 /* Decorative Absolute Images */
@@ -166,7 +168,7 @@ const HomeBanner = () => {
             <ParaWrapper>
               <Para para=" Lorem ipsum dolor sit amet consectetur. Nisl malesuada eu aenean adipiscing augue arcu facilisis. Nulla dui ullamcorper maecenas non nunc nam." />
             </ParaWrapper>
-            <MainButton text="SIGN UP NOW" bgColor="secondary" />
+            <MainButton text="SIGN UP NOW" color="secondary" />
 
             <CloudTopLeft component="img" src={cloud} alt="cloud" />
             <MiniStarTop component="img" src={miniStar} alt="miniStar" />

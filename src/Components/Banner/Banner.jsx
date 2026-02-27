@@ -11,6 +11,7 @@ import wave from "../../assets/wave.png";
 
 const BannerWrapper = styled(Box)({
   backgroundColor: "#FFF8F8",
+
 });
 
 const ContentWrapper = styled(Container)({
@@ -19,7 +20,8 @@ const ContentWrapper = styled(Container)({
   alignItems: "center",
   flexDirection: "column",
   position: "relative",
-  padding:"123px 0 108px"
+  padding: "123px 0 108px",
+
 });
 const Heading = styled(Typography)({
 
@@ -85,6 +87,8 @@ const LStarImage = styled(Box)({
 
 const WaveImage = styled(Box)({
   width: "100%",
+  height: "auto",
+  transform:"translateY(4px)"
 
 });
 
@@ -92,7 +96,7 @@ const Banner = (props) => {
   return (
     <BannerWrapper>
       <ContentWrapper maxWidth="lg">
-        <Heading >
+        <Heading  variant="h1">
           {props.heading}
         </Heading>
         <SubHeading >
@@ -106,6 +110,7 @@ const Banner = (props) => {
       </ContentWrapper>
 
       <WaveImage component="img" src={wave} alt="wave" />
+
     </BannerWrapper>
   );
 };

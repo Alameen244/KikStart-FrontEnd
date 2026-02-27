@@ -163,11 +163,11 @@ function Header() {
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <ActionButtons>
               <Box component={Link} to="/subs">
-                <RedButton text="LOGIN" />
+                <RedButton text="LOGIN" color="primary" />
               </Box>
               <Box></Box>
 
-              <RedButton text="REQUEST A FREE DEMO" bgColor="secondary" />
+              <RedButton text="REQUEST A FREE DEMO" color="secondary" />
             </ActionButtons>
 
             <MobileMenuBox>
