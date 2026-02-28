@@ -26,7 +26,7 @@ const pages = [
 /* STYLED WRAPPERS (same values, no extras) */
 
 const StyledAppBar = styled(AppBar)(() => ({
-  backgroundColor: "#FFFAFA",
+  backgroundColor: "#FFF8F8",
   margin: "auto",
   padding: "28px 0",
   boxShadow: "none",
