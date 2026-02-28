@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 
-import { useParams } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from '@emotion/styled';
 import Para from '../Para/Para';
 import Program2 from '../../assets/Program2 copy.png'
@@ -14,14 +13,14 @@ import Program1 from '../../assets/Program1 copy.png'
 import Grid from '@mui/material/Grid'
 import bigLogoImage from '../../assets/BigLogoHome.png'
 import TextField from '@mui/material/TextField';
-import MainButton from '../RedButton/MainButton';
+import MainButton from '../RedButton/RedButton';
 import Headings from '../Heading/Headings';
 
 const ProgramDetailsComponentWrapper = styled(Box)({
 
 })
 const KikLogoWrapper = styled(Box) ({
-    
+
 })
 const ContentWrapper = styled(Container)({
   paddingTop: "80px",
@@ -131,18 +130,15 @@ const GridWrapper = styled(Grid)({
     alignItems:"center",
     marginTop:"22px",
     display:"flex",
-    alignItems:"center",
     justifyContent:"space-between"
 })
 
 const ImageBox = styled(Box) ({
-    
-    "& img":{
-       
-    height:"267px",
-    width:"267px",
-    borderRadius:"30px",
-    }
+
+  height:"267px",
+  width:"267px",
+
+
 
 })
 const ProgramImages  = styled(Typography) ({
@@ -182,7 +178,7 @@ const StyledTextField = styled(TextField)({
 
   "& .MuiInputLabel-root": {
     fontFamily: "Noto Sans",
-    fontSize: "14px",      
+    fontSize: "14px",
     color: "#B3B3B3",
   },
 
@@ -192,9 +188,9 @@ const StyledTextField = styled(TextField)({
 
   "& .MuiOutlinedInput-input": {
     padding: "20px",
-    
+
   },
-  
+
 });
 const InputWrapper = styled(Box) ({
 
@@ -210,11 +206,19 @@ const ProgramFormWrapper = styled(Box) ({
   marginTop:"100px"
 })
 
+const GalleryImage = styled(Box)({
+    height:"100%",
+    width:"100%",
+  objectFit: "cover",
+  objectPosition: 'top',
+        borderRadius:"30px",
+})
+
 function ProgramDetailsComponent() {
     const location = useLocation()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const program = location.state || {};
-    const { heading, image, shortDescription, details } = program;
+    // const { heading, image, shortDescription, details } = program;
     if(!program) <h2>Program Not Found</h2>
 
     //EnqueryForm
@@ -261,7 +265,7 @@ function ProgramDetailsComponent() {
                 src={program.image}
                 alt={program.heading}
             />
-            
+
         </ImageWrapper>
         <Paragraph>
           {program.shortDescription}
@@ -288,13 +292,13 @@ function ProgramDetailsComponent() {
         <ProgramImages>
             Program Images
         </ProgramImages>
-        
+
         <GridWrapper  >
                         {
                         gallaryImage.map((items , index) => (
-                            <Grid item size = {{lg : 4}}  >
+                            <Grid key={index} item size = {{lg : 4}}  >
                                 <ImageBox>
-                                    <img src={items.image} alt="" />
+                                    <GalleryImage component="img" src={items.image} alt="" />
                                 </ImageBox>
                             </Grid>
                         ))
@@ -302,7 +306,7 @@ function ProgramDetailsComponent() {
         </GridWrapper>
             <ProgramFormWrapper>
               <GridWrapper container spacing={8} >
-            
+
             <Grid item size ={{lg:6}} >
               <Headings subHeading = "" heading = "Enquiry" />
               <Para para = "Quam in non velit malesuada arcu eget id. Id ut turpis tempor semper et in nunc aliquet. Orci cras faucibus aliquam eget orci egestas."/>
@@ -318,7 +322,7 @@ function ProgramDetailsComponent() {
                 <StyledTextField
                   label="Contact Person Name Of The School"
                   name="personName"
-                  
+
                   value={formData.personName}
                   onChange={handleChange}
                   fullWidth
@@ -335,7 +339,7 @@ function ProgramDetailsComponent() {
                       label="Phone Number Of The School"
                       name="phoneNumber"
                       type = "tel"
-                      
+
                       value={formData.phoneNumber}
                       onChange={handleChange}
                       fullWidth
@@ -343,7 +347,7 @@ function ProgramDetailsComponent() {
 
 
                 </EnquiryWrapper>
-                <MainButton bgColor = "secondary" text = " SEND "/>
+                <MainButton color = "secondary" text = "SEND" px="42px" py='18px'/>
                 </InputWrapper>
             </Grid>
             <Grid item size ={{lg:6}}>

@@ -10,6 +10,7 @@ import Details from "./Pages/Details";
 import Subscription from './Pages/Subscription'
 import WhyUs from "./Pages/WhyUs";
 import ProgramDetails from "./Pages/ProgramDetails";
+import FAQs from "./Pages/FAQs";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/become-a-coach" element={<Details/>} />
             <Route path="/subs" element={<Subscription />} />
             <Route path="/why-us" element={<WhyUs />} />
+            <Route path="/faqs" element={<FAQs />} />
 
 
 

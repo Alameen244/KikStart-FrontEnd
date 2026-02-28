@@ -7,7 +7,7 @@ import ImageAfterImage from "../HomeComponents/Layer2/ImageAfterImage";
 import Headings from "../Heading/Headings";
 import Para from "../Para/Para";
 import Box from "@mui/material/Box";
-import MainButton from "../RedButton/MainButton";
+import MainButton from "../RedButton/RedButton";
 
 const WhoWrapper = styled(Container)({
 // padding:"37px 0 100px",
@@ -42,11 +42,11 @@ Curabitur suspendisse tellus placerat libero ut. Enim auctor velit massa integer
           </ParaWrapper>
           <Para para="Ut fermentum elementum amet elementum arcu suspendisse. Vitae lectus penatibus est sit iaculis quis. Auctor eu vitae imperdiet dignissim hendrerit. A elementum turpis sem quis."/>
           <MainButtonWrapper>
-            <MainButton text="KNOW MORE" bgColor = 'secondary' />
+            <MainButton text="KNOW MORE" color = 'secondary' />
           </MainButtonWrapper>
         </Grid>
       </GridWrapper>
-      
+
     </WhoWrapper>
   );
 };

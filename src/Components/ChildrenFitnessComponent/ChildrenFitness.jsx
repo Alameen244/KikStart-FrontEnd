@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -10,19 +10,23 @@ import img2 from "../../assets/Rectangle 13 (1).png"
 import img3 from "../../assets/Rectangle 13 (2).png"
 import TextOverCard from '../TextOverCard/TextOverCard'
 import Headings from '../Heading/Headings'
-import MainButton from '../RedButton/MainButton'
+import MainButton from '../RedButton/RedButton'
 const Outer = styled(Box) ({
     backgroundColor : "#FFFCF3",
     margin:"48px 0 "
 })
 const ChildrenFitnessWrapper = styled(Container) ({
-    
+
 })
 const UpCurveImg = styled(Box) ({
-
+    width: "100%",
+    height: "auto",
+      transform: 'translateY(4px)'
 })
 const LowCurveImg = styled(Box) ({
-
+  width: "100%",
+    height: "auto",
+    transform: 'translateY(4px)'
 })
 const GridWrapper = styled(Grid)({
     alignItems:"center",
@@ -52,7 +56,7 @@ function ChildrenFitness() {
     <Outer>
         <UpCurveImg component = 'img' src = {upCurve}/>
         <ChildrenFitnessWrapper maxWidth = "lg" >
-        
+
         <Headings subHeading = "SERVICES" heading = "Children’s Fitness Programs" align = "center" />
 
             <GridWrapper container spacing={4} >
@@ -66,11 +70,11 @@ function ChildrenFitness() {
             </GridWrapper>
 
         <ButtonWrapper>
-            <MainButton bgColor = "secondary" text = "VIEW ALL" />
+            <MainButton color = "secondary" text = "VIEW ALL" />
         </ButtonWrapper>
 
-        
-        
+
+
     </ChildrenFitnessWrapper>
     <LowCurveImg component = 'img' src = {lowCurve}/>
     </Outer>

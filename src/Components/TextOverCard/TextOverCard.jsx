@@ -26,7 +26,8 @@ const CardImage = styled("img")({
   width: "100%",
   // display: "block",
   transition: "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-  objectFit:"cover"
+  objectFit: "cover",
+  objectPosition: "center 0%",
 });
 const CardText = styled(Box) ({
     position:"absolute",
@@ -37,14 +38,14 @@ const CardText = styled(Box) ({
 const CardHeading = styled(Box) ({
     marginLeft:"28px",
   "& h3":{
-    
+
 
 
 fontFamily: 'PT Sans',
 fontStyle: 'normal',
 fontWeight: 700,
 fontSize: 20,
-
+zIndex: 1,
 
 textTransform: 'capitalize',
 
@@ -71,7 +72,7 @@ color: '#FFFFFF',
 })
 const CardImageWrapper = styled(Box)({
   height:"436px",
-  width:"364px",
+  width: "364px",
 })
 function TextOverCard(props) {
   return (
@@ -87,7 +88,7 @@ function TextOverCard(props) {
             <CardPara>
                 <p>{props.para}</p>
             </CardPara>
-            
+
         </CardText>
     </TextOverCardWrapper>
   )

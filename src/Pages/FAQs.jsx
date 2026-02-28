@@ -4,8 +4,7 @@ import Container from '@mui/material/Container'
 import styled from '@emotion/styled'
 import Box from '@mui/material/Box'
 import Banner from '../Components/Banner/Banner'
-import Header from '../Components/Header/Header'
-import Footer from '../Components/Footer/Footer'
+
 
 
 const FAQWrapper = styled(Container) ({
@@ -66,26 +65,23 @@ function FAQs() {
         }
   return (
     <MainFAQWrapper>
-        <Header/>
         <Banner heading = "FAQs" subHeading = "Home / FAQs" />
-        
+
     <FAQWrapper maxWidth = 'lg' >
-        
+
         <FaqWrapper>
-                
-                
+
+
             {
                 data.map((faq , index) => (
                     <FAQ key={faq.id} question={faq.question} answer={faq.ans} open={ openIndex === index } onclick={() => handleToggle(index) } />
                 ))
             }
-            
+
         </FaqWrapper>
     </FAQWrapper>
-    
-    <Footer/>
     </MainFAQWrapper>
-            
+
   )
 }
 
