@@ -65,6 +65,7 @@ const MiniStarImage = styled(Box)({
   position: "absolute",
   top:"141px",
   left: "180px",
+  
 });
 
 const CloudImage = styled(Box)({

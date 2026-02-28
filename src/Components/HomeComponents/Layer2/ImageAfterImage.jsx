@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import star from "./images/Group.png";
+import star from "./images/star.png";
 
 const Wrapper = styled(Box)({
     position: "relative",
