@@ -9,7 +9,13 @@ import { styled } from "@mui/material/styles";
 import kikstart from "../../assets/KIKSTART.png";
 import sms from "../../assets/sms.png";
 import wave from "../../assets/revwave.png";
-
+import { Link } from "react-router-dom";
+const QuickLinks = [
+  { label: "About Us", path: "/about" },
+  { label: "Programs", path: "/programs" },
+  { label: "Contact Us", path: "/contact-us" },
+  { label: "Faqs", path: "/faqs" },
+].filter(Boolean);
 const FooterWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: "#FFFAFA",
   padding: theme.breakpoints.up("md") ? "px 0 80px" : undefined,
@@ -56,8 +62,18 @@ const LinkText = styled(Typography)({
   /* identical to box height */
   textTransform: "capitalize",
 
+  display: "block",
+  textDecoration: "none",
+  width: "fit-content",
+  transformOrigin: "left center",
   color: "#494949",
   marginTop: "20px",
+  transition: "color 0.3s ease, transform 0.3s ease",
+  "&:hover": {
+    color: "#ED1C24",
+    cursor: "pointer",
+    transform: "scale(1.05)",
+  },
 });
 
 const HeadingText = styled(Typography)({
@@ -170,6 +186,15 @@ const NewsletterGrid = styled(Grid)({
   maxWidth:"256px"
 });
 
+const LogoWrapper = styled(Link)({
+  display: "inline-block",
+  textDecoration: "none",
+  lineHeight: 0,
+  "&:focus-visible": {
+    outline: "2px solid #ED1C24",
+    outlineOffset: 4,
+  },
+});
 const Footer = () => {
   return (
     <FooterWrapper component="footer">
@@ -177,8 +202,10 @@ const Footer = () => {
       <Container maxWidth="lg" disableGutters>
         <GridWrapper container spacing={0} columns={12}>
 
-            <LeftGrid size={{ lg: 4 }}>
-              <Logo component="img" src={kikstart} alt="kikstart logo" />
+          <LeftGrid size={{ lg: 4 }}>
+            <LogoWrapper to="/" aria-label="Go to home">
+              <Logo component="img" src={kikstart} alt="KikStart home" />
+            </LogoWrapper>
 
               <Description>
                 Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at
@@ -195,11 +222,9 @@ const Footer = () => {
             <QuickLinksGrid size={{ lg: 2}} >
 
                 <HeadingText color="dark">Quick Links</HeadingText>
-
-                <LinkText>About Us</LinkText>
-                <LinkText>Programs</LinkText>
-                <LinkText>Contact Us</LinkText>
-                <LinkText>Faqs</LinkText>
+                {QuickLinks.map((link) => (
+                  <LinkText key={link.label} component={Link} to={link.path} >{link.label}</LinkText>
+                ))}
 
             </QuickLinksGrid>
 

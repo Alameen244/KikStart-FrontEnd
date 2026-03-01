@@ -8,6 +8,11 @@ import stars from "../../assets/shooting.png";
 import { styled } from "@mui/material/styles";
 import Threestar from "../../assets/3star.png";
 import icon from "../../assets/icon.png";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCube, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
 const SliderWrapper = styled(Box)({
   paddingBottom:"44px",
 });
@@ -74,11 +79,41 @@ const SliderContentWrapper = styled(Box)({
   margin: " 31px auto 0px",
 
 });
+const StyledSwiper = styled(Swiper)({
+  width: "100%",
+  "& .swiper-slide": {
+    display: "flex",
+    justifyContent: "center",
+  },
+  "& .swiper-pagination": {
+    position: "relative",
+    marginTop: "20px",
+    bottom: "unset",
+  },
+  "& .swiper-pagination-bullet": {
+    backgroundColor: "#C9C9C9",
+    opacity: 1,
+  },
+  "& .swiper-pagination-bullet-active": {
+    backgroundColor: "#ED1C24",
+  },
+});
+
+const SlideCard = styled(Box)({
+  width: "100%",
+});
 const IconWrapper = styled(Box)({
   position: "absolute",
   bottom: "22px",
   left: "-26px",
 });
+
+const testimonials = Array.from({ length: 5 }, () => ({
+  image: girlImage,
+  para: "Lorem ipsum dolor sit amet consectetur. Tortor sed ipsum tortor in et. Arcu tortor phasellus elementum sed natoquepellentesque in elit imperdiet. Sit nisi turpis arcu malesuada purus semper. Bibendum urna dolor at ut tincidunt.Scelerisque dictumst sed.",
+  name: "Cameron Williamson",
+  role: "Coach",
+}));
 
 const Slider = () => {
   return (
@@ -90,20 +125,35 @@ const Slider = () => {
           align="center"
         />
         <SliderContentWrapper>
-          <ImageWrapper>
-            <GirlImage component="img" src={girlImage} alt="girlImage" />
-          </ImageWrapper>
-          <ParaWrapper>
-            <Para
-              para="Lorem ipsum dolor sit amet consectetur. Tortor sed ipsum tortor in et. Arcu tortor phasellus elementum sed natoquepellentesque in elit imperdiet. Sit nisi turpis arcu malesuada purus semper. Bibendum urna dolor at ut tincidunt.Scelerisque dictumst sed."
-              align="center"
-            />
-          </ParaWrapper>
-          <Box>
-            <Name color="dark">Cameron Williamson</Name>
-            <Role color="myRed">Coach</Role>
-          </Box>
-
+          <StyledSwiper
+            effect="cube"
+            grabCursor
+            cubeEffect={{
+              shadow: false,
+              slideShadows: false,
+              shadowOffset: 20,
+              shadowScale: 0.94,
+            }}
+            pagination
+            modules={[EffectCube, Pagination]}
+          >
+            {testimonials.map((item, index) => (
+              <SwiperSlide key={`testimonial-${index}`}>
+                <SlideCard>
+                  <ImageWrapper>
+                    <GirlImage component="img" src={item.image} alt="girlImage" />
+                  </ImageWrapper>
+                  <ParaWrapper>
+                    <Para para={item.para} align="center" />
+                  </ParaWrapper>
+                  <Box>
+                    <Name color="dark">{item.name}</Name>
+                    <Role color="myRed">{item.role}</Role>
+                  </Box>
+                </SlideCard>
+              </SwiperSlide>
+            ))}
+          </StyledSwiper>
         </SliderContentWrapper>
             <StarsWrapper>
           <Box component="img" src={stars} alt="shooting stars" />
