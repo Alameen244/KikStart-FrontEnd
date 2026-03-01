@@ -15,6 +15,7 @@ import bigLogoImage from '../../assets/BigLogoHome.png'
 import TextField from '@mui/material/TextField';
 import MainButton from '../RedButton/RedButton';
 import Headings from '../Heading/Headings';
+import RightStarBroom from "../../assets/Group (3).png"
 
 const ProgramDetailsComponentWrapper = styled(Box)({
 
@@ -23,8 +24,8 @@ const KikLogoWrapper = styled(Box) ({
 
 })
 const ContentWrapper = styled(Container)({
-  paddingTop: "80px",
-  paddingBottom: "80px",
+  marginTop: "80px",
+  marginBottom: "80px",
 });
 const Title = styled('h1')({
 
@@ -213,6 +214,16 @@ const GalleryImage = styled(Box)({
   objectPosition: 'top',
         borderRadius:"30px",
 })
+const LeftInputWrapper = styled(Box) ({
+  position:"relative",
+})
+
+const StarImageWrapper = styled(Box) ({
+    position:"absolute",
+    bottom:"70px",
+    right:"-80px",
+    zIndex:"-1",
+})
 
 function ProgramDetailsComponent() {
     const location = useLocation()
@@ -310,7 +321,8 @@ function ProgramDetailsComponent() {
             <Grid item size ={{lg:6}} >
               <Headings subHeading = "" heading = "Enquiry" />
               <Para para = "Quam in non velit malesuada arcu eget id. Id ut turpis tempor semper et in nunc aliquet. Orci cras faucibus aliquam eget orci egestas."/>
-                <InputWrapper>
+                <LeftInputWrapper>
+                  <InputWrapper>
                     <EnquiryWrapper component="form" onSubmit={handleSubmit}>
                     <StyledTextField
                   label="School Name"
@@ -349,6 +361,8 @@ function ProgramDetailsComponent() {
                 </EnquiryWrapper>
                 <MainButton color = "secondary" text = "SEND" px="42px" py='18px'/>
                 </InputWrapper>
+                <StarImageWrapper component = 'img' src = {RightStarBroom} />
+                </LeftInputWrapper>
             </Grid>
             <Grid item size ={{lg:6}}>
 
