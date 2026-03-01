@@ -11,6 +11,7 @@ import Subscription from './Pages/Subscription'
 import WhyUs from "./Pages/WhyUs";
 import ProgramDetails from "./Pages/ProgramDetails";
 import FAQs from "./Pages/FAQs";
+import ContactUs from "./Pages/ContactUs";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact-us" element={<ContactUs/>} />
             <Route path="/schools" element={<InterestedSchools/>} />
             <Route path="/programs" element={<Programs/>} />
             <Route path="/program/:id" element={<ProgramDetails/>} />

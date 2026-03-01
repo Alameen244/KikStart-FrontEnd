@@ -17,7 +17,7 @@ const pages = [
   { label: "About Us", path: "/about" },
   { label: "Programs", path: "/programs" },
   { label: "Why Us", path: "/why-us" },
-  { label: "Contact Us", path: "/contact" },
+  { label: "Contact Us", path: "/contact-us" },
   { label: "Interested Schools", path: "/schools" },
   { label: "Become a Coach", path: "/become-a-coach" },
   { label: "Coach's Login", path: "/coach-login" },
