@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Box from '@mui/material/Box'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Banner from '../Components/Banner/Banner'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
@@ -12,14 +12,14 @@ import img1 from "../assets/Vector (1).png"
 import img2 from "../assets/sms.png"
 import Typography from '@mui/material/Typography'
 import leftStarBroom from "../assets/Group (4).png"
-import { style } from '@mui/system'
+
 
 
 const ContactUsWrappeer = styled(Box) ({
 
 })
 const ContentWrapper = styled(Container) ({
-    
+
 })
 const GridWrapper = styled(Grid) ({
     margin:"35px 0 58px 0"
@@ -77,7 +77,7 @@ const SMSWrapper = styled(Box) ({
     display:"flex",
     alignItems:"center",
     position:"relative",
-   
+
 marginTop:"38px",
 
 background: '#FFFFFF',
@@ -85,7 +85,7 @@ boxShadow: '0px 7px 23px rgba(69, 69, 69, 0.05)',
 borderRadius: "30px",
 padding:"20px"
 
-    
+
 })
 const SMSImageWrapper = styled(Box) ({
     height:"53px",
@@ -95,8 +95,8 @@ const SMSImageWrapper = styled(Box) ({
     display:"flex",
     alignItems:"center",
     justifyContent:"center"
-    
-    
+
+
 })
 const SMSImage = styled(Box) ({
 
@@ -148,7 +148,7 @@ export default function ContactUs() {
 
   return (
     <ContactUsWrappeer>
-        <Banner heading="Contact Us" subHeading = "Home / Contact Us" />
+        <Banner heading="Contact Us" subHeading = "Contact Us" />
         <ContentWrapper maxWidth = 'lg' >
 
             <GridWrapper container spacing={8} >
@@ -161,7 +161,7 @@ export default function ContactUs() {
                             <SMSImage component = "img" src = {img2} />
                         </SMSImageWrapper>
                         <TextWrapper>
-                             info@KikStartKids.com
+                            .info@KikStartKids.com
                         </TextWrapper>
                         <IstarWrapper component = 'img'src = {img1} />
 
@@ -173,18 +173,18 @@ export default function ContactUs() {
                         <GetInTouchWrapper component = "form" onSubmit={handleSubmit}>
 
                             <StyledTextField
-                            
+
                             label = "Full Name"
                             name = "fullName"
-                            
+
                             value = {formData.fullName}
                             onChange = {handleChange}
                             fullWidth
 
-                            
+
                             />
                             <StyledTextField
-                            
+
                             label = "Email"
                             name = "email"
                             type = "email"
@@ -192,31 +192,31 @@ export default function ContactUs() {
                             onChange = {handleChange}
                             fullWidth
 
-                            
+
                             />
                             <StyledTextField
-                            
+
                             label = "Query ubject"
                             name = "querySub"
-                            
+
                             value = {formData.querySub}
                             onChange = {handleChange}
                             fullWidth
 
-                            
+
                             />
                             <StyledTextField
-                            
+
                             label = "Query Details"
                             name = "queryDetails"
-                            
+
                             value = {formData.queryDetails}
                             onChange = {handleChange}
                             fullWidth
                             multiline
                             minRows={2}
 
-                            
+
                             />
 
                         </GetInTouchWrapper>
@@ -224,7 +224,7 @@ export default function ContactUs() {
                     </InputWrapper>
                     <StarImageWrapper component = 'img' src = {leftStarBroom} />
                     </RightInputWrapper>
-                    
+
                 </Grid>
 
             </GridWrapper>

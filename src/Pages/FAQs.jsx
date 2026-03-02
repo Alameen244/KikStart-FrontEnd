@@ -65,7 +65,7 @@ function FAQs() {
         }
   return (
     <MainFAQWrapper>
-        <Banner heading = "FAQs" subHeading = "Home / FAQs" />
+        <Banner heading = "FAQs" subHeading = "FAQs" />
 
     <FAQWrapper maxWidth = 'lg' >
 

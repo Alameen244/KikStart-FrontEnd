@@ -9,10 +9,15 @@ import { styled } from "@mui/material/styles";
 import Threestar from "../../assets/3star.png";
 import icon from "../../assets/icon.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCube, Pagination } from "swiper/modules";
+import { EffectCube, Pagination , Autoplay , Navigation} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cube";
 import "swiper/css/pagination";
+import { useRef } from "react";
+
+
+
+
 const SliderWrapper = styled(Box)({
   paddingBottom:"44px",
 });
@@ -115,7 +120,44 @@ const testimonials = Array.from({ length: 5 }, () => ({
   role: "Coach",
 }));
 
+
+const AutoplayProgress = styled(Box)({
+   position: 'absolute',
+  right: 16,
+  bottom: 16,
+  zIndex: 10,
+  width: 48,
+  height: 48,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontWeight: 'bold',
+  color: 'var(--swiper-theme-color)',
+  "& svg": {
+      Progress: 0,
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  zIndex: 10,
+  width: '100%',
+  height: '100%',
+  strokeWidth: 4,
+  stroke: 'var(--swiper-theme-color)',
+  fill: 'none',
+  strokeDashoffset: 'calc(125.6px * (1 - var(--progress)))',
+  strokeDasharray: 125.6,
+  transform: 'rotate(-90deg)',
+  }
+})
 const Slider = () => {
+  const progressCircle = useRef(null);
+  const progressContent = useRef(null);
+const onAutoplayTimeLeft = (s, time, progress) => {
+  if (!progressCircle.current || !progressContent.current) return;
+
+  progressCircle.current.style.setProperty('--progress', 1 - progress);
+  progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+};
   return (
     <SliderWrapper>
       <StyledContainer maxWidth="lg">
@@ -134,8 +176,18 @@ const Slider = () => {
               shadowOffset: 20,
               shadowScale: 0.94,
             }}
-            pagination
-            modules={[EffectCube, Pagination]}
+              pagination={{
+          clickable: true,
+        }}
+
+            spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+            modules={[EffectCube, Pagination, Autoplay ]}
+            onAutoplayTimeLeft={onAutoplayTimeLeft}
           >
             {testimonials.map((item, index) => (
               <SwiperSlide key={`testimonial-${index}`}>
@@ -154,6 +206,12 @@ const Slider = () => {
               </SwiperSlide>
             ))}
           </StyledSwiper>
+                   <AutoplayProgress slot="container-end">
+          <svg viewBox="0 0 48 48" ref={progressCircle}>
+            <circle cx="24" cy="24" r="20"></circle>
+          </svg>
+          <span ref={progressContent}></span>
+        </AutoplayProgress>
         </SliderContentWrapper>
             <StarsWrapper>
           <Box component="img" src={stars} alt="shooting stars" />

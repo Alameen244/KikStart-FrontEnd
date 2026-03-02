@@ -47,7 +47,7 @@ Read: 'more: https://drafts.csswg.org/css-inline-3/#leading-trim',
 */
   leadingTrim: "both",
   textEdge: "cap",
-
+  textDecoration: "none",
   color: "#494949",
   display: "flex",
   alignItems: "center",
@@ -172,18 +172,13 @@ const GridWrapper = styled(Grid)({
   padding: "103px 0 81px",
 });
 
-
 const LeftGrid = styled(Grid)({
   transform: "translateY(-19px)",
 });
-const QuickLinksGrid = styled(Grid)({
-
-});
-const LegalGrid = styled(Grid)({
-
-});
+const QuickLinksGrid = styled(Grid)({});
+const LegalGrid = styled(Grid)({});
 const NewsletterGrid = styled(Grid)({
-  maxWidth:"256px"
+  maxWidth: "256px",
 });
 
 const LogoWrapper = styled(Link)({
@@ -201,55 +196,52 @@ const Footer = () => {
       <WaveImage component="img" src={wave} alt="wave" />
       <Container maxWidth="lg" disableGutters>
         <GridWrapper container spacing={0} columns={12}>
-
           <LeftGrid size={{ lg: 4 }}>
             <LogoWrapper to="/" aria-label="Go to home">
               <Logo component="img" src={kikstart} alt="KikStart home" />
             </LogoWrapper>
 
-              <Description>
-                Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at
-                interdum eu viverra.
-              </Description>
+            <Description>
+              Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at
+              interdum eu viverra.
+            </Description>
 
-              <EmailRow>
-                <Box component="img" src={sms} alt="sms" />
-                info@KikStartKids.com
-              </EmailRow>
-            </LeftGrid>
+            <EmailRow component={Link} to="mailto:info@KikStartKids.com">
+              <Box component="img" src={sms} alt="sms" />
+              info@KikStartKids.com
+            </EmailRow>
+          </LeftGrid>
 
+          <QuickLinksGrid size={{ lg: 2 }}>
+            <HeadingText color="dark">Quick Links</HeadingText>
+            {QuickLinks.map((link) => (
+              <LinkText key={link.label} component={Link} to={link.path}>
+                {link.label}
+              </LinkText>
+            ))}
+          </QuickLinksGrid>
 
-            <QuickLinksGrid size={{ lg: 2}} >
+          <LegalGrid size={{ lg: 2 }}>
+            <HeadingText color="dark">Legal</HeadingText>
 
-                <HeadingText color="dark">Quick Links</HeadingText>
-                {QuickLinks.map((link) => (
-                  <LinkText key={link.label} component={Link} to={link.path} >{link.label}</LinkText>
-                ))}
+            <LinkText>About Us</LinkText>
+            <LinkText>Terms and Conditions</LinkText>
+            <LinkText>Privacy Policy</LinkText>
+          </LegalGrid>
 
-            </QuickLinksGrid>
+          <NewsletterGrid size={{ lg: 3 }}>
+            <HeadingText>Newsletter</HeadingText>
 
-            <LegalGrid size={{ lg: 2 }}>
-              <HeadingText color="dark">Legal</HeadingText>
-
-              <LinkText>About Us</LinkText>
-              <LinkText>Terms and Conditions</LinkText>
-              <LinkText>Privacy Policy</LinkText>
-            </LegalGrid>
-
-            <NewsletterGrid size={{ lg: 3}}>
-              <HeadingText>Newsletter</HeadingText>
-
-              <NewsletterText color="semiDark">
-                Enter the email to subscribe our newsletter
-              </NewsletterText>
-              <EmailInputWrapper>
-                <EmailInputField placeholder="Enter Email" variant="outlined" />
-                <EmailSubmitButton>
-                  <SubmitIcon src={arrowIcon} alt="submit" />
-                </EmailSubmitButton>
-              </EmailInputWrapper>
-            </NewsletterGrid>
-
+            <NewsletterText color="semiDark">
+              Enter the email to subscribe our newsletter
+            </NewsletterText>
+            <EmailInputWrapper>
+              <EmailInputField placeholder="Enter Email" variant="outlined" />
+              <EmailSubmitButton>
+                <SubmitIcon src={arrowIcon} alt="submit" />
+              </EmailSubmitButton>
+            </EmailInputWrapper>
+          </NewsletterGrid>
         </GridWrapper>
       </Container>
     </FooterWrapper>

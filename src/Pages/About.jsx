@@ -14,7 +14,7 @@ const SliderWrapper = styled(Box)({
 const About = () => {
   return (
     <div>
-      <Banner heading="About Us" subHeading="Home/ About Us" />
+      <Banner heading="About Us" subHeading="About Us" />
       <WhoWrapper>
         <WhoComponent />
       </WhoWrapper>
