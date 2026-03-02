@@ -8,10 +8,9 @@ import bigStar from "../../assets/bigStar.png";
 import lStar from "../../assets/lStar.png";
 import cloud from "../../assets/cloud.png";
 import wave from "../../assets/wave.png";
-
+import { Link } from "react-router-dom";
 const BannerWrapper = styled(Box)({
   backgroundColor: "#FFF8F8",
-
 });
 
 const ContentWrapper = styled(Container)({
@@ -21,38 +20,40 @@ const ContentWrapper = styled(Container)({
   flexDirection: "column",
   position: "relative",
   padding: "123px 0 108px",
-
 });
 const Heading = styled(Typography)({
+  fontFamily: "PT Sans",
+  fontStyle: "normal",
+  fontWeight: 700,
+  fontSize: 74,
+  textAlign: "center",
 
-
-fontFamily: 'PT Sans',
-fontStyle: 'normal',
-fontWeight: 700,
-fontSize: 74,
-textAlign: 'center',
-
-color: '#2B2B2B',
-
+  color: "#2B2B2B",
 });
 const SubHeading = styled(Typography)({
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: 20,
 
+  // Read: 'more: https://drafts.csswg.org/css-inline-3/#leading-trim',
+  // */
+  leadingTrim: "both",
+  textEdge: "cap",
+  textAlign: "center",
 
-fontFamily: 'Noto Sans',
-fontStyle: 'normal',
-fontWeight: 400,
-fontSize: 20,
+  color: "#494949",
+  "& a": {
+    textDecoration: "none",
+    fontFamily: "Noto Sans",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 20,
+    leadingTrim: "both",
+    textEdge: "cap",
 
-
-// Read: 'more: https://drafts.csswg.org/css-inline-3/#leading-trim',
-// */
-leadingTrim: 'both',
-textEdge: 'cap',
-textAlign: 'center',
-
-color: '#494949',
-
-
+    color: "#494949",
+  },
 });
 
 const StarImage = styled(Box)({
@@ -63,9 +64,8 @@ const StarImage = styled(Box)({
 
 const MiniStarImage = styled(Box)({
   position: "absolute",
-  top:"141px",
+  top: "141px",
   left: "180px",
-  
 });
 
 const CloudImage = styled(Box)({
@@ -89,19 +89,16 @@ const LStarImage = styled(Box)({
 const WaveImage = styled(Box)({
   width: "100%",
   height: "auto",
-  transform:"translateY(4px)"
-
+  transform: "translateY(4px)",
 });
 
 const Banner = (props) => {
   return (
     <BannerWrapper>
       <ContentWrapper maxWidth="lg">
-        <Heading  variant="h1">
-          {props.heading}
-        </Heading>
-        <SubHeading >
-          {props.subHeading}
+        <Heading variant="h1">{props.heading}</Heading>
+        <SubHeading>
+          <Link to="/">Home</Link>/{props.subHeading}
         </SubHeading>
         <StarImage component="img" src={star} alt="star" />
         <MiniStarImage component="img" src={miniStar} alt="miniStar" />
@@ -111,7 +108,6 @@ const Banner = (props) => {
       </ContentWrapper>
 
       <WaveImage component="img" src={wave} alt="wave" />
-
     </BannerWrapper>
   );
 };

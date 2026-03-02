@@ -27,7 +27,7 @@ const GridWrapper = styled(Grid)({
 })
 
 const WhyUsComponent = () => {
-    
+
   const cardData = [
           {
               backGroundColor : "#FFF8F8",
@@ -77,20 +77,20 @@ const WhyUsComponent = () => {
               cardHeading : "Quality support",
               cardPara: "Lorem ipsum dolor sit amet consectetur. Nunc id adipiscing at interdum eu viverra"
           }
-          
-          
-  
-  
+
+
+
+
       ]
 
 
   return (
     <WhyUsWrapper>
-        <Banner heading = "Why us" subHeading = "Home / Why us" />
+        <Banner heading = "Why us" subHeading = "Why us" />
 
         <GymcardComponentSection maxWidth = "lg" >
 
-        
+
         <Para para = "Lorem ipsum dolor sit amet consectetur. Vitae elit quam volutpat id. Quisque orci lacinia sit non. Diam et adipiscing proin orci. Eget lorem sit etiam molestie rhoncus non. Ut tincidunt tristique suspendisse arcu ac." align = "center" />
         <GridWrapper container spacing={4} >
 
@@ -108,7 +108,7 @@ const WhyUsComponent = () => {
     </GymcardComponentSection>
 
     </WhyUsWrapper>
-      
+
   )
 }
 

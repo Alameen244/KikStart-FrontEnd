@@ -215,7 +215,7 @@ const ProgramComponent = () => {
     <ProgramComponentWrapper>
 
 
-        <Banner heading = "Programs" subHeading = "Home / Programs" />
+        <Banner heading = "Programs" subHeading = "Programs" />
 
         {/* pagination */}
         <Container maxWidth="lg" sx={{py:'80px'}}>
