@@ -1,12 +1,12 @@
-import React from 'react'
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Cards from './Cards';
+import Cards from '../../SchoolCardComponent/SchoolCardComponent';
 
 
-const Layer3 = () =>  {
+const IntrestedSchoolsComponent = () =>  {
 
-  
+
 
 
   return (
@@ -20,4 +20,4 @@ const Layer3 = () =>  {
   )
 }
 
-export default Layer3
+export default IntrestedSchoolsComponent;

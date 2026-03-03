@@ -1,16 +1,14 @@
 
-import Layer1 from '../Components/FormComponents/Layer1/Layer1'
-import Banner from '../Components/Banner/Banner'
+import Banner from "../Components/Banner/Banner";
+import FormComponent from "../Components/FormComponents/FormComponent";
 
-const Details = () =>   {
+const Details = () => {
   return (
     <div>
       <Banner heading="Details" subHeading="Details" />
-      <Layer1/>
+      <FormComponent/>
     </div>
-  )
-}
+  );
+};
 
-export default Details
-
-
+export default Details;

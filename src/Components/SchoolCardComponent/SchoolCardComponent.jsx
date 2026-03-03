@@ -7,16 +7,16 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import img from "./images/9.png";
-import img1 from "./images/image.png";
-import img2 from "./images/image2.png";
-import img3 from "./images/image3.png";
-import img4 from "./images/image4.png";
-import img5 from "./images/image5.png";
-import img6 from "./images/image6.png";
-import img7 from "./images/image7.png";
-import img8 from "./images/image8.png";
-import img9 from "./images/image9.png";
+import img from "../../assets/9.png";
+import img1 from "../../assets/image.png";
+import img2 from "../../assets/image2.png";
+import img3 from "../../assets/image3.png";
+import img5 from "../../assets/image5.png";
+import img6 from "../../assets/image6.png";
+import img7 from "../../assets/image7.png";
+import img8 from "../../assets/image8.png";
+import img4 from "../../assets/image4.png";
+import img9 from "../../assets/image9.png";
 
 const CardsContainer = styled(Container)({
   padding:"25px 0 58px"
@@ -209,7 +209,7 @@ const CardData = [
   },
 ];
 
-function Cards() {
+function SchoolCardComponent() {
   const [page, setPage] = useState(1);
   const cardsPerPage = 9;
 
@@ -269,4 +269,4 @@ function Cards() {
   );
 }
 
-export default Cards;
+export default SchoolCardComponent;

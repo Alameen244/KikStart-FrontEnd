@@ -3,8 +3,8 @@ import Container from "@mui/material/Container";
 import React from "react";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
-import Stepper from "./Stepper";
-import ChildrenForm from "./ChildrenForm";
+import Stepper from "../Stepper/Stepper";
+import ChildrenForm from "../ChildrenForm.jsx/ChildrenForm";
 
 const LayerWrapper = styled("div")({});
 
@@ -21,17 +21,17 @@ const ContentWrapper = styled(Box)({
 
 const ContentGrid = styled(Grid)({});
 
-export default function Layer1() {
+export default function FormComponent() {
   return (
     <LayerWrapper>
       <LayerContainer>
         <ContentWrapper>
           <ContentGrid container spacing={4}>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ lg: 4 }}>
               <Stepper activeStep={0} />
             </Grid>
 
-            <Grid item xs={12} md={8}>
+            <Grid size={{ lg: 8 }}>
               <ChildrenForm />
             </Grid>
           </ContentGrid>

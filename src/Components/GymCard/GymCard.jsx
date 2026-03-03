@@ -1,8 +1,6 @@
 import { styled } from "@mui/material/styles";
-import React from 'react'
-import cardBag from '../../assets/cardBag.png'
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
 
 const GymCardWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== "bgcolor",
@@ -36,7 +34,7 @@ const CardPara = styled(Box) ({
   margin:"10px 0  30px 0 ",
 
   "& p": {
-  
+
 fontFamily: 'Noto Sans',
 fontStyle: 'normal',
 fontWeight: 400,
@@ -51,7 +49,7 @@ const CardImgBackground = styled(Box,{
   shouldForwardProp : (prop) => prop !== "bgcolor",
 })(({ bgcolor }) => ({
 
-  backgroundColor: bgcolor, 
+  backgroundColor: bgcolor,
   height:"66px",
   width:"66px",
   borderRadius:"100%",
@@ -64,7 +62,7 @@ const CardImgBackground = styled(Box,{
 }))
 
 const CardImg = styled('img') ({
-   
+
 })
 const ImageSection = styled(Box) ({
   display:"flex",
@@ -91,5 +89,5 @@ const GymCard = (props) => {
   )
 }
 export default GymCard
-     
+
 
