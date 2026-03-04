@@ -12,7 +12,9 @@ import WhyUs from "./Pages/WhyUs";
 import ProgramDetails from "./Pages/ProgramDetails";
 import FAQs from "./Pages/FAQs";
 import ContactUs from "./Pages/ContactUs";
-
+import Auth from "./Pages/Auth";
+import SignUp from "./Pages/SignUp";
+SignUp
 function App() {
   return (
     <>
@@ -34,7 +36,8 @@ function App() {
 
           </Route>
           <Route element={<AuthLayout />}>
-
+              {/* <Route path="/auth" element={<Auth />} /> */}
+              <Route path="/auth" element={<SignUp />} />
 
           </Route>
         </Routes>

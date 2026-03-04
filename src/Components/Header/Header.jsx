@@ -20,7 +20,7 @@ const pages = [
   { label: "Contact Us", path: "/contact-us" },
   { label: "Interested Schools", path: "/schools" },
   { label: "Become a Coach", path: "/become-a-coach" },
-  { label: "Coach's Login", path: "/coach-login" },
+  { label: "Coach's Login", path: "/subs" },
 ].filter(Boolean);
 
 /* STYLED WRAPPERS (same values, no extras) */
@@ -162,7 +162,7 @@ function Header() {
           {/* RIGHT → BUTTONS + HAMBURGER */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <ActionButtons>
-              <Box component={Link} to="/subs">
+              <Box component={Link} to="/auth">
                 <RedButton text="LOGIN" color="primary" />
               </Box>
               <Box></Box>
