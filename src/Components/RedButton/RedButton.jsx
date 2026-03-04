@@ -53,12 +53,12 @@ transition: "background-position 360ms ease ,  box-shadow 260ms ease",
     backgroundPosition: "left",
   },
 }));
-  
 
-const RedButton = ({ text, color , py="15px" , px="25px"}) => {
+
+const RedButton = ({ text, color , py="15px" , px="25px" , onClick}) => {
   return (
     <Wrapper>
-      <StyledButton variant="contained" color={color} py={py} px={px}>
+      <StyledButton variant="contained" color={color} py={py} px={px} onClick={onClick}>
         {text}
       </StyledButton>
     </Wrapper>
