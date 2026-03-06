@@ -14,7 +14,11 @@ import FAQs from "./Pages/FAQs";
 import ContactUs from "./Pages/ContactUs";
 import Auth from "./Pages/Auth";
 import SignUp from "./Pages/SignUp";
-SignUp
+import Login from "./Components/Auth/Login/Login";
+import ForgotPassword from "./Components/Auth/ForgotPassword/ForgotPassword";
+import ResetPassword from "./Components/Auth/ResetPassword/ResetPassword";
+import OTP from "./Components/Auth/OTP/OTP";
+OTP
 function App() {
   return (
     <>
@@ -37,7 +41,12 @@ function App() {
           </Route>
           <Route element={<AuthLayout />}>
               {/* <Route path="/auth" element={<Auth />} /> */}
-              <Route path="/auth" element={<SignUp />} />
+            {/* <Route path="/auth" element={<SignUp />} /> */}
+            {/* <Route path="/auth" element={<Login />} /> */}
+            {/* <Route path="/auth" element={<ForgotPassword />} /> */}
+            {/* <Route path="/auth" element={<ResetPassword />} />
+             */}
+            <Route path="/auth" element={<OTP />} />
 
           </Route>
         </Routes>

@@ -26,7 +26,7 @@ const OneLineField = ({
   height = 86,
   width = 500,
   type = "text",
-  Label = "Label",
+  label = "label",
 }) => {
   const autoCompleteValue =
     type === "password" ? "current-password" : undefined;
@@ -34,7 +34,7 @@ const OneLineField = ({
   return (
     <Box sx={{ width }}>
       <StyledTextField
-        label={Label}
+        label={label}
         type={type}
         autoComplete={autoCompleteValue}
         sx={{

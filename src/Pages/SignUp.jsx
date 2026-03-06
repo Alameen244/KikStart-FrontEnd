@@ -1,32 +1,37 @@
-import { Box, Container, Grid, styled } from '@mui/material'
-import SignUpPic from '../Components/Auth/signUpPic/SignUpPic'
-import SignUpForm from '../Components/Auth/SignUpForm/SignUpForm'
+import { Box, styled, Container } from "@mui/material";
+import SignUpPic from "../Components/Auth/signUpPic/SignUpPic";
+import SignUpForm from "../Components/Auth/SignUpForm/SignUpForm";
 
+const SignUpWrapper = styled(Box)({});
 
+const ContainerBox = styled(Container)({
+  paddingLeft: "30px",
+  paddingRight: "30px",
+  margin: "0px auto",
+  display: "flex",
+  alignItems: "center",
+  gap: "145px",
+});
 
-const SignUpWrapper = styled(Box)({
-})
-
-const ContainerBox = styled(Box)({
-    padding: " 30px",
-    margin:" 0px"
-})
 const SignUp = () => {
   return (
-      <SignUpWrapper>
-          <ContainerBox maxwidht="xl">
-              <Grid container>
-                  <Grid size={{xl:6}}>
-                           <SignUpPic />
-                  </Grid>
-                  <Grid size={{xl:6}}>
-                     <SignUpForm />
-                  </Grid>
-              </Grid>
+    <SignUpWrapper>
+      <ContainerBox maxWidth="xl" disableGutters>
+        <Box sx={{ flexShrink: 0 }}>
+          <SignUpPic
+            bottomNote={
+              <>
+                Have an account? <Box component="span">Sign In</Box>
+              </>
+            }
+          />
+        </Box>
+        <Box sx={{ width: "620px", maxWidth: "100%", flexShrink: 0 }}>
+          <SignUpForm />
+        </Box>
+      </ContainerBox>
+    </SignUpWrapper>
+  );
+};
 
-          </ContainerBox>
-   </SignUpWrapper>
-  )
-}
-
-export default SignUp
+export default SignUp;
