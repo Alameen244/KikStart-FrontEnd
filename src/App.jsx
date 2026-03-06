@@ -18,7 +18,7 @@ import Login from "./Components/Auth/Login/Login";
 import ForgotPassword from "./Components/Auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/Auth/ResetPassword/ResetPassword";
 import OTP from "./Components/Auth/OTP/OTP";
-OTP
+
 function App() {
   return (
     <>
