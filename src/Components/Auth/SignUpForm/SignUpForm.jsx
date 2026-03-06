@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import OneLineField from "../../OneLineField/OneLineField";
+import PaswordField from "../../PasswordField/PaswordField";
 import KIKSTART from "../../../assets/KIKSTART.png";
 import FormHeadings from "../../FormHeadings/FormHeadings";
 import {
@@ -368,14 +369,27 @@ const SignUpForm = () => {
                   />
                 </>
               ) : (
-                steps[currentStep].map((field, index) => (
-                  <OneLineField
-                    key={index}
-                    Label={field.Label}
-                    type={field.type}
-                    width="100%"
-                  />
-                ))
+                currentStep === 2
+                  ? steps[currentStep].map((field, index) =>
+                      index === 0 ? (
+                        <PaswordField key={index} label={field.Label} />
+                      ) : (
+                        <OneLineField
+                          key={index}
+                          label={field.Label}
+                          type={field.type}
+                          width="100%"
+                        />
+                      ),
+                    )
+                  : steps[currentStep].map((field, index) => (
+                      <OneLineField
+                        key={index}
+                        label={field.Label}
+                        type={field.type}
+                        width="100%"
+                      />
+                    ))
               )}
 
               {/* Checkbox only on last step */}

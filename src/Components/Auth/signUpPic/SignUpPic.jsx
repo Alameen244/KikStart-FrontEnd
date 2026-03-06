@@ -97,7 +97,7 @@ const BottomNote = styled(Typography)({
   },
 });
 
-const SignUpPic = () => {
+const SignUpPic = ({bottomNote}) => {
   return (
     <SectionWrapper>
       <Lstar component="img" src={lstar} alt="lstar" />
@@ -120,7 +120,7 @@ const SignUpPic = () => {
       </ImageBox>
 
       <BottomNote>
-        Have an account? <Box component="span">Sign In</Box>
+        {bottomNote}
       </BottomNote>
     </SectionWrapper>
   );
