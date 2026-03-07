@@ -8,13 +8,13 @@ import FormHeadings from "../../FormHeadings/FormHeadings";
 import RedButton from "../../RedButton/RedButton";
 import OtpInput from "./OtpInput";
 
-const OTPWrapper = styled(Box)(({ theme }) => ({
+const OTPWrapper = styled(Box) ({
   boxSizing: "border-box",
   minHeight: "100vh",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: theme.palette.background?.default || "#fff",
+  backgroundColor: "#FFF8F8",
 
   "& .OTPCard": {
     display: "flex",
@@ -65,7 +65,7 @@ const OTPWrapper = styled(Box)(({ theme }) => ({
       cursor: "pointer",
     },
   },
-}));
+});
 
 const OTP = () => {
   const [phoneNumber, setPhoneNumber] = useState("");

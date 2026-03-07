@@ -162,7 +162,7 @@ function Header() {
           {/* RIGHT → BUTTONS + HAMBURGER */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <ActionButtons>
-              <Box component={Link} to="/auth">
+              <Box component={Link} to="/login">
                 <RedButton text="LOGIN" color="primary" />
               </Box>
               <Box></Box>

@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { theme } from './theme.js'
 import { StyledEngineProvider } from "@mui/material/styles";
 
+
 createRoot(document.getElementById('root')).render(
 <StyledEngineProvider injectFirst>
 

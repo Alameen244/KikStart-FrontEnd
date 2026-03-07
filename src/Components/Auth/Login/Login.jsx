@@ -9,6 +9,7 @@ import PaswordField from "../../PasswordField/PaswordField";
 import { Typography } from "@mui/material";
 import RedButton from "../../RedButton/RedButton";
 
+
 const LoginWrapper = styled(Box)({
   boxSizing: "border-box",
   overflow: "hidden",
@@ -43,6 +44,10 @@ const LoginWrapper = styled(Box)({
   },
 });
 const Login = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission
+  };
   return (
     <LoginWrapper maxWidth="Xl"
     >
@@ -65,12 +70,15 @@ const Login = () => {
             align="center"
           />
         </Box>
+        <form  onSubmit={handleSubmit}>
+
         <Box sx={{marginBottom:"16px"}}>
           <OneLineField label="Email" type="email" />
         </Box>
         <Box>
           <PaswordField label="Password" />
         </Box>
+        </form>
         <Typography className="forgotText">
           Forgot password?
         </Typography>
