@@ -10,10 +10,9 @@ const steps = [
 ];
 
 const StepperWrapper = styled("div")({
-  paddingTop: "20px",
+  paddingTop: "50px",
   width: "203px",
   fontFamily: "Arial, sans-serif",
-  paddingRight: "40px",
 });
 
 const StepRow = styled("div")({

@@ -7,7 +7,22 @@ const PageWrapper = styled("div")({
   borderLeft: "1px solid #E5E5E5",
 });
 
-const HeaderWrapper = styled("div")({});
+const HeaderWrapper = styled("div")({
+  paddingBottom: "30px",
+  paddingTop: "40px",
+  h2: {
+    fontFamily: "PT Sans",
+    fontSize: "20px", 
+    fontWeight: "700",
+    color: "#2B2B2B",
+  },
+  p: {
+    fontFamily: "Noto Sans",
+    fontSize: "15px",
+    fontWeight: "400",
+    color: "#494949",
+  },  
+});
 
 const FormWrapper = styled("div")({
   width: "580px",
@@ -24,13 +39,24 @@ const FieldWrapper = styled("div")({
 
 const LocationFieldWrapper = styled(FieldWrapper)({
   position: "relative",
+  paddingBottom: "8px",
 });
 
-const FieldLabel = styled("label")({});
+const FieldLabel = styled("label")({
+  padding: "0 0 8px 0",
+  color: "#B3B3B3",
+  fontFamily: "Noto Sans",
+  fontSize: "14px",
+  fontWeight: "400",
+});
 
 const FieldInput = styled("input")({
   outline: "0",
   border: "0",
+  fontFamily: "Noto Sans",
+  fontSize: "16px",
+  fontWeight: "400",
+  color: "#2B2B2B",
 });
 
 const LocationInput = styled(FieldInput)({
@@ -59,14 +85,22 @@ const UploadTitle = styled("p")({
 });
 
 const UploadSubTitle = styled("p")({
-  color: "#9CA3AF",
+  color: "#2B2B2B",
+  fontFamily: "Noto Sans",
+  fontSize: "14px",
+  fontWeight: "400",
+  paddingTop: "6px",
 });
 
 const UploadButton = styled("label")({
   border: "1px solid #DEE2E6",
   borderRadius: "12px",
-  padding: "8px 16px",
+  padding: "18px 22px",
   cursor: "pointer",
+  fontFamily: "Noto Sans",
+  fontSize: "16px",
+  fontWeight: "500",
+  color: "#2B2B2B",
   marginLeft: "auto",
   "&:hover": {
     backgroundColor: "#F3F4F6",
@@ -80,8 +114,12 @@ const HiddenFileInput = styled("input")({
 const NextButton = styled("button")({
   backgroundColor: "#EF4444",
   color: "#FFFFFF",
-  padding: "8px 16px",
+  fontFamily: "Noto Sans",
+  fontSize: "16px",
+  fontWeight: "500",
+  padding: "15px 35px",
   borderRadius: "50px",
+  marginBottom: "40px",
   border: "0",
   "&:hover": {
     backgroundColor: "#DC2626",
@@ -157,7 +195,7 @@ const ChildrenForm = () => {
 
         <UploadRow>
           <div>
-            <UploadTitle>Profile Image</UploadTitle>
+            <FieldLabel>Profile Image</FieldLabel>
             <UploadSubTitle>Upload image Within size of 5MB</UploadSubTitle>
           </div>
 
