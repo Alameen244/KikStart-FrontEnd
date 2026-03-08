@@ -1,6 +1,7 @@
 import { Box, styled, Container } from "@mui/material";
 import SignUpPic from "../Components/Auth/signUpPic/SignUpPic";
 import SignUpForm from "../Components/Auth/SignUpForm/SignUpForm";
+import { Link } from "react-router-dom";
 
 const SignUpWrapper = styled(Box)({});
 
@@ -21,7 +22,7 @@ const SignUp = () => {
           <SignUpPic
             bottomNote={
               <>
-                Have an account? <Box component="span">Sign In</Box>
+                Have an account? <Box component={Link} to="/login">Sign In</Box>
               </>
             }
           />

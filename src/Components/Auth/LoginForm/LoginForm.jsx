@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import KIKSTART from "../../../assets/KIKSTART.png";
 import FormHeadings from "../../FormHeadings/FormHeadings";
@@ -6,11 +6,80 @@ import OneLineField from "../../OneLineField/OneLineField";
 import PaswordField from "../../PasswordField/PaswordField";
 import { Typography } from "@mui/material";
 import RedButton from "../../RedButton/RedButton";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../../Apis/authApi";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Context/AuthContext";
 
 const LoginForm = () => {
+  const [formData, setFormData] = useState(() => {
+    // Restore from sessionStorage on mount
+    const saved = sessionStorage.getItem("loginFormData");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          email: "",
+          password: "",
+        };
+  });
+
+  // Save to sessionStorage whenever formData changes
+  useEffect(() => {
+    sessionStorage.setItem("loginFormData", JSON.stringify(formData));
+  }, [formData]);
+  const navigate = useNavigate();
+  const { refreshAuth } = useAuth();
+
+  const loginMutation = useMutation({
+    mutationFn: login,
+  });
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+
+    // Client-side validation
+    if (!formData.email || !formData.password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    const loginPromise = loginMutation.mutateAsync(formData).then(async (res) => {
+      Cookies.set("token", res?.token, { expires: 7 });
+      localStorage.setItem("loginName", res?.name || "");
+      await refreshAuth();
+      setFormData({ email: "", password: "" });
+      sessionStorage.removeItem("loginFormData");
+      navigate("/");
+      return res;
+    });
+
+    toast.promise(loginPromise, {
+      pending: "Logging in...",
+      success: {
+        render({ data }) {
+          return data?.message || "Login successful!";
+        },
+      },
+      error: {
+        render({ data }) {
+          return data?.response?.data?.message || "Login failed. Please try again.";
+        },
+      },
+    });
+  };
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
   return (
     <Box className="LoginForm">
-      <Box className="imageBox">
+      <Box className="imageBox" component={Link} to="/">
         <Box component="img" src={KIKSTART} />
       </Box>
       <Box className="Headings">
@@ -20,16 +89,35 @@ const LoginForm = () => {
           align="center"
         />
       </Box>
-      <Box sx={{marginBottom:"16px"}}>
-        <OneLineField label="Email" type="email" />
-      </Box>
-      <Box>
-        <PaswordField label="Password" />
-      </Box>
-      <Typography className="forgotText">
-        Forgot password?
-      </Typography>
-      <RedButton text="LOGIN" color="secondary" py="18px" px="53px" />
+      <form onSubmit={handleLoginSubmit}>
+        <Box sx={{ marginBottom: "16px" }}>
+          <OneLineField
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleLoginChange}
+            required
+          />
+        </Box>
+        <Box>
+          <PaswordField
+            label="Password"
+            name="password"
+            value={formData.password}
+            onChange={handleLoginChange}
+          />
+        </Box>
+        <Typography className="forgotText" component={Link} to="/forgot-password">Forgot password?</Typography>
+        <RedButton
+          text={loginMutation.isPending ? "Logging in..." : "LOGIN"}
+          color="secondary"
+          py="18px"
+          px="53px"
+          type="submit"
+          disabled={loginMutation.isPending}
+        />
+      </form>
     </Box>
   );
 };

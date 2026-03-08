@@ -5,7 +5,25 @@ import TextField from "@mui/material/TextField";
 const StyledTextField = styled(TextField)({
   width: "100%",
 
+  "& .MuiInputLabel-root": {
+    /* Email */
+
+    fontFamily: "Noto Sans",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 14,
+    /* identical to box height */
+    textTransform: "capitalize",
+
+    color: "#B3B3B3",
+  },
   "& .MuiInputLabel-root.Mui-focused": {
+    fontFamily: "Noto Sans",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 14,
+    /* identical to box height */
+    textTransform: "capitalize",
     color: "#ED1C24",
   },
   "& .MuiOutlinedInput-root": {
@@ -27,6 +45,11 @@ const OneLineField = ({
   width = 500,
   type = "text",
   label = "label",
+  onChange,
+  name,
+  value,
+  required,
+  ...otherProps
 }) => {
   const autoCompleteValue =
     type === "password" ? "current-password" : undefined;
@@ -36,12 +59,17 @@ const OneLineField = ({
       <StyledTextField
         label={label}
         type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
         autoComplete={autoCompleteValue}
         sx={{
           "& .MuiOutlinedInput-root": {
             height,
           },
         }}
+        {...otherProps}
       />
     </Box>
   );

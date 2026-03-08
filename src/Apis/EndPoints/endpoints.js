@@ -1,4 +1,4 @@
-export const API_ENDPOINTS = {
+export const endpoints = {
   SIGN_UP: "/auth/signUp",
   LOGIN: "/auth/login",
   RESET_PASSWORD: "/auth/resetPassword",
@@ -6,5 +6,6 @@ export const API_ENDPOINTS = {
   VERIFY_FORGOT_OTP: "/auth/verifyForgotOTP",
   VERIFY_SIGN_UP_OTP: "/auth/verifySignUpOTP",
   FORGOT_PASSWORD: "/auth/forgotPassword",
-  RESEND_OTP: "/auth/resendOTP",
+  RESEND_OTP: "/auth/resendOtp",
+  ME: "/auth/me",
 };
