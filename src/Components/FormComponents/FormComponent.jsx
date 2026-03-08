@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Stepper from "../Stepper/Stepper";
-import ChildrenForm from "../ChildrenForm.jsx/ChildrenForm";
+import FormStepper from "../FormStepper/FormStepper";
 
 const LayerWrapper = styled("div")({});
 
@@ -39,24 +39,42 @@ const Headingwrapper = styled("div")({
 const ContentGrid = styled(Grid)({});
 
 export default function FormComponent() {
+
+  const [step, setStep] = useState(1);
+
+  const next = () => {
+    setStep((prev) => prev + 1);
+  };
+
+  const back = () => {
+    setStep((prev) => prev - 1);
+  };
+
   return (
     <LayerWrapper>
       <LayerContainer>
+
         <Headingwrapper>
           <h2>Fill the form</h2>
           <p>Lorem ipsum dolor sit amet consectetur</p>
         </Headingwrapper>
+
         <ContentWrapper>
           <ContentGrid container spacing={4}>
+
+            {/* Stepper */}
             <Grid size={{ lg: 4 }}>
-              <Stepper activeStep={0} />
+              <Stepper activeStep={step - 1} />
             </Grid>
 
+            {/* Forms */}
             <Grid size={{ lg: 8 }}>
-              <ChildrenForm />
+              <FormStepper step={step} next={next} back={back} />
             </Grid>
+
           </ContentGrid>
         </ContentWrapper>
+
       </LayerContainer>
     </LayerWrapper>
   );
