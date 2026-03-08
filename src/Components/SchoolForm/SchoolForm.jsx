@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import { styled } from "@mui/material/styles";
 
 const PageWrapper = styled("div")({
@@ -39,7 +39,7 @@ const FieldWrapper = styled("div")({
 
 const LocationFieldWrapper = styled(FieldWrapper)({
   position: "relative",
-  paddingBottom: "8px",
+  paddingBottom: "10px",
 });
 
 const FieldLabel = styled("label")({
@@ -71,45 +71,6 @@ const TargetIconWrapper = styled("div")({
   cursor: "pointer",
 });
 
-const UploadRow = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  border: "1px solid #DEE2E6",
-  borderRadius: "12px",
-  padding: "16px",
-  marginBottom: "16px",
-});
-
-const UploadTitle = styled("p")({
-  marginBottom: "0",
-});
-
-const UploadSubTitle = styled("p")({
-  color: "#2B2B2B",
-  fontFamily: "Noto Sans",
-  fontSize: "14px",
-  fontWeight: "400",
-  paddingTop: "6px",
-});
-
-const UploadButton = styled("label")({
-  border: "1px solid #DEE2E6",
-  borderRadius: "12px",
-  padding: "18px 22px",
-  cursor: "pointer",
-  fontFamily: "Noto Sans",
-  fontSize: "16px",
-  fontWeight: "500",
-  color: "#2B2B2B",
-  marginLeft: "auto",
-  "&:hover": {
-    backgroundColor: "#F3F4F6",
-  },
-});
-
-const HiddenFileInput = styled("input")({
-  display: "none",
-});
 
 const NextButton = styled("button")({
   backgroundColor: "#EF4444",
@@ -123,6 +84,22 @@ const NextButton = styled("button")({
   border: "0",
   "&:hover": {
     backgroundColor: "#DC2626",
+  },
+});
+
+const BackButton = styled("button")({
+  backgroundColor: "#2B2B2B",
+  color: "#FFFFFF",
+  fontFamily: "Noto Sans",
+  fontSize: "16px",
+  fontWeight: "500",
+  padding: "15px 35px",
+  borderRadius: "50px",
+  marginBottom: "40px",
+  border: "0",
+  marginRight: "15px",
+  "&:hover": {
+    backgroundColor: "#1b1a1a",
   },
 });
 
@@ -146,69 +123,33 @@ const TargetIcon = () => (
   </svg>
 );
 
-const ChildrenForm = ({ next }) => {
+
+export default function SchoolForm( { next, back }) {
   return (
     <PageWrapper>
       <HeaderWrapper>
-        <h2>Children Details</h2>
+        <h2>School Details</h2>
         <p>Lorem ipsum dolor sit amet consectetur</p>
       </HeaderWrapper>
 
       <FormWrapper>
         <FieldWrapper>
-          <FieldLabel>Full Name</FieldLabel>
+          <FieldLabel>School Name</FieldLabel>
           <FieldInput type="text" />
         </FieldWrapper>
 
         <LocationFieldWrapper>
-          <FieldLabel>Location</FieldLabel>
+          <FieldLabel>School Location</FieldLabel>
           <LocationInput type="text" />
           <TargetIconWrapper>
             <TargetIcon />
           </TargetIconWrapper>
         </LocationFieldWrapper>
 
-        <FieldWrapper>
-          <FieldLabel>Age</FieldLabel>
-          <FieldInput type="text" />
-        </FieldWrapper>
-
-        <FieldWrapper>
-          <FieldLabel>Food Habit</FieldLabel>
-          <FieldInput type="text" />
-        </FieldWrapper>
-
-        <FieldWrapper>
-          <FieldLabel>Have Any Type of Allergy?</FieldLabel>
-          <FieldInput type="dropdown" />
-        </FieldWrapper>
-
-        <FieldWrapper>
-          <FieldLabel>Allergy Details</FieldLabel>
-          <FieldInput type="text" />
-        </FieldWrapper>
-
-        <FieldWrapper>
-          <FieldLabel>Any Prolong Details</FieldLabel>
-          <FieldInput type="text" />
-        </FieldWrapper>
-
-        <UploadRow>
-          <div>
-            <FieldLabel>Profile Image</FieldLabel>
-            <UploadSubTitle>Upload image Within size of 5MB</UploadSubTitle>
-          </div>
-
-          <UploadButton>
-            UPLOAD
-            <HiddenFileInput type="file" />
-          </UploadButton>
-        </UploadRow>
       </FormWrapper>
 
+      <BackButton onClick={back}>Back</BackButton>
       <NextButton onClick={next}>Next</NextButton>
     </PageWrapper>
-  );
-};
-
-export default ChildrenForm;
+  )
+}
