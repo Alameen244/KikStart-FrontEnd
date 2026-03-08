@@ -9,7 +9,25 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const StyledTextField = styled(TextField)({
   width: "100%",
+  "& .MuiInputLabel-root": {
+    /* Email */
+
+    fontFamily: "Noto Sans",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 14,
+    /* identical to box height */
+    textTransform: "capitalize",
+
+    color: "#B3B3B3",
+  },
   "& .MuiInputLabel-root.Mui-focused": {
+    fontFamily: "Noto Sans",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: 14,
+    /* identical to box height */
+    textTransform: "capitalize",
     color: "#ED1C24",
   },
   "& .MuiOutlinedInput-root": {
@@ -26,7 +44,7 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const PaswordField = ({ label }) => {
+const PaswordField = ({ label, onChange, name, value }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,6 +62,9 @@ const PaswordField = ({ label }) => {
       <StyledTextField
         label={label}
         type={showPassword ? "text" : "password"}
+        name={name}
+        value={value}
+        onChange={onChange}
         autoComplete="current-password"
         sx={{
           "& .MuiOutlinedInput-root": {

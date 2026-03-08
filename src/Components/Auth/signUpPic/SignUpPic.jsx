@@ -82,14 +82,14 @@ const BottomNote = styled(Typography)({
   textAlign: "center",
 
   color: "#2B2B2B",
-  "& span": {
+  "& a": {
     /* Have an account? Sign In */
 
     fontFamily: "Noto Sans",
     fontStyle: "normal",
     fontWeight: 700,
     fontSize: 15,
-
+    textDecoration: "none",
     /* identical to box height, or 173% */
     textAlign: "center",
 

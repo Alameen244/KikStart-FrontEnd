@@ -1,14 +1,18 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import OtpInput from "./OtpInput";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import KIKSTART from "../../../assets/KIKSTART.png";
 import FormHeadings from "../../FormHeadings/FormHeadings";
-import RedButton from "../../RedButton/RedButton";
-import OtpInput from "./OtpInput";
+import { Container } from "@mui/material";
+import { verifySignUpOtp, verifyForgotOtp, resendOTP, sendOtp } from "../../../Apis/authApi";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../../Context/AuthContext";
 
-const OTPWrapper = styled(Box) ({
+const OTPWrapper = styled(Box)({
   boxSizing: "border-box",
   minHeight: "100vh",
   display: "flex",
@@ -63,146 +67,297 @@ const OTPWrapper = styled(Box) ({
       fontWeight: 700,
       color: "#ED1C24",
       cursor: "pointer",
+      textDecoration: "underline",
     },
+    "& span.disabled": {
+      color: "#9e9e9e",
+      cursor: "not-allowed",
+      textDecoration: "none",
+    },
+  },
+  "& .countdownBox": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    alignItems: "center",
+  },
+  "& .timerRow": {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+  },
+  "& .timerLabel": {
+    fontFamily: "Noto Sans",
+    fontSize: "14px",
+    color: "#666",
+  },
+  "& .timerBadge": {
+    fontFamily: "Noto Sans",
+    fontWeight: 700,
+    color: "#fff",
+    background: "#ED1C24",
+    padding: "4px 10px",
+    borderRadius: "999px",
+    minWidth: "72px",
+    textAlign: "center",
+    letterSpacing: "0.02em",
+  },
+  "& .contentBox": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "25px",
   },
 });
 
-const OTP = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  const [phoneError, setPhoneError] = useState("");
+const OTP_EXPIRY_SECONDS = 3 * 60;
+const RESEND_COOLDOWN_SECONDS = 30;
 
-  const handlePhoneSubmit = (e) => {
-    e.preventDefault();
-    const regex = /[^0-9]/g;
-    if (!phoneNumber) {
-      setPhoneError("Phone number is required.");
-      return;
+const getOtpExpiryKey = (contact, purpose) => `otp_expiry_until_${purpose}_${contact}`;
+const getResendKey = (contact, purpose) => `otp_resend_until_${purpose}_${contact}`;
+const getPurpose = (state) => (state?.purpose === "forgot" ? "forgot" : "signup");
+const formatSeconds = (value) => {
+  const safeValue = Math.max(0, value);
+  const min = Math.floor(safeValue / 60)
+    .toString()
+    .padStart(2, "0");
+  const sec = (safeValue % 60).toString().padStart(2, "0");
+  return `${min}:${sec}`;
+};
+
+const OTP = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { refreshAuth } = useAuth();
+
+  // Initialize state directly from location state (best practice)
+  const state = location.state;
+  const purpose = getPurpose(state);
+  const initialContactInfo = state?.email || state?.phoneNumber || "";
+  const initialContactType = state?.email
+    ? "email"
+    : state?.phoneNumber
+      ? "phone"
+      : "email";
+  const initialShowOtpInput = !!state?.email || !!state?.phoneNumber;
+
+  const [showOtpInput] = useState(initialShowOtpInput);
+  const [contactInfo] = useState(initialContactInfo);
+  const [contactType] = useState(initialContactType);
+  const [otpRemainingSeconds, setOtpRemainingSeconds] = useState(0);
+  const [resendRemainingSeconds, setResendRemainingSeconds] = useState(0);
+  const canResend = resendRemainingSeconds <= 0;
+
+  // Handle case where no state exists
+  useEffect(() => {
+    if (!state?.email && !state?.phoneNumber) {
+      const fallbackRoute = purpose === "forgot" ? "/forgot-password" : "/signUp";
+      navigate(fallbackRoute);
+      toast.error("No contact information found.");
     }
-    if (phoneNumber.length !== 10 || regex.test(phoneNumber)) {
-      setPhoneError("Please enter a valid 10-digit phone number.");
-      return;
+  }, [state, navigate, purpose]);
+
+  useEffect(() => {
+    if (!contactInfo) return;
+
+    const now = Date.now();
+    const otpExpiryKey = getOtpExpiryKey(contactInfo, purpose);
+    const resendKey = getResendKey(contactInfo, purpose);
+
+    let otpExpiryUntil = Number(sessionStorage.getItem(otpExpiryKey));
+    if (!otpExpiryUntil) {
+      otpExpiryUntil = now + OTP_EXPIRY_SECONDS * 1000;
+      sessionStorage.setItem(otpExpiryKey, String(otpExpiryUntil));
     }
-    setPhoneError("");
-    // Call BE API to send OTP
-    setShowOtpInput(true);
+
+    let resendUntil = Number(sessionStorage.getItem(resendKey));
+    if (!resendUntil) {
+      resendUntil = now + RESEND_COOLDOWN_SECONDS * 1000;
+      sessionStorage.setItem(resendKey, String(resendUntil));
+    }
+
+    const tick = () => {
+      const current = Date.now();
+      const latestOtpExpiryUntil = Number(sessionStorage.getItem(otpExpiryKey)) || 0;
+      const latestResendUntil = Number(sessionStorage.getItem(resendKey)) || 0;
+      const otpLeft = Math.max(
+        0,
+        Math.ceil((latestOtpExpiryUntil - current) / 1000),
+      );
+      const resendLeft = Math.max(
+        0,
+        Math.ceil((latestResendUntil - current) / 1000),
+      );
+      setOtpRemainingSeconds(otpLeft);
+      setResendRemainingSeconds(resendLeft);
+    };
+
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [contactInfo, purpose]);
+
+  const setResendCooldown = (seconds) => {
+    if (!contactInfo) return;
+    const resendUntil = Date.now() + seconds * 1000;
+    sessionStorage.setItem(getResendKey(contactInfo, purpose), String(resendUntil));
+    setResendRemainingSeconds(seconds);
   };
 
-  const onOtpSubmit = (otp) => {
-    console.log("Login Successful", otp);
+  const resetOtpExpiry = () => {
+    if (!contactInfo) return;
+    const otpExpiryUntil = Date.now() + OTP_EXPIRY_SECONDS * 1000;
+    sessionStorage.setItem(getOtpExpiryKey(contactInfo, purpose), String(otpExpiryUntil));
+    setOtpRemainingSeconds(OTP_EXPIRY_SECONDS);
+  };
+
+  const parseWaitSeconds = (message) => {
+    const match = message?.match(/(\d+)\s*seconds?/i);
+    if (!match) return null;
+    const seconds = Number(match[1]);
+    return Number.isFinite(seconds) ? seconds : null;
+  };
+
+  const getResendWaitingText = () => {
+    if (canResend) return "";
+    if (resendRemainingSeconds > 0) {
+      return `Please wait ${resendRemainingSeconds}s for resend OTP`;
+    }
+    return "Please wait before resending OTP";
+  };
+
+  const verifyOtpMutation = useMutation({
+    mutationFn: purpose === "forgot" ? verifyForgotOtp : verifySignUpOtp,
+  });
+  const handleOtpSubmit = async (otp) => {
+    const verifyPromise = verifyOtpMutation.mutateAsync({
+      email: contactInfo,
+      otp: otp,
+    });
+
+    toast.promise(verifyPromise, {
+      pending: "Verifying OTP...",
+      success: "OTP verified successfully!",
+      error: {
+        render({ data }) {
+          return data?.response?.data?.message || "OTP verification failed";
+        },
+      },
+    });
+
+    try {
+      await verifyPromise;
+      if (purpose === "forgot") {
+        navigate("/reset-password", { state: { email: contactInfo } });
+      } else {
+        await refreshAuth();
+        navigate("/");
+      }
+    } catch (_) {
+      // handled by toast.promise
+    }
+  };
+
+  const resendOtpMutation = useMutation({
+    mutationFn: purpose === "forgot" ? sendOtp : resendOTP,
+  });
+  // Dynamic heading based on contact type
+  const getHeadingText = () => {
+    if (purpose === "forgot") {
+      return `Enter the OTP sent to ${contactInfo} to reset your password.`;
+    }
+    if (contactType === "email") {
+      return `We've sent a verification code to your email: ${contactInfo}`;
+    } else {
+      return `We've sent a verification code to your phone: ${contactInfo}`;
+    }
+  };
+
+  // Resend OTP handler (with countdown check)
+  const handleResendOtp = async () => {
+    if (canResend) {
+      const resendPromise = resendOtpMutation.mutateAsync({
+        email: contactInfo,
+      });
+
+      toast.promise(resendPromise, {
+        pending: "Sending OTP...",
+        success: "OTP resent successfully!",
+        error: {
+          render({ data }) {
+            return data?.response?.data?.message || "Failed to resend OTP";
+          },
+        },
+      });
+
+      try {
+        await resendPromise;
+        setResendCooldown(RESEND_COOLDOWN_SECONDS);
+        resetOtpExpiry();
+      } catch (error) {
+        const message = error?.response?.data?.message || "";
+        const waitSeconds = parseWaitSeconds(message);
+        if (waitSeconds !== null) {
+          setResendCooldown(waitSeconds);
+          toast.warning(`Please wait ${waitSeconds}s for resend OTP`);
+        }
+      }
+    } else {
+      toast.error(getResendWaitingText());
+    }
   };
 
   return (
     <Container maxWidth="xl" disableGutters>
       <OTPWrapper>
         <Box className="OTPCard">
-          <Box className="imageBox">
+          <Box component={Link} to="/" className="imageBox">
             <Box
               component="img"
               src={KIKSTART}
               alt="KikStart"
-              sx={{ width: "100%" }}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
           </Box>
-
-          <Box className="Headings">
+          <Box className="contentBox">
             <FormHeadings
-              heading={showOtpInput ? "Enter OTP" : "Verify Phone"}
-              subHeading={
-                showOtpInput
-                  ? "We have sent a 4-digit OTP to your phone"
-                  : "Please enter your phone number to receive an OTP"
-              }
+              heading="Verify Your Account"
+              subHeading={getHeadingText()}
               align="center"
             />
-          </Box>
 
-          {!showOtpInput ? (
-            <Box
-              component="form"
-              onSubmit={handlePhoneSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <Box
-                component="input"
-                type="text"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value);
-                  if (phoneError) setPhoneError("");
-                }}
-                placeholder="Enter Phone Number"
-                sx={{
-                  width: "340px",
-                  height: "56px",
-                  borderRadius: "12px",
-                  border: phoneError
-                    ? "2px solid #ED1C24"
-                    : "2px solid #E0E0E0",
-                  padding: "0 20px",
-                  fontFamily: "Noto Sans",
-                  fontSize: "15px",
-                  color: "#2B2B2B",
-                  outline: "none",
-                  "&:focus": {
-                    borderColor: "#ED1C24",
-                  },
-                }}
-              />
-              {phoneError && (
-                <Typography
-                  sx={{
-                    fontFamily: "Noto Sans",
-                    fontSize: "13px",
-                    color: "#ED1C24",
-                    alignSelf: "flex-start",
-                    pl: "4px",
-                    mb: "8px",
-                  }}
-                >
-                  {phoneError}
+            {showOtpInput && (
+              <>
+                <OtpInput length={6} onOtpSubmit={handleOtpSubmit} />
+                <Box className="countdownBox">
+                  <Box className="timerRow">
+                    <Typography className="timerLabel">OTP expires in</Typography>
+                    <Typography className="timerBadge">
+                      {formatSeconds(otpRemainingSeconds)}
+                    </Typography>
+                  </Box>
+                  {!canResend && (
+                    <Typography className="timerLabel">
+                      Please wait {resendRemainingSeconds}s for resend OTP
+                    </Typography>
+                  )}
+                </Box>
+                <Typography className="resendText">
+                  Didn't receive the code?{" "}
+                  <span
+                    onClick={handleResendOtp}
+                    className={canResend ? "" : "disabled"}
+                  >
+                    Resend OTP
+                  </span>
                 </Typography>
-              )}
-              <Box sx={{ mt: phoneError ? 0 : "16px" }}>
-                <RedButton
-                  text="SEND OTP"
-                  color="secondary"
-                  py="18px"
-                  px="53px"
-                />
-              </Box>
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Typography className="phoneText">
-                OTP sent to <span>{phoneNumber}</span>
-              </Typography>
-
-              <OtpInput length={4} onOtpSubmit={onOtpSubmit} />
-
-              <Typography className="resendText">
-                Didn't receive OTP? <span onClick={() => {}}>Resend OTP</span>
-              </Typography>
-
-              <RedButton
-                text="VERIFY OTP"
-                color="secondary"
-                py="18px"
-                px="53px"
-              />
-            </Box>
-          )}
+              </>
+            )}
+          </Box>
         </Box>
       </OTPWrapper>
     </Container>

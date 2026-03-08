@@ -15,7 +15,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import RedButton from "../../RedButton/RedButton";
 import gps from "../../../assets/gps.png";
-
+import { toast, Zoom } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { register, sendOtp } from "../../../Apis/authApi";
+import Cookies from "js-cookie";
+import { useAuth } from "../../../Context/AuthContext";
 // ── Page wrapper with subtle warm background ───────────────────
 const PageWrapper = styled(Box)({
   minHeight: "100vh",
@@ -103,7 +108,7 @@ const StepHeadingWrapper = styled(Box)({
 });
 
 // ── Form fields column ─────────────────────────────────────────
-const FormContent = styled(Box)({
+const FormContent = styled("form")({
   display: "flex",
   flexDirection: "column",
   gap: "16px",
@@ -177,14 +182,14 @@ const stepTabs = ["Personal Info", "Location & Code", "Set Password"];
 
 const steps = [
   [
-    { Label: "Full Name", type: "text" },
-    { Label: "Email", type: "email" },
-    { Label: "Phone", type: "tel" },
+    { Label: "Full Name", type: "text", value: "name" },
+    { Label: "Email", type: "email", value: "email" },
+    { Label: "Phone", type: "tel", value: "phone" },
   ],
   [], // handled separately (Location + PassCode with GPS)
   [
-    { Label: "Desired Password", type: "password" },
-    { Label: "Confirm Password", type: "password" },
+    { Label: "Desired Password", type: "password", value: "password" },
+    { Label: "Confirm Password", type: "password", value: "confirmPassword" },
   ],
 ];
 
@@ -206,14 +211,40 @@ const SignUpForm = () => {
   const [direction, setDirection] = useState("forward");
   const [animKey, setAnimKey] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-  const [location, setLocation] = useState("");
-  const [passCode, setPassCode] = useState("");
   const [gpsLoading, setGpsLoading] = useState(false);
   const tabRefs = useRef([]);
   const tabsWrapperRef = useRef(null);
+  const [checked, setChecked] = useState(false);
 
+  const [formData, setFormData] = useState(() => {
+    const saved = sessionStorage.getItem("signUpFormData");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          name: "",
+          email: "",
+          phone: "",
+          password: "",
+          confirmPassword: "",
+          location: "",
+          passCode: "",
+        };
+  });
+  // Save to sessionStorage whenever formData changes
+  useEffect(() => {
+    sessionStorage.setItem("signUpFormData", JSON.stringify(formData));
+  }, [formData]);
   const isLastStep = currentStep === steps.length - 1;
   const isFirstStep = currentStep === 0;
+
+  const navigate = useNavigate();
+  const { refreshAuth } = useAuth();
+  const signUpMutation = useMutation({
+    mutationFn: register,
+  });
+  const sendOtpMutation = useMutation({
+    mutationFn: sendOtp,
+  });
 
   const goTo = (nextStep, dir) => {
     setDirection(dir);
@@ -254,10 +285,17 @@ const SignUpForm = () => {
             addr.state ||
             "Unknown location";
           const pincode = addr.postcode || "";
-          setLocation(city);
-          setPassCode(pincode);
+          setFormData({
+            ...formData,
+            location: city,
+            passCode: pincode,
+          });
         } catch {
-          setLocation("Unable to fetch location");
+          setFormData({
+            ...formData,
+            location: "Unable to fetch location",
+            passCode: "",
+          });
         } finally {
           setGpsLoading(false);
         }
@@ -268,15 +306,135 @@ const SignUpForm = () => {
     );
   };
 
-  const handleContinue = () => goTo(currentStep + 1, "forward");
-  const handleBack = () => goTo(currentStep - 1, "backward");
-  const handleSubmit = () => console.log("Form submitted!");
+  const handleContinue = () => {
+    if (currentStep === 0) {
+      // First step: validate required fields
+      if (!formData.name || !formData.phone || !formData.email) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
 
+      if (!formData.email.includes("@")) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+
+      if (formData.phone.length < 10 || !/^\d+$/.test(formData.phone)) {
+        toast.error("Please enter a valid phone number");
+        return;
+      }
+
+      if (formData.phone.length > 10) {
+        toast.error("Phone number can not be more than 10 digits");
+        return;
+      }
+    }
+
+    if (currentStep === 1) {
+      // Second step: validate required fields
+      if (!formData.location || !formData.passCode) {
+        toast.error("Please fill in all required fields");
+        toast.info("click on the gps icon to get your location", {
+          theme: "dark",
+          transition: Zoom,
+          delay: 500,
+        });
+        return;
+      }
+
+      if (!/^\d+$/.test(formData.passCode)) {
+        toast.error("Please enter a valid pass code");
+        return;
+      }
+    }
+
+    goTo(currentStep + 1, "forward");
+  };
+  const handleBack = () => goTo(currentStep - 1, "backward");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.password || !formData.confirmPassword) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    // Password validation - same as backend schema
+    if (formData.password.length < 8) {
+      toast.error("Password must be at least 8 characters long");
+      return;
+    }
+
+    if (!/[A-Z]/.test(formData.password)) {
+      toast.error("Password must contain at least one uppercase letter");
+      return;
+    }
+
+    if (!/[a-z]/.test(formData.password)) {
+      toast.error("Password must contain at least one lowercase letter");
+      return;
+    }
+
+    if (!/[0-9]/.test(formData.password)) {
+      toast.error("Password must contain at least one number");
+      return;
+    }
+
+    // Password match validation
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    if (!checked) {
+      toast.error("Please agree to the terms and conditions");
+      return;
+    }
+
+    const signUpPromise = signUpMutation.mutateAsync(formData).then(async (res) => {
+      Cookies.set("token", res.data.token, { expires: 7 });
+      await refreshAuth();
+      localStorage.setItem("RegisterName", res.data.user.name);
+      sessionStorage.removeItem("signUpFormData");
+
+      await sendOtpMutation.mutateAsync({ email: formData.email });
+      navigate("/otp", { state: { email: formData.email } });
+      return res;
+    });
+
+    toast.promise(signUpPromise, {
+      pending: "Creating account...",
+      success: {
+        render({ data }) {
+          return data?.message || "Sign up successful! Please verify OTP.";
+        },
+      },
+      error: {
+        render({ data }) {
+          const message =
+            data?.response?.data?.message || "Sign up failed. Please try again.";
+          if (message.toLowerCase().includes("user already exists")) {
+            return "User already exists! Please login instead.";
+          }
+          return message;
+        },
+      },
+    });
+  };
   return (
     <PageWrapper>
       {/* ── Logo + Main Heading (untouched) ── */}
       <TopSection>
-        <Box className="figure">
+        <Box className="figure" component={Link} to="/">
           <Box component="img" src={KIKSTART} alt="KIKSTART" />
         </Box>
         <Box sx={{ paddingBottom: "8px" }}>
@@ -319,14 +477,15 @@ const SignUpForm = () => {
               />
             </StepHeadingWrapper>
 
-            <FormContent>
+            <FormContent onSubmit={handleSignUpSubmit}>
               {currentStep === 1 ? (
                 <>
                   {/* Location field with GPS icon */}
                   <LocationTextField
                     label="Location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
                     placeholder="Access your location"
                     InputProps={{
                       endAdornment: (
@@ -361,35 +520,48 @@ const SignUpForm = () => {
                   {/* Pass Code field */}
                   <LocationTextField
                     label="Pass Code"
-                    value={passCode}
-                    onChange={(e) => setPassCode(e.target.value)}
+                    name="passCode"
+                    value={formData.passCode}
+                    onChange={handleChange}
                     sx={{
                       "& .MuiOutlinedInput-root": { height: 86 },
                     }}
                   />
                 </>
+              ) : currentStep === 2 ? (
+                steps[currentStep].map((field, index) =>
+                  index === 0 ? (
+                    <PaswordField
+                      key={index}
+                      label={field.Label}
+                      name={field.value}
+                      value={formData[field.value]}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <OneLineField
+                      key={index}
+                      label={field.Label}
+                      type={field.type}
+                      name={field.value}
+                      width="100%"
+                      value={formData[field.value]}
+                      onChange={handleChange}
+                    />
+                  ),
+                )
               ) : (
-                currentStep === 2
-                  ? steps[currentStep].map((field, index) =>
-                      index === 0 ? (
-                        <PaswordField key={index} label={field.Label} />
-                      ) : (
-                        <OneLineField
-                          key={index}
-                          label={field.Label}
-                          type={field.type}
-                          width="100%"
-                        />
-                      ),
-                    )
-                  : steps[currentStep].map((field, index) => (
-                      <OneLineField
-                        key={index}
-                        label={field.Label}
-                        type={field.type}
-                        width="100%"
-                      />
-                    ))
+                steps[currentStep].map((field, index) => (
+                  <OneLineField
+                    key={index}
+                    label={field.Label}
+                    type={field.type}
+                    name={field.value}
+                    width="100%"
+                    value={formData[field.value]}
+                    onChange={handleChange}
+                  />
+                ))
               )}
 
               {/* Checkbox only on last step */}
@@ -397,6 +569,8 @@ const SignUpForm = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={checked}
+                      onChange={(e) => setChecked(e.target.checked)}
                       sx={{
                         color: "#ED1C24",
                         "&.Mui-checked": { color: "#ED1C24" },
@@ -405,7 +579,7 @@ const SignUpForm = () => {
                   }
                   label={
                     <CheckboxText>
-                      I agree to the <a href="#">Terms of Service</a> and{" "}
+                      I agree to the <a href="#">Terms of Service</a> and
                       <a href="#">Privacy Policy</a>
                     </CheckboxText>
                   }
@@ -432,11 +606,13 @@ const SignUpForm = () => {
                   />
                 )}
                 <RedButton
-                  text={isLastStep ? "Sign Up" : "Continue →"}
+                  text={isLastStep ? (signUpMutation.isPending ? "Signing up..." : "Sign Up") : "Continue →"}
                   color="secondary"
                   py="16px"
                   px="48px"
-                  onClick={isLastStep ? handleSubmit : handleContinue}
+                  onClick={!isLastStep ? handleContinue : undefined}
+                  type={isLastStep ? "submit" : "button"}
+                  disabled={isLastStep && signUpMutation.isPending}
                 />
               </Box>
             </FormContent>

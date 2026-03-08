@@ -14,7 +14,7 @@ import curveArrow from "../../assets/curveArrow.png";
 import butterfly from "../../assets/butterfly.png";
 import wave from "../../assets/wave.png";
 import miniStar from "../../assets/miniStar.png";
-
+import { useAuth } from "../../Context/AuthContext";
 /* Styled Wrappers (1:1 sx conversion) */
 
 const BannerWrapper = styled(Box)({
@@ -155,6 +155,7 @@ const ButterflyImg = styled(Box)({
 });
 
 const HomeBanner = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <BannerWrapper>
       <OuterContainer maxWidth="lg">
@@ -168,7 +169,11 @@ const HomeBanner = () => {
             <ParaWrapper>
               <Para para=" Lorem ipsum dolor sit amet consectetur. Nisl malesuada eu aenean adipiscing augue arcu facilisis. Nulla dui ullamcorper maecenas non nunc nam." />
             </ParaWrapper>
-            <MainButton text="SIGN UP NOW" color="secondary" />
+            {isAuthenticated ? (
+              <MainButton text="Start your journey" color="secondary" />
+            ) : (
+              <MainButton text="SIGN UP NOW" color="secondary" />
+            )}
 
             <CloudTopLeft component="img" src={cloud} alt="cloud" />
             <MiniStarTop component="img" src={miniStar} alt="miniStar" />

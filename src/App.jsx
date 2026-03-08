@@ -17,6 +17,7 @@ import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import OTP from "./Components/Auth/OTP/OTP";
+import ProtectedRoute from "./Components/Auth/ProtectedRoute";
 
 function App() {
   return (
@@ -30,8 +31,22 @@ function App() {
             <Route path="/schools" element={<InterestedSchools />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/program/:id" element={<ProgramDetails />} />
-            <Route path="/become-a-coach" element={<Details />} />
-            <Route path="/subs" element={<Subscription />} />
+            <Route
+              path="/become-a-coach"
+              element={
+                <ProtectedRoute>
+                  <Details />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/subs"
+              element={
+                <ProtectedRoute>
+                  <Subscription />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/why-us" element={<WhyUs />} />
             <Route path="/faqs" element={<FAQs />} />
           </Route>

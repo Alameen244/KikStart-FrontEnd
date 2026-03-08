@@ -21,7 +21,7 @@ const ChildrenFitnessWrapper = styled(Container) ({
 const UpCurveImg = styled(Box) ({
     width: "100%",
     height: "auto",
-      transform: 'translateY(4px)'
+     transform: 'translateY(-4px)'
 })
 const LowCurveImg = styled(Box) ({
   width: "100%",

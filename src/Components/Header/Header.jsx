@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -10,9 +10,11 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink  } from "react-router-dom";
+import Cookies from "js-cookie";
 import kikstart from "../../assets/KIKSTART.png";
 import RedButton from "../RedButton/RedButton";
+import { useAuth } from "../../Context/AuthContext";
 const pages = [
   { label: "About Us", path: "/about" },
   { label: "Programs", path: "/programs" },
@@ -111,16 +113,27 @@ const DesktopButton = styled(Button)(({ theme }) => ({
     color: theme.palette.myRed,
     backgroundColor: "transparent",
   },
+  "&:active": {
+    backgroundColor: "transparent",
+  },
+  "&:focus": {
+    backgroundColor: "transparent",
+  },
+  "&.Mui-focusVisible": {
+    backgroundColor: "transparent",
+  },
 }));
 
 const ActionButtons = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
-  gap: "6px",
+  gap: "16px",
 }));
 
 function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const { isAuthenticated, logout } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -128,6 +141,13 @@ function Header() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    localStorage.removeItem("loginName");
+
+    logout({ redirectTo: "/login", showToast: true });
   };
 
   return (
@@ -162,12 +182,16 @@ function Header() {
           {/* RIGHT → BUTTONS + HAMBURGER */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <ActionButtons>
-              <Box component={Link} to="/login">
-                <RedButton text="LOGIN" color="primary" />
+              {isAuthenticated ? (
+                <RedButton text="LOGOUT" color="primary" onClick={handleLogout} />
+              ) : (
+                <Box component={Link} to="/login">
+                  <RedButton text="LOGIN" color="primary" />
+                </Box>
+              )}
+              <Box component={Link} to="#">
+                <RedButton text="REQUEST A FREE DEMO" color="secondary" />
               </Box>
-              <Box></Box>
-
-              <RedButton text="REQUEST A FREE DEMO" color="secondary" />
             </ActionButtons>
 
             <MobileMenuBox>

@@ -2,6 +2,7 @@ import { Box, styled, Container } from "@mui/material";
 import SignUpPic from "../Components/Auth/signUpPic/SignUpPic";
 import ForgotPasswordForm from "../Components/Auth/ForgotPasswordForm/ForgotPasswordForm";
 
+
 const ForgotPasswordWrapper = styled(Box)({
   boxSizing: "border-box",
   overflow: "hidden",

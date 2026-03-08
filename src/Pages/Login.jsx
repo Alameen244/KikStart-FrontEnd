@@ -1,6 +1,7 @@
 import { Box, styled, Container } from "@mui/material";
 import SignUpPic from "../Components/Auth/signUpPic/SignUpPic";
 import LoginForm from "../Components/Auth/LoginForm/LoginForm";
+import { Link } from "react-router-dom";
 
 const LoginWrapper = styled(Box)({
   boxSizing: "border-box",
@@ -24,6 +25,7 @@ const LoginWrapper = styled(Box)({
     marginBottom: "30px",
   },
   "& .forgotText": {
+    display: "block",
     fontFamily: "Noto Sans",
     fontStyle: "normal",
     fontWeight: 400,
@@ -32,6 +34,7 @@ const LoginWrapper = styled(Box)({
     width: "500px",
     textAlign: "left",
     margin: "17px 0 24px",
+    textDecoration: "none",
   },
 });
 
@@ -52,7 +55,13 @@ const Login = () => {
           <SignUpPic
             bottomNote={
               <>
-                Have an account? <Box component="span">Sign In</Box>
+                Don't have an account?{" "}
+                <Box
+                  component={Link}
+                  to="/signup"
+                >
+                  Sign Up
+                </Box>
               </>
             }
           />
