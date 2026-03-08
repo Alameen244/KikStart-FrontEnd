@@ -6,6 +6,7 @@ import OneLineField from "../../OneLineField/OneLineField";
 import PaswordField from "../../PasswordField/PaswordField";
 import { Typography } from "@mui/material";
 import RedButton from "../../RedButton/RedButton";
+import AuthSocialOptions from "../AuthSocialOptions/AuthSocialOptions";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../Apis/authApi";
 import Cookies from "js-cookie";
@@ -117,6 +118,7 @@ const LoginForm = () => {
           type="submit"
           disabled={loginMutation.isPending}
         />
+        <AuthSocialOptions />
       </form>
     </Box>
   );

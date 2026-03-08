@@ -21,22 +21,28 @@ import { useMutation } from "@tanstack/react-query";
 import { register, sendOtp } from "../../../Apis/authApi";
 import Cookies from "js-cookie";
 import { useAuth } from "../../../Context/AuthContext";
+import AuthSocialOptions from "../AuthSocialOptions/AuthSocialOptions";
 // ── Page wrapper with subtle warm background ───────────────────
-const PageWrapper = styled(Box)({
-  minHeight: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  paddingBottom: "48px",
-});
-
-// ── Top section (logo + main heading) — untouched ─────────────
-const TopSection = styled(Box)({
+const PageWrapper = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "embeddedMode",
+})(({ embeddedMode }) => ({
+  minHeight: embeddedMode ? "auto" : "100vh",
   width: "100%",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  paddingTop: "32px",
+  paddingBottom: embeddedMode ? 0 : "48px",
+}));
+
+// ── Top section (logo + main heading) — untouched ─────────────
+const TopSection = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "embeddedMode",
+})(({ embeddedMode }) => ({
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  paddingTop: embeddedMode ? "20px" : "32px",
   paddingBottom: "8px",
   "& .figure": {
     display: "flex",
@@ -49,18 +55,20 @@ const TopSection = styled(Box)({
     objectFit: "contain",
     textAlign: "center",
   },
-});
+}));
 
 // ── Card container wrapping tabs + form ───────────────────────
-const FormCard = styled(Box)({
+const FormCard = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "embeddedMode",
+})(({ embeddedMode }) => ({
   width: "100%",
-  maxWidth: "620px",
+  maxWidth: embeddedMode ? "100%" : "620px",
   background: "#ffffff",
   borderRadius: "24px",
   boxShadow: "0 4px 32px rgba(237, 28, 36, 0.07), 0 1px 8px rgba(0,0,0,0.06)",
   overflow: "hidden",
-  marginTop: "8px",
-});
+  marginTop: embeddedMode ? 0 : "8px",
+}));
 
 // ── Progress Tabs ──────────────────────────────────────────────
 const TabsWrapper = styled(Box)({
@@ -206,7 +214,7 @@ const stepHeadings = [
 ];
 
 // ── Component ─────────────────────────────────────────────────
-const SignUpForm = () => {
+const SignUpForm = ({ embedded = false }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [animKey, setAnimKey] = useState(0);
@@ -431,9 +439,9 @@ const SignUpForm = () => {
     });
   };
   return (
-    <PageWrapper>
+    <PageWrapper embeddedMode={embedded}>
       {/* ── Logo + Main Heading (untouched) ── */}
-      <TopSection>
+      <TopSection embeddedMode={embedded}>
         <Box className="figure" component={Link} to="/">
           <Box component="img" src={KIKSTART} alt="KIKSTART" />
         </Box>
@@ -447,7 +455,7 @@ const SignUpForm = () => {
       </TopSection>
 
       {/* ── Form Card ── */}
-      <FormCard>
+      <FormCard embeddedMode={embedded}>
         {/* Progress Tabs */}
         <TabsWrapper ref={tabsWrapperRef}>
           {stepTabs.map((label, i) => (
@@ -626,6 +634,7 @@ const SignUpForm = () => {
           ))}
         </DotsWrapper>
       </FormCard>
+      <AuthSocialOptions sx={{ maxWidth: embedded ? "100%" : "620px" }} />
     </PageWrapper>
   );
 };
