@@ -14,7 +14,7 @@ const SectionWrapper = styled(Box)({
   height: "840px",
   border: "none",
   borderRadius: "65px",
-  backgroundColor: "#FFF8F8",
+  backgroundColor: "transparent",
   boxSizing: "border-box",
   overflow: "hidden",
   display: "flex",
