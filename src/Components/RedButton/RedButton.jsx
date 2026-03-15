@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 
 const Wrapper = styled(Box)({});
 
-const StyledButton = styled(Button)(({ theme , py , px }) => ({
+const StyledButton = styled(Button)(({ theme , py , px , fontSize }) => ({
   borderRadius: "50px",
   paddingLeft: px,
   paddingRight: px,
@@ -12,7 +12,7 @@ const StyledButton = styled(Button)(({ theme , py , px }) => ({
   paddingBottom: py,
   fontFamily: "Noto Sans",
   fontWeight: 500,
-  fontSize: "16px",
+  fontSize: fontSize,
   // backgroundSize: "200% 100%",
   // backgroundPosition: "right center",
   // transition: "background-position 360ms ease, box-shadow 260ms ease",
@@ -55,10 +55,10 @@ transition: "background-position 360ms ease ,  box-shadow 260ms ease",
 }));
 
 
-const RedButton = ({ text, color , py="15px" , px="25px" , onClick, type="button"}) => {
+const RedButton = ({ text, color, py = "15px", px = "25px", onClick, type = "button", fontSize = "16px" , ...props}) => {
   return (
     <Wrapper>
-      <StyledButton variant="contained" color={color} py={py} px={px} onClick={onClick} type={type} >
+      <StyledButton variant="contained" color={color} py={py} px={px} onClick={onClick} type={type} fontSize={fontSize} {...props}>
         {text}
       </StyledButton>
     </Wrapper>

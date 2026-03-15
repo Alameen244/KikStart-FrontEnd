@@ -8,9 +8,9 @@ const SignUpWrapper = styled(Box)({});
 const ContainerBox = styled(Container)({
   paddingLeft: "30px",
   paddingRight: "30px",
-  margin: "0px auto",
+ paddingTop:"30px",
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   gap: "145px",
 });
 

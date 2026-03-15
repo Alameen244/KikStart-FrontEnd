@@ -9,12 +9,12 @@ import bigStar from "../../../assets/bigStar.png";
 import icon from "../../../assets/pinkLines.png";
 
 const SectionWrapper = styled(Box)({
+  backgroundColor:"#FFF8F8",
   position: "relative",
   width: "740px",
   height: "840px",
   border: "none",
   borderRadius: "65px",
-  backgroundColor: "transparent",
   boxSizing: "border-box",
   overflow: "hidden",
   display: "flex",

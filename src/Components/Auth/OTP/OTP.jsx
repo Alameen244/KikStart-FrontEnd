@@ -251,7 +251,7 @@ const OTP = () => {
         navigate("/reset-password", { state: { email: contactInfo } });
       } else {
         await refreshAuth();
-        navigate("/");
+        navigate("/login", { state: { email: contactInfo } });
       }
     } catch (_) {
       // handled by toast.promise

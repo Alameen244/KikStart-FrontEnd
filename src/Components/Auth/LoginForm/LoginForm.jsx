@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import KIKSTART from "../../../assets/KIKSTART.png";
 import FormHeadings from "../../FormHeadings/FormHeadings";
@@ -8,23 +8,25 @@ import { Typography } from "@mui/material";
 import RedButton from "../../RedButton/RedButton";
 import AuthSocialOptions from "../AuthSocialOptions/AuthSocialOptions";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../../Apis/authApi";
+import { login , sendOtp } from "../../../Apis/authApi";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation } from "react-router-dom";
 import { useAuth } from "../../../Context/AuthContext";
 
+
 const LoginForm = () => {
+  const location = useLocation();
   const [formData, setFormData] = useState(() => {
     // Restore from sessionStorage on mount
     const saved = sessionStorage.getItem("loginFormData");
     return saved
       ? JSON.parse(saved)
       : {
-          email: "",
-          password: "",
-        };
+        email: location.state?.email || "",
+        password: "",
+      };
   });
 
   // Save to sessionStorage whenever formData changes
@@ -37,11 +39,25 @@ const LoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: login,
   });
+
+  const verifyEmail = () => {
+    return (
+      <div>
+        <p style={{
+          color: "#5f0909",
+          fontWeight:500,
+          fontFamily: "Noto Sans",
+          marginBottom: "6px"
+        }}>please verify your email first</p>
+        <RedButton text="Get Otp for verification" px="18px" py="12px" color="secondary" fontSize="13px" onClick={handleClick} fontWeight="600"/>
+      </div>
+    )
+  }
   const handleLoginSubmit = (e) => {
     e.preventDefault();
 
     // Client-side validation
-    if (!formData.email || !formData.password) {
+    if ((!formData.email) || !formData.password) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -55,7 +71,6 @@ const LoginForm = () => {
       navigate("/");
       return res;
     });
-
     toast.promise(loginPromise, {
       pending: "Logging in...",
       success: {
@@ -65,7 +80,19 @@ const LoginForm = () => {
       },
       error: {
         render({ data }) {
+          if (data?.response?.data?.message.toLowerCase() === "please verify your email first") {
+            return verifyEmail();
+          }
           return data?.response?.data?.message || "Login failed. Please try again.";
+        },
+        icon: ({ data }) => {
+      if (
+        data?.response?.data?.message?.toLowerCase() ===
+        "please verify your email first"
+      ) {
+        return false;
+      }
+      return true;
         },
       },
     });
@@ -77,6 +104,29 @@ const LoginForm = () => {
       ...formData,
       [name]: value,
     });
+  };
+ const otpMutation = useMutation({
+    mutationFn: sendOtp,
+  });
+  const handleClick = () => {
+    const otpPromise = otpMutation.mutateAsync({ email: formData.email }).then((res) => {
+      navigate("/otp", { state: { email: formData.email } })
+      return res;
+    })
+    toast.promise(otpPromise, {
+      pending: "Sending OTP...",
+      success: {
+        render({ data }) {
+          return data?.message || "OTP sent successfully!";
+        },
+      },
+      error: {
+        render({ data }) {
+          return data?.response?.data?.message || "Failed to send OTP. Please try again.";
+        },
+      },
+    });
+
   };
   return (
     <Box className="LoginForm">
@@ -109,7 +159,11 @@ const LoginForm = () => {
             onChange={handleLoginChange}
           />
         </Box>
-        <Typography className="forgotText" component={Link} to="/forgot-password">Forgot password?</Typography>
+        <Typography className="forgotText" onClick={() => navigate("/forgot-password", { state: { email: formData.email } })} sx={{
+          "&:hover": {
+            cursor:"pointer",
+          },
+        }}>Forgot password?</Typography>
         <RedButton
           text={loginMutation.isPending ? "Logging in..." : "LOGIN"}
           color="secondary"

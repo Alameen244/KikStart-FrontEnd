@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import MainLayout from "./Layouts/MainLayout";
 import AuthLayout from "./Layouts/AuthLayout";
@@ -12,7 +12,8 @@ import WhyUs from "./Pages/WhyUs";
 import ProgramDetails from "./Pages/ProgramDetails";
 import FAQs from "./Pages/FAQs";
 import ContactUs from "./Pages/ContactUs";
-import SignUp_LoginPage from "./Pages/SignUp_LoginPage";
+import SignUp from "./Pages/SignUp";
+import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import OTP from "./Components/Auth/OTP/OTP";
@@ -50,8 +51,8 @@ function App() {
             <Route path="/faqs" element={<FAQs />} />
           </Route>
           <Route element={<AuthLayout />}>
-            <Route path="/signup" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<SignUp_LoginPage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/otp" element={<OTP />} />
