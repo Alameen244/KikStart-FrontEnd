@@ -1,4 +1,4 @@
-export const endpoints = {
+export const authEndpoints = {
   SIGN_UP: "api/v1/auth/signUp",
   LOGIN: "api/v1/auth/login",
   RESET_PASSWORD: "api/v1/auth/resetPassword",
@@ -9,3 +9,9 @@ export const endpoints = {
   RESEND_OTP: "api/v1/auth/resendOtp",
   ME: "api/v1/auth/me",
 };
+
+export const homeEndpoints = {
+  BANNER: "/api/v1/banner",
+  WHO: "/api/v1/who",
+};
+

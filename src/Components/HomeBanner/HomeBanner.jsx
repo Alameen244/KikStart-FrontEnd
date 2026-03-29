@@ -16,7 +16,8 @@ import wave from "../../assets/wave.png";
 import miniStar from "../../assets/miniStar.png";
 import { useAuth } from "../../Context/AuthContext";
 /* Styled Wrappers (1:1 sx conversion) */
-
+import { getHomeBanner } from "../../Apis/homeApi";
+import { useQuery } from "@tanstack/react-query";
 const BannerWrapper = styled(Box)({
   backgroundColor: "#FFFAFA",
 });
@@ -53,18 +54,13 @@ const RedSubHeading = styled(Typography)({
   marginBottom: "12px",
 });
 
-const BlackHeading = styled(Typography)({
+const Heading = styled(Typography)({
   fontFamily: "PT Sans",
   fontStyle: "normal",
   fontWeight: 700,
   fontSize: 66,
 });
-const RedHeading = styled(Typography)({
-  fontFamily: "PT Sans",
-  fontStyle: "normal",
-  fontWeight: 700,
-  fontSize: 66,
-});
+
 const ParaWrapper = styled(Box)({
   padding: "13px 0 34px",
 });
@@ -155,24 +151,36 @@ const ButterflyImg = styled(Box)({
 });
 
 const HomeBanner = () => {
+  const { data: homeBannerData } = useQuery({
+    queryKey: ["homeBanner"],
+    queryFn: getHomeBanner,
+  });
   const { isAuthenticated } = useAuth();
+  const activeBanner = Array.isArray(homeBannerData) ? homeBannerData[0] : homeBannerData;
+  const bannerHeadings = Array.isArray(activeBanner?.headings) ? activeBanner.headings : [];
+
   return (
     <BannerWrapper>
       <OuterContainer maxWidth="lg">
         <GridWrapper container>
           <LeftGrid item size={{ lg: 4 }}>
-            <RedSubHeading color="myRed">PLAY LIKE A PRO</RedSubHeading>
-            <BlackHeading variant="h1">Never Miss a</BlackHeading>
-            <RedHeading variant="h1" color="myRed">
-              Chance To Play
-            </RedHeading>
+            <RedSubHeading color="myRed">{activeBanner?.subHeading}</RedSubHeading>
+            {bannerHeadings.length > 0 && (
+              <>
+                {bannerHeadings.map((heading, index) => (
+                  <Heading key={index} variant="h1" color={index % 2 === 0 ? "dark" : "myRed"}>
+                    {typeof heading === "string" ? heading : heading?.text}
+                  </Heading>
+                ))}
+              </>
+            )}
             <ParaWrapper>
-              <Para para=" Lorem ipsum dolor sit amet consectetur. Nisl malesuada eu aenean adipiscing augue arcu facilisis. Nulla dui ullamcorper maecenas non nunc nam." />
+              <Para para={activeBanner?.description} />
             </ParaWrapper>
             {isAuthenticated ? (
-              <MainButton text="Start your journey" color="secondary" />
+              <MainButton text={activeBanner?.authButtonText} color="secondary" />
             ) : (
-              <MainButton text="SIGN UP NOW" color="secondary" />
+              <MainButton text={activeBanner?.guestButtonText} color="secondary" />
             )}
 
             <CloudTopLeft component="img" src={cloud} alt="cloud" />
@@ -184,7 +192,7 @@ const HomeBanner = () => {
 
           <RightGrid item size={{ lg: 8 }}>
             <ImageWrapper>
-              <BigImage component="img" src={Big} alt="big pic" />
+              <BigImage component="img" src={activeBanner?.image?.url } alt="big pic" />
             </ImageWrapper>
             <CloudBottomRight component="img" src={cloud} alt="cloud" />
             <BigStarImg component="img" src={bigStar} alt="star" />

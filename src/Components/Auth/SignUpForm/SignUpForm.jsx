@@ -433,6 +433,10 @@ const SignUpForm = ({ embedded = false }) => {
           if (message.toLowerCase().includes("user already exists")) {
             return "User already exists! Please login instead.";
           }
+          if (message.toLowerCase().includes("user already exist but not verified")) {
+            navigate("/otp", { state: { email: formData.email } });
+            return "User is not verified! Please verify your email first.";
+          }
           return message;
         },
       },

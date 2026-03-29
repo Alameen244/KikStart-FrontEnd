@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await getMe();
       setUser(res?.data || null);
-      setIsAuthenticated(Boolean(res?.data));
+      setIsAuthenticated(Boolean(res?.data?.isVerified));
     } catch (_) {
       Cookies.remove("token");
       setUser(null);
