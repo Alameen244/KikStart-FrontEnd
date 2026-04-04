@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
-import Typography from '@mui/material/Typography';
-import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from '@mui/material/Collapse';
-
-
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 
 const Item = styled(Box) ({
-   
+
 
 
 background: '#FFFFFF',
@@ -28,13 +25,13 @@ const Row = styled(Box) ({
     cursor:"pointer",
     padding:"10px"
 })
-const RotateIcon = styled(ExpandMoreIcon)(({ open }) => ({
-  transform: open ? "rotate(180deg)" : "rotate(0deg)",
+const RotateIcon = styled(ArrowRightAltIcon)(({ open }) => ({
+  transform: open ? "rotate(-90deg)" : "rotate(0deg)",
   transition: "0.3s",
   color: "#ff3b3b",
 }));
 const QuestionWrapper = styled(Box) ({
-    
+
 fontFamily: 'PT Sans',
 fontStyle: 'normal',
 fontWeight: 700,
@@ -49,7 +46,7 @@ padding:"10px 0"
 
 })
 const Answer = styled(Box) ({
-    
+
 
 
 fontFamily: 'Noto Sans',
@@ -66,9 +63,9 @@ color: '#494949',
 
 
 const FAQ = ({question , answer, onclick,open}) => {
-    
-    
-   
+
+
+
   return (
     <Item onClick={onclick} >
 
@@ -77,7 +74,7 @@ const FAQ = ({question , answer, onclick,open}) => {
         <IconButton size="small">
           <RotateIcon open={open} />
         </IconButton>
-        
+
         </Row>
         <Collapse in = {open} >
             <Answer>{answer}</Answer>

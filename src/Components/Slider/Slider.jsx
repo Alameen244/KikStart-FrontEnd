@@ -1,6 +1,5 @@
 import Container from "@mui/material/Container";
 import Headings from "../Heading/Headings";
-import girlImage from "../../assets/Girl.png";
 import Box from "@mui/material/Box";
 import Para from "../Para/Para";
 import Typography from "@mui/material/Typography";
@@ -9,17 +8,17 @@ import { styled } from "@mui/material/styles";
 import Threestar from "../../assets/3star.png";
 import icon from "../../assets/icon.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCube, Pagination , Autoplay , Navigation} from "swiper/modules";
+import { EffectCube, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cube";
 import "swiper/css/pagination";
 import { useRef } from "react";
-
-
-
+import { useQuery } from "@tanstack/react-query";
+import { getHomeTestimonials } from "../../Apis/homeApi";
+import noImage from "../../assets/defaultimage/noImage.png";
 
 const SliderWrapper = styled(Box)({
-  paddingBottom:"44px",
+  paddingBottom: "44px",
 });
 
 const StyledContainer = styled(Container)({
@@ -31,12 +30,19 @@ const ImageWrapper = styled(Box)({
   justifyContent: "center",
 });
 
-const GirlImage = styled(Box)({
+const ClientImage = styled(Box)({
   objectFit: "cover",
+  height: "127px",
+  width: "127px",
+  borderRadius: "50%",
 });
 
 const ParaWrapper = styled(Box)({
-  padding: "28px 0 ",
+  padding: "28px 0",
+  minHeight: "120px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent:"center"
 });
 
 const Name = styled(Typography)({
@@ -76,13 +82,11 @@ const ThreeStarsWrapper = styled(Box)({
   position: "absolute",
   top: "89px",
   left: "80px",
-
 });
 
 const SliderContentWrapper = styled(Box)({
   maxWidth: "732px",
   margin: " 31px auto 0px",
-
 });
 const StyledSwiper = styled(Swiper)({
   width: "100%",
@@ -106,6 +110,13 @@ const StyledSwiper = styled(Swiper)({
 
 const SlideCard = styled(Box)({
   width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "320px",
+});
+
+const PersonInfo = styled(Box)({
+  marginTop: "auto",
 });
 const IconWrapper = styled(Box)({
   position: "absolute",
@@ -113,57 +124,111 @@ const IconWrapper = styled(Box)({
   left: "-26px",
 });
 
-const testimonials = Array.from({ length: 5 }, () => ({
-  image: girlImage,
-  para: "Lorem ipsum dolor sit amet consectetur. Tortor sed ipsum tortor in et. Arcu tortor phasellus elementum sed natoquepellentesque in elit imperdiet. Sit nisi turpis arcu malesuada purus semper. Bibendum urna dolor at ut tincidunt.Scelerisque dictumst sed.",
-  name: "Cameron Williamson",
-  role: "Coach",
-}));
+const fallbackTestimonials = {
+  heading: "Whats Our Client Say",
+  subheading: "TESTIMONIALS",
+  testimonials: [
+    {
+      image: {
+        url: noImage,
+      },
+      description: "clients message ",
+      name: "client name",
+      profession: "client proffession",
+    },
+    {
+      image: {
+        url: noImage,
+      },
+      description: "clients message ",
+      name: "client name",
+      profession: "client proffession",
+    },
+    {
+      image: {
+        url: noImage,
+      },
+      description: "clients message ",
+      name: "client name",
+      profession: "client proffession",
+    },
+  ],
+};
 
+const EmptyMessage = styled(Typography)({
+  position: "absolute",
+  bottom: "-24px",
+  left: 0,
+  fontFamily: "cursive",
+  fontSize: 14,
+});
 
 const AutoplayProgress = styled(Box)({
-   position: 'absolute',
+  position: "absolute",
   right: 16,
   bottom: 16,
   zIndex: 10,
   width: 48,
   height: 48,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontWeight: 'bold',
-  color: 'var(--swiper-theme-color)',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontWeight: "bold",
+  color: "var(--swiper-theme-color)",
   "& svg": {
-      Progress: 0,
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  zIndex: 10,
-  width: '100%',
-  height: '100%',
-  strokeWidth: 4,
-  stroke: 'var(--swiper-theme-color)',
-  fill: 'none',
-  strokeDashoffset: 'calc(125.6px * (1 - var(--progress)))',
-  strokeDasharray: 125.6,
-  transform: 'rotate(-90deg)',
-  }
-})
+    Progress: 0,
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 10,
+    width: "100%",
+    height: "100%",
+    strokeWidth: 4,
+    stroke: "var(--swiper-theme-color)",
+    fill: "none",
+    strokeDashoffset: "calc(125.6px * (1 - var(--progress)))",
+    strokeDasharray: 125.6,
+    transform: "rotate(-90deg)",
+  },
+});
 const Slider = () => {
+  const { data: testimonialResponse } = useQuery({
+    queryKey: ["homeTestimonials"],
+    queryFn: getHomeTestimonials,
+  });
+  // console.log(testimonialResponse);
   const progressCircle = useRef(null);
   const progressContent = useRef(null);
-const onAutoplayTimeLeft = (s, time, progress) => {
-  if (!progressCircle.current || !progressContent.current) return;
+  const testimonialData = testimonialResponse?.data;
+  const testimonials = Array.isArray(testimonialData?.testimonials)
+    ? testimonialData.testimonials
+    : [];
+  const isTestimonialEmpty =
+    testimonialResponse?.empty || testimonials.length === 0;
+  const testimonialContent = isTestimonialEmpty
+    ? fallbackTestimonials
+    : testimonialData;
+  const activeTestimonials = Array.isArray(testimonialContent?.testimonials)
+    ? testimonialContent.testimonials
+    : fallbackTestimonials.testimonials;
 
-  progressCircle.current.style.setProperty('--progress', 1 - progress);
-  progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-};
+  const onAutoplayTimeLeft = (s, time, progress) => {
+    if (!progressCircle.current || !progressContent.current) return;
+
+    progressCircle.current.style.setProperty("--progress", 1 - progress);
+    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  };
   return (
     <SliderWrapper>
       <StyledContainer maxWidth="lg">
+        {isTestimonialEmpty && (
+          <EmptyMessage color="secondary">
+            !! testimonial section content is not available right now.
+          </EmptyMessage>
+        )}
         <Headings
-          heading="Whats Our Client Say"
-          subHeading="TESTIMONIALS"
+          heading={testimonialContent?.heading}
+          subHeading={testimonialContent?.subheading}
           align="center"
         />
         <SliderContentWrapper>
@@ -176,44 +241,53 @@ const onAutoplayTimeLeft = (s, time, progress) => {
               shadowOffset: 20,
               shadowScale: 0.94,
             }}
-              pagination={{
-          clickable: true,
-        }}
-
+            pagination={{
+              clickable: true,
+            }}
             spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-            modules={[EffectCube, Pagination, Autoplay ]}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            modules={[EffectCube, Pagination, Autoplay]}
             onAutoplayTimeLeft={onAutoplayTimeLeft}
           >
-            {testimonials.map((item, index) => (
+            {activeTestimonials.map((item, index) => (
               <SwiperSlide key={`testimonial-${index}`}>
                 <SlideCard>
                   <ImageWrapper>
-                    <GirlImage component="img" src={item.image} alt="girlImage" />
+                    <ClientImage
+                      component="img"
+                      src={item?.image?.url}
+                      alt={item?.name}
+                    />
                   </ImageWrapper>
                   <ParaWrapper>
-                    <Para para={item.para} align="center" />
+                    <Para para={item?.description} align="center" />
                   </ParaWrapper>
-                  <Box>
-                    <Name color="dark">{item.name}</Name>
-                    <Role color="myRed">{item.role}</Role>
-                  </Box>
+                  <PersonInfo>
+                    <Name color="dark">{item?.name}</Name>
+                    <Role color="myRed">{item?.profession}</Role>
+                  </PersonInfo>
                 </SlideCard>
               </SwiperSlide>
             ))}
           </StyledSwiper>
-                   <AutoplayProgress slot="container-end">
-          <svg viewBox="0 0 48 48" ref={progressCircle}>
-            <circle cx="24" cy="24" r="20"></circle>
-          </svg>
-          <span ref={progressContent}></span>
-        </AutoplayProgress>
+
+          {activeTestimonials.length > 1 ? (
+            <AutoplayProgress slot="container-end">
+              <svg viewBox="0 0 48 48" ref={progressCircle}>
+                <circle cx="24" cy="24" r="20"></circle>
+              </svg>
+              <span ref={progressContent}></span>
+            </AutoplayProgress>
+          ) : (
+            ""
+          )}
         </SliderContentWrapper>
-            <StarsWrapper>
+        <StarsWrapper>
           <Box component="img" src={stars} alt="shooting stars" />
         </StarsWrapper>
         <ThreeStarsWrapper>

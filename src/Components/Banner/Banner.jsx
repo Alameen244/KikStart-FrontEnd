@@ -98,7 +98,7 @@ const Banner = (props) => {
       <ContentWrapper maxWidth="lg">
         <Heading variant="h1">{props.heading}</Heading>
         <SubHeading>
-          <Link to="/">Home</Link>/{props.subHeading}
+          <Link to="/">Home </Link>/ {props.subHeading}
         </SubHeading>
         <StarImage component="img" src={star} alt="star" />
         <MiniStarImage component="img" src={miniStar} alt="miniStar" />

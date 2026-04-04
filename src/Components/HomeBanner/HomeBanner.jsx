@@ -15,9 +15,22 @@ import butterfly from "../../assets/butterfly.png";
 import wave from "../../assets/wave.png";
 import miniStar from "../../assets/miniStar.png";
 import { useAuth } from "../../Context/AuthContext";
-/* Styled Wrappers (1:1 sx conversion) */
 import { getHomeBanner } from "../../Apis/homeApi";
 import { useQuery } from "@tanstack/react-query";
+import noImage from "../../assets/defaultimage/noImage.png";
+import { Link } from "react-router-dom";
+
+const fallbackBanner = {
+  subHeading: "Welcome to our platform",
+  headings: [{ text: "Main heading" }],
+  description: "Banner description",
+  guestButtonText: "SIGN UP NOW",
+  authButtonText: "Start your journey",
+  image: {
+    url: noImage,
+  },
+};
+
 const BannerWrapper = styled(Box)({
   backgroundColor: "#FFFAFA",
 });
@@ -65,6 +78,14 @@ const ParaWrapper = styled(Box)({
   padding: "13px 0 34px",
 });
 
+const EmptyMessage = styled(Typography)({
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  fontFamily: "cursive",
+  fontSize: 14,
+});
+
 const ImageWrapper = styled(Box)({
   position: "relative",
   width: "100%",
@@ -90,8 +111,7 @@ const BigImage = styled(Box)(({ theme }) => ({
 const WaveImage = styled(Box)({
   width: "100%",
   height: "auto",
-  transform:"translateY(4px)"
-
+  transform: "translateY(4px)",
 });
 
 /* Decorative Absolute Images */
@@ -156,19 +176,39 @@ const HomeBanner = () => {
     queryFn: getHomeBanner,
   });
   const { isAuthenticated } = useAuth();
-  const activeBanner = Array.isArray(homeBannerData) ? homeBannerData[0] : homeBannerData;
-  const bannerHeadings = Array.isArray(activeBanner?.headings) ? activeBanner.headings : [];
+  const bannerData = Array.isArray(homeBannerData?.data)
+    ? homeBannerData.data
+    : [];
+  const isBannerEmpty = homeBannerData?.empty || bannerData.length === 0;
+  const activeBanner = isBannerEmpty ? fallbackBanner : bannerData[0];
+  const bannerHeadings = Array.isArray(activeBanner?.headings)
+    ? activeBanner.headings
+    : [];
 
   return (
     <BannerWrapper>
       <OuterContainer maxWidth="lg">
+
+
         <GridWrapper container>
+          {isBannerEmpty && (
+            <EmptyMessage color="secondary">
+              !! Main banner content is not available right now.
+            </EmptyMessage>
+          )}
+
           <LeftGrid item size={{ lg: 4 }}>
-            <RedSubHeading color="myRed">{activeBanner?.subHeading}</RedSubHeading>
+            <RedSubHeading color="myRed">
+              {activeBanner?.subHeading}
+            </RedSubHeading>
             {bannerHeadings.length > 0 && (
               <>
                 {bannerHeadings.map((heading, index) => (
-                  <Heading key={index} variant="h1" color={index % 2 === 0 ? "dark" : "myRed"}>
+                  <Heading
+                    key={index}
+                    variant="h1"
+                    color={index % 2 === 0 ? "dark" : "myRed"}
+                  >
                     {typeof heading === "string" ? heading : heading?.text}
                   </Heading>
                 ))}
@@ -178,9 +218,17 @@ const HomeBanner = () => {
               <Para para={activeBanner?.description} />
             </ParaWrapper>
             {isAuthenticated ? (
-              <MainButton text={activeBanner?.authButtonText} color="secondary" />
+              <MainButton
+                text={activeBanner?.authButtonText}
+                color="secondary"
+              />
             ) : (
-              <MainButton text={activeBanner?.guestButtonText} color="secondary" />
+              <MainButton
+                text={activeBanner?.guestButtonText}
+                component={Link}
+                to="/signup"
+                color="secondary"
+              />
             )}
 
             <CloudTopLeft component="img" src={cloud} alt="cloud" />
@@ -192,7 +240,11 @@ const HomeBanner = () => {
 
           <RightGrid item size={{ lg: 8 }}>
             <ImageWrapper>
-              <BigImage component="img" src={activeBanner?.image?.url } alt="big pic" />
+              <BigImage
+                component="img"
+                src={activeBanner?.image?.url || Big}
+                alt="big pic"
+              />
             </ImageWrapper>
             <CloudBottomRight component="img" src={cloud} alt="cloud" />
             <BigStarImg component="img" src={bigStar} alt="star" />
