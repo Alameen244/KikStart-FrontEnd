@@ -13,7 +13,7 @@ const HeaderWrapper = styled("div")({
   paddingTop: "40px",
   h2: {
     fontFamily: "PT Sans",
-    fontSize: "20px", 
+    fontSize: "20px",
     fontWeight: "700",
     color: "#2B2B2B",
   },
@@ -22,7 +22,7 @@ const HeaderWrapper = styled("div")({
     fontSize: "15px",
     fontWeight: "400",
     color: "#494949",
-  },  
+  },
 });
 
 const DetailsWrapper = styled("div")({
@@ -41,7 +41,7 @@ const ProgramWrapper = styled("div")({
     },
     h5: {
         fontFamily: "Noto Sans",
-        fontSize: "16px",   
+        fontSize: "16px",
         fontWeight: "400",
         color: "#2B2B2B",
     }
@@ -57,7 +57,7 @@ const DurationWrapper = styled("div")({
     },
      h5: {
         fontFamily: "Noto Sans",
-        fontSize: "16px",   
+        fontSize: "16px",
         fontWeight: "400",
         color: "#2B2B2B",
     }
@@ -74,11 +74,11 @@ const TextWrapper = styled("div")({
   },
   h5: {
     fontFamily: "Noto Sans",
-    fontSize: "16px", 
+    fontSize: "16px",
     fontWeight: "700",
     color: "#2B2B2B",
     paddingBottom: "10px",
-  },  
+  },
 });
 
 
@@ -143,7 +143,7 @@ const ProgramForm = ({ back }) => {
           <BackButton onClick={back}>Back</BackButton>
           <NextButton>Next</NextButton>
       </PageWrapper>
-    )   
+    )
 }
 
 export default ProgramForm;

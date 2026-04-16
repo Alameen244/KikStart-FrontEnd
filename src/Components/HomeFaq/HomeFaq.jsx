@@ -12,7 +12,7 @@ import { getHomeFAQs } from "../../Apis/homeApi";
 
 const fallbackFaqSection = {
   heading: "Have Question",
-  subheading: "FAQ S",
+  subheading: "FAQS",
   faqs: [
     {
       _id: "fallback-home-faq-1",
