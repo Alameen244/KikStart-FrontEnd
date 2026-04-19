@@ -16,6 +16,8 @@ export const homeEndpoints = {
   HOME_FAQS: "/api/v1/faqs/home",
   HOME_ACTIVE_CARDS: "/api/v1/gym-cards/home",
   TESTIMONIALS: "/api/v1/testimonials",
+  PROGRAMS: "/api/v1/programs",
+  HOME_PROGRAMS: "/api/v1/programs/home",
 };
 
 export const faqEndpoints = {

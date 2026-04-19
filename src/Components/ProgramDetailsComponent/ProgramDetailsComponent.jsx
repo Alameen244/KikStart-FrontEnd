@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
+import ReactPlayer from "react-player";
 import Para from "../Para/Para";
 import Grid from "@mui/material/Grid";
 import bigLogoImage from "../../assets/BigLogoHome.png";
@@ -11,14 +12,14 @@ import TextField from "@mui/material/TextField";
 import MainButton from "../RedButton/RedButton";
 import Headings from "../Heading/Headings";
 import RightStarBroom from "../../assets/Group (3).png";
-import { programsData } from "../../data/programsData";
+// import { programsData } from "../../data/programsData";
 // import Marquee from "react-fast-marquee";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 const ProgramDetailsComponentWrapper = styled(Box)({});
 const KikLogoWrapper = styled(Box)({});
@@ -38,6 +39,7 @@ const Title = styled("h1")({
 const ImageWrapper = styled(Box)({
   position: "relative",
   width: "100%",
+  aspectRatio: "16 / 9",
   borderRadius: "65px",
   overflow: "hidden",
   cursor: "pointer",
@@ -46,20 +48,49 @@ const ImageWrapper = styled(Box)({
   marginTop: "20px",
 });
 
-const StyledImage = styled("img")({
-  width: "100%",
-  height: "634px",
-  objectFit: "cover",
-  objectPosition: "top", // This prevents the head from being cut off
-  display: "block",
+const StyledPlayer = styled(ReactPlayer)({
+  width: "100% !important",
+  height: "100% !important",
+  "& video, & iframe": {
+    border: 0,
+    width: "100%",
+    height: "100%",
+  },
+  "& .react-player__preview": {
+    width: "100% !important",
+    height: "100% !important",
+    backgroundSize: "cover !important",
+    backgroundPosition: "center !important",
+  },
+  "& .react-player__shadow": {
+    background: "rgba(0, 0, 0, 0.26) !important",
+  },
 });
 
 const Paragraph = styled(Typography)({
+  display: "block",
   fontSize: "16px",
   lineHeight: "28px",
   color: "#555",
   marginBottom: "20px",
-  whiteSpace: "pre-line",
+  overflow: "visible",
+  whiteSpace: "normal",
+  WebkitLineClamp: "unset",
+  WebkitBoxOrient: "initial",
+  "& p": {
+    margin: 0,
+  },
+  "& p + p": {
+    marginTop: "14px",
+  },
+  "& *": {
+    overflow: "visible",
+    WebkitLineClamp: "unset",
+    WebkitBoxOrient: "initial",
+  },
+  "& img, & video, & iframe": {
+    display: "none",
+  },
 });
 const SubHeading = styled(Typography)({
   fontFamily: "PT Sans",
@@ -73,13 +104,32 @@ const SubHeading = styled(Typography)({
   color: "#2B2B2B",
 });
 
-const DetailedDescription = styled(Box)({
+const DetailedDescription = styled(Typography)({
   margin: "9px 0 40px",
+  display: "block",
   fontFamily: "Noto Sans",
   fontWeight: 400,
   fontSize: 15,
-  whiteSpace: "pre-line",
+  lineHeight: 1.8,
   color: "#494949",
+  overflow: "visible",
+  whiteSpace: "normal",
+  WebkitLineClamp: "unset",
+  WebkitBoxOrient: "initial",
+  "& p": {
+    margin: 0,
+  },
+  "& p + p": {
+    marginTop: "16px",
+  },
+  "& *": {
+    overflow: "visible",
+    WebkitLineClamp: "unset",
+    WebkitBoxOrient: "initial",
+  },
+  "& img, & video, & iframe": {
+    display: "none",
+  },
 });
 
 const DetailsWrapper = styled(Box)({
@@ -179,7 +229,7 @@ const StarImageWrapper = styled(Box)({
   zIndex: "-1",
 });
 
-function ProgramDetailsComponent({ program }) {
+function ProgramDetailsComponent({ program , items}) {
   if (!program) {
     return (
       <ProgramDetailsComponentWrapper>
@@ -189,7 +239,16 @@ function ProgramDetailsComponent({ program }) {
       </ProgramDetailsComponentWrapper>
     );
   }
+  console.log(program)
 
+function getFirstImages(arr) {
+  if (!Array.isArray(arr)) return [];
+
+  return arr
+    .map(item => item?.images?.[0])
+    .filter(Boolean);
+}
+  const FirstImages = getFirstImages(items);
   //EnqueryForm
 
   const [formData, setFormData] = useState({
@@ -209,47 +268,78 @@ function ProgramDetailsComponent({ program }) {
     console.log(formData);
   };
 
+  const detailsContent =
+    program?.ProgramDetails || program?.details?.detailedDescription || "";
+  const enquiryContent =
+    "Lorem ipsum dolor sit amet consectetur. Quam in non velit malesuada arcu eget id. Id ut turpis tempor semper et in nunc aliquet. Orci cras faucibus aliquam eget orci egestas.";
+
+  const normalizeRichText = (value = "") => {
+    if (!value) return "";
+
+    const normalizedValue = value.replace(/&nbsp;/gi, " ");
+    const hasHtmlTag = /<\/?[a-z][\s\S]*>/i.test(normalizedValue);
+
+    if (hasHtmlTag) {
+      return normalizedValue;
+    }
+
+    return normalizedValue.replace(/\n/g, "<br />");
+  };
+
   return (
     <ProgramDetailsComponentWrapper>
       <ContentWrapper maxWidth="lg">
-        <Title>{program.heading}</Title>
+        <Title>{program?.title || program?.heading}</Title>
         <ImageWrapper>
-          <StyledImage src={program?.image} alt={program?.heading} />
+          <StyledPlayer
+            src="https://youtu.be/ug5RIt4r5oc?si=vRIwnMNSmtTKVxh9"
+            width="100%"
+            height="634px"
+            controls
+            light={program?.image}
+            playing={false}
+          />
         </ImageWrapper>
-        <Paragraph>{program.description}</Paragraph>
+        <Paragraph
+          dangerouslySetInnerHTML={{
+            __html: normalizeRichText(program.description || ""),
+          }}
+        />
         <SubHeading>Program Details</SubHeading>
 
         <DetailsWrapper>
-          <DetailedDescription>
-            {program?.details?.detailedDescription}
-          </DetailedDescription>
+          <DetailedDescription
+            dangerouslySetInnerHTML={{ __html: normalizeRichText(detailsContent) }}
+          />
         </DetailsWrapper>
 
         <ProgramImages>Program Images</ProgramImages>
          {/* marquee scroll  */}
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          grabCursor
-          pagination={{
-            clickable: true,
-          }}
-          slidesPerView={"auto"}
-          spaceBetween={20}
-          loop={true}
-          speed={4000}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-        >
-          {programsData.map((program) => (
-            <SwiperSlide key={program.id} style={{ width: "300px" }}>
+<Swiper
+  modules={[Autoplay, Pagination]}
+  grabCursor
+  pagination={{ clickable: true }}
+  slidesPerView={"auto"}
+  spaceBetween={20}
+  loop={true}
+
+  speed={4000}
+  autoplay={{
+    delay: 0,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+  }}
+>
+          {FirstImages.map((programItem, index) => (
+            <SwiperSlide
+              key={`${programItem?._id || programItem?.url || "program-image"}-${index}`}
+              style={{ width: "300px" }}
+            >
               <ImageBox>
                 <GalleryImage
                   component="img"
-                  src={program.image}
-                  alt={program.heading}
+                  src={programItem?.url || programItem?.image}
+                  alt={`${program?.title || program?.heading} ${index + 1}`}
                 />
               </ImageBox>
             </SwiperSlide>
@@ -260,7 +350,7 @@ function ProgramDetailsComponent({ program }) {
           <GridWrapper container spacing={8}>
             <Grid item size={{ lg: 6 }}>
               <Headings subHeading="" heading="Enquiry" />
-              <Para para={program.details.enquiryDetail} />
+              <Para para={enquiryContent} />
               <LeftInputWrapper>
                 <InputWrapper>
                   <EnquiryWrapper component="form" onSubmit={handleSubmit}>

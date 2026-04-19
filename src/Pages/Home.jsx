@@ -16,6 +16,7 @@ import HomeFaq from '../Components/HomeFaq/HomeFaq'
 import HomeWhoComponent from '../Components/HomeWhoComponent/HomeWhoComponent'
 
 
+
 const SliderWrapper = styled(Box)({
   padding:"23px 0 121px",
 });

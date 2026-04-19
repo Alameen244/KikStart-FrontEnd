@@ -53,3 +53,23 @@ export const getHomeTestimonials = async () => {
         throw error;
     }
 }
+
+export const getPrograms = async () => {
+    try {
+        const response = await axiosInstance.get(homeEndpoints.PROGRAMS);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching programs:", error);
+        throw error;
+    }
+}
+
+export const getHomePrograms = async () => {
+    try {
+        const response = await axiosInstance.get(homeEndpoints.HOME_PROGRAMS);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching home programs:", error);
+        throw error;
+    }
+}
