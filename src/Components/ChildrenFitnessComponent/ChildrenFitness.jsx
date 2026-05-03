@@ -86,8 +86,10 @@ const EmptyMessage = styled(Typography)({
   fontSize: 14,
 });
 
+
 const stripHtml = (value = "") =>
   value
+    .replace(/&nbsp;/gi, " ")
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
     .trim();

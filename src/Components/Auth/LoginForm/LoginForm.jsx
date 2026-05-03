@@ -64,7 +64,7 @@ const LoginForm = () => {
 
     const loginPromise = loginMutation.mutateAsync(formData).then(async (res) => {
       Cookies.set("token", res?.token, { expires: 7 });
-      localStorage.setItem("loginName", res?.name || "");
+      localStorage.setItem("loginName", res?.data?.name || res?.name || "");
       await refreshAuth();
       setFormData({ email: "", password: "" });
       sessionStorage.removeItem("loginFormData");
