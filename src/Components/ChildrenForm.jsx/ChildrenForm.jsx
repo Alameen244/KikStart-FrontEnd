@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 
 const PageWrapper = styled("div")({
@@ -12,7 +12,7 @@ const HeaderWrapper = styled("div")({
   paddingTop: "40px",
   h2: {
     fontFamily: "PT Sans",
-    fontSize: "20px", 
+    fontSize: "20px",
     fontWeight: "700",
     color: "#2B2B2B",
   },
@@ -21,7 +21,7 @@ const HeaderWrapper = styled("div")({
     fontSize: "15px",
     fontWeight: "400",
     color: "#494949",
-  },  
+  },
 });
 
 const FormWrapper = styled("div")({
@@ -35,6 +35,11 @@ const FieldWrapper = styled("div")({
   borderRadius: "12px",
   padding: "16px",
   marginBottom: "16px",
+  transition: "border-color 180ms ease, box-shadow 180ms ease",
+  "&:focus-within": {
+    borderColor: "#ED1C24",
+    boxShadow: "0 0 0 4px rgba(237, 28, 36, 0.08)",
+  },
 });
 
 const LocationFieldWrapper = styled(FieldWrapper)({
@@ -55,9 +60,49 @@ const FieldInput = styled("input")({
   border: "0",
   fontFamily: "Noto Sans",
   fontSize: "16px",
-  fontWeight: "400",
-  color: "#2B2B2B",
+  fontWeight: "500",
+  color: "#1F2937",
+  backgroundColor: "transparent",
+  "&::placeholder": {
+    color: "#6B7280",
+  },
 });
+
+const AllergyToggle = styled("div")({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "10px",
+  padding: "6px",
+  backgroundColor: "#FFF5F5",
+  borderRadius: "999px",
+  width: "fit-content",
+});
+
+const ToggleButton = styled("button", {
+  shouldForwardProp: (prop) => prop !== "isSelected",
+})(({ isSelected }) => ({
+  border: "0",
+  borderRadius: "999px",
+  padding: "10px 18px",
+  fontFamily: "Noto Sans",
+  fontSize: "15px",
+  fontWeight: "600",
+  color: isSelected ? "#FFFFFF" : "#374151",
+  backgroundColor: isSelected ? "#ED1C24" : "transparent",
+  cursor: "pointer",
+  transition: "all 180ms ease",
+  boxShadow: isSelected ? "0 10px 20px rgba(237, 28, 36, 0.18)" : "none",
+  "&:hover": {
+    backgroundColor: isSelected ? "#ED1C24" : "#FFE4E6",
+  },
+}));
+
+const AllergyDetailsInput = styled(FieldInput, {
+  shouldForwardProp: (prop) => prop !== "isDisabled",
+})(({ isDisabled }) => ({
+  color: isDisabled ? "#A8A8A8" : "#1F2937",
+  cursor: isDisabled ? "not-allowed" : "text",
+}));
 
 const LocationInput = styled(FieldInput)({
   paddingRight: "40px",
@@ -78,10 +123,6 @@ const UploadRow = styled("div")({
   borderRadius: "12px",
   padding: "16px",
   marginBottom: "16px",
-});
-
-const UploadTitle = styled("p")({
-  marginBottom: "0",
 });
 
 const UploadSubTitle = styled("p")({
@@ -147,6 +188,8 @@ const TargetIcon = () => (
 );
 
 const ChildrenForm = ({ next }) => {
+  const [hasAllergy, setHasAllergy] = useState("no");
+
   return (
     <PageWrapper>
       <HeaderWrapper>
@@ -180,12 +223,36 @@ const ChildrenForm = ({ next }) => {
 
         <FieldWrapper>
           <FieldLabel>Have Any Type of Allergy?</FieldLabel>
-          <FieldInput type="dropdown" />
+          <AllergyToggle>
+            <ToggleButton
+              type="button"
+              isSelected={hasAllergy === "no"}
+              onClick={() => setHasAllergy("no")}
+            >
+              No
+            </ToggleButton>
+            <ToggleButton
+              type="button"
+              isSelected={hasAllergy === "yes"}
+              onClick={() => setHasAllergy("yes")}
+            >
+              Yes
+            </ToggleButton>
+          </AllergyToggle>
         </FieldWrapper>
 
         <FieldWrapper>
           <FieldLabel>Allergy Details</FieldLabel>
-          <FieldInput type="text" />
+          <AllergyDetailsInput
+            type="text"
+            isDisabled={hasAllergy !== "yes"}
+            disabled={hasAllergy !== "yes"}
+            placeholder={
+              hasAllergy === "yes"
+                ? "Enter allergy details"
+                : "Enable by selecting Yes above"
+            }
+          />
         </FieldWrapper>
 
         <FieldWrapper>
