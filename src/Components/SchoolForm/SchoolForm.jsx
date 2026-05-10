@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { styled } from "@mui/material/styles";
 
 const PageWrapper = styled("div")({
@@ -12,7 +12,7 @@ const HeaderWrapper = styled("div")({
   paddingTop: "40px",
   h2: {
     fontFamily: "PT Sans",
-    fontSize: "20px", 
+    fontSize: "20px",
     fontWeight: "700",
     color: "#2B2B2B",
   },
@@ -21,7 +21,7 @@ const HeaderWrapper = styled("div")({
     fontSize: "15px",
     fontWeight: "400",
     color: "#494949",
-  },  
+  },
 });
 
 const FormWrapper = styled("div")({
@@ -50,6 +50,11 @@ const FieldLabel = styled("label")({
   fontWeight: "400",
 });
 
+const RequiredMark = styled("span")({
+  color: "#ED1C24",
+  marginLeft: "4px",
+});
+
 const FieldInput = styled("input")({
   outline: "0",
   border: "0",
@@ -57,20 +62,25 @@ const FieldInput = styled("input")({
   fontSize: "16px",
   fontWeight: "400",
   color: "#2B2B2B",
+  "&::placeholder": {
+    color: "#A8B0BA",
+  },
 });
 
 const LocationInput = styled(FieldInput)({
   paddingRight: "40px",
 });
 
-const TargetIconWrapper = styled("div")({
+const TargetIconWrapper = styled("button")({
   position: "absolute",
   right: "20px",
   top: "50%",
   transform: "translateY(-50%)",
   cursor: "pointer",
+  background: "transparent",
+  border: "0",
+  padding: "0",
 });
-
 
 const NextButton = styled("button")({
   backgroundColor: "#EF4444",
@@ -82,8 +92,14 @@ const NextButton = styled("button")({
   borderRadius: "50px",
   marginBottom: "40px",
   border: "0",
+  transition: "opacity 180ms ease, background-color 180ms ease",
   "&:hover": {
     backgroundColor: "#DC2626",
+  },
+  "&:disabled": {
+    opacity: 0.5,
+    cursor: "not-allowed",
+    backgroundColor: "#EF4444",
   },
 });
 
@@ -123,8 +139,14 @@ const TargetIcon = () => (
   </svg>
 );
 
-
-export default function SchoolForm( { next, back }) {
+export default function SchoolForm({
+  next,
+  back,
+  formData,
+  onChange,
+  onLocationRequest,
+  nextDisabled,
+}) {
   return (
     <PageWrapper>
       <HeaderWrapper>
@@ -134,22 +156,42 @@ export default function SchoolForm( { next, back }) {
 
       <FormWrapper>
         <FieldWrapper>
-          <FieldLabel>School Name</FieldLabel>
-          <FieldInput type="text" />
+          <FieldLabel>
+            School Name
+            <RequiredMark>*</RequiredMark>
+          </FieldLabel>
+          <FieldInput
+            type="text"
+            value={formData.schoolName}
+            onChange={(e) => onChange("schoolName", e.target.value)}
+            placeholder="Enter school name"
+          />
         </FieldWrapper>
 
         <LocationFieldWrapper>
-          <FieldLabel>School Location</FieldLabel>
-          <LocationInput type="text" />
-          <TargetIconWrapper>
+          <FieldLabel>
+            School Location
+            <RequiredMark>*</RequiredMark>
+          </FieldLabel>
+          <LocationInput
+            type="text"
+            value={formData.schoolLocation}
+            onChange={(e) => onChange("schoolLocation", e.target.value)}
+            placeholder="Enter school location"
+          />
+          <TargetIconWrapper
+            type="button"
+            onClick={() => onLocationRequest("schoolLocation")}
+          >
             <TargetIcon />
           </TargetIconWrapper>
         </LocationFieldWrapper>
-
       </FormWrapper>
 
       <BackButton onClick={back}>Back</BackButton>
-      <NextButton onClick={next}>Next</NextButton>
+      <NextButton onClick={next} disabled={nextDisabled}>
+        Next
+      </NextButton>
     </PageWrapper>
-  )
+  );
 }

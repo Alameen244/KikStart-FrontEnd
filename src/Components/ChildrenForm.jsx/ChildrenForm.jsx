@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 
 const PageWrapper = styled("div")({
@@ -55,6 +55,11 @@ const FieldLabel = styled("label")({
   fontWeight: "400",
 });
 
+const RequiredMark = styled("span")({
+  color: "#ED1C24",
+  marginLeft: "4px",
+});
+
 const FieldInput = styled("input")({
   outline: "0",
   border: "0",
@@ -64,7 +69,7 @@ const FieldInput = styled("input")({
   color: "#1F2937",
   backgroundColor: "transparent",
   "&::placeholder": {
-    color: "#6B7280",
+    color: "#A8B0BA",
   },
 });
 
@@ -108,12 +113,15 @@ const LocationInput = styled(FieldInput)({
   paddingRight: "40px",
 });
 
-const TargetIconWrapper = styled("div")({
+const TargetIconWrapper = styled("button")({
   position: "absolute",
-  right: "20px",
+  right: "16px",
   top: "50%",
   transform: "translateY(-50%)",
   cursor: "pointer",
+  background: "transparent",
+  border: "0",
+  padding: "0",
 });
 
 const UploadRow = styled("div")({
@@ -152,6 +160,22 @@ const HiddenFileInput = styled("input")({
   display: "none",
 });
 
+const FileName = styled("p")({
+  fontFamily: "Noto Sans",
+  fontSize: "13px",
+  fontWeight: "400",
+  color: "#6B7280",
+  paddingTop: "6px",
+});
+
+const HelperText = styled("p")({
+  fontFamily: "Noto Sans",
+  fontSize: "13px",
+  fontWeight: "400",
+  color: "#ED1C24",
+  marginTop: "8px",
+});
+
 const NextButton = styled("button")({
   backgroundColor: "#EF4444",
   color: "#FFFFFF",
@@ -162,8 +186,14 @@ const NextButton = styled("button")({
   borderRadius: "50px",
   marginBottom: "40px",
   border: "0",
+  transition: "opacity 180ms ease, background-color 180ms ease",
   "&:hover": {
     backgroundColor: "#DC2626",
+  },
+  "&:disabled": {
+    opacity: 0.5,
+    cursor: "not-allowed",
+    backgroundColor: "#EF4444",
   },
 });
 
@@ -187,8 +217,18 @@ const TargetIcon = () => (
   </svg>
 );
 
-const ChildrenForm = ({ next }) => {
-  const [hasAllergy, setHasAllergy] = useState("no");
+const ChildrenForm = ({
+  next,
+  formData,
+  onChange,
+  onFileChange,
+  onLocationRequest,
+  nextDisabled,
+}) => {
+  const ageError =
+    formData.age !== "" && (Number.isNaN(Number(formData.age)) || Number(formData.age) < 1);
+
+  const showAllergyError = formData.hasAllergy && !formData.allergyDetails.trim();
 
   return (
     <PageWrapper>
@@ -199,26 +239,60 @@ const ChildrenForm = ({ next }) => {
 
       <FormWrapper>
         <FieldWrapper>
-          <FieldLabel>Full Name</FieldLabel>
-          <FieldInput type="text" />
+          <FieldLabel>
+            Full Name
+            <RequiredMark>*</RequiredMark>
+          </FieldLabel>
+          <FieldInput
+            type="text"
+            value={formData.fullName}
+            onChange={(e) => onChange("fullName", e.target.value)}
+            placeholder="Enter full name"
+          />
         </FieldWrapper>
 
         <LocationFieldWrapper>
-          <FieldLabel>Location</FieldLabel>
-          <LocationInput type="text" />
-          <TargetIconWrapper>
+          <FieldLabel>
+            Location
+            <RequiredMark>*</RequiredMark>
+          </FieldLabel>
+          <LocationInput
+            type="text"
+            value={formData.location}
+            onChange={(e) => onChange("location", e.target.value)}
+            placeholder="Enter location"
+          />
+          <TargetIconWrapper
+            type="button"
+            onClick={() => onLocationRequest("location")}
+          >
             <TargetIcon />
           </TargetIconWrapper>
         </LocationFieldWrapper>
 
         <FieldWrapper>
-          <FieldLabel>Age</FieldLabel>
-          <FieldInput type="text" />
+          <FieldLabel>
+            Age
+            <RequiredMark>*</RequiredMark>
+          </FieldLabel>
+          <FieldInput
+            type="number"
+            min="1"
+            value={formData.age}
+            onChange={(e) => onChange("age", e.target.value)}
+            placeholder="Enter age"
+          />
+          {ageError && <HelperText>Please enter a valid age.</HelperText>}
         </FieldWrapper>
 
         <FieldWrapper>
           <FieldLabel>Food Habit</FieldLabel>
-          <FieldInput type="text" />
+          <FieldInput
+            type="text"
+            value={formData.foodHabit}
+            onChange={(e) => onChange("foodHabit", e.target.value)}
+            placeholder="Enter food habit"
+          />
         </FieldWrapper>
 
         <FieldWrapper>
@@ -226,15 +300,18 @@ const ChildrenForm = ({ next }) => {
           <AllergyToggle>
             <ToggleButton
               type="button"
-              isSelected={hasAllergy === "no"}
-              onClick={() => setHasAllergy("no")}
+              isSelected={!formData.hasAllergy}
+              onClick={() => {
+                onChange("hasAllergy", false);
+                onChange("allergyDetails", "");
+              }}
             >
               No
             </ToggleButton>
             <ToggleButton
               type="button"
-              isSelected={hasAllergy === "yes"}
-              onClick={() => setHasAllergy("yes")}
+              isSelected={formData.hasAllergy}
+              onClick={() => onChange("hasAllergy", true)}
             >
               Yes
             </ToggleButton>
@@ -242,38 +319,60 @@ const ChildrenForm = ({ next }) => {
         </FieldWrapper>
 
         <FieldWrapper>
-          <FieldLabel>Allergy Details</FieldLabel>
+          <FieldLabel>
+            Allergy Details
+            {formData.hasAllergy && <RequiredMark>*</RequiredMark>}
+          </FieldLabel>
           <AllergyDetailsInput
             type="text"
-            isDisabled={hasAllergy !== "yes"}
-            disabled={hasAllergy !== "yes"}
+            isDisabled={!formData.hasAllergy}
+            disabled={!formData.hasAllergy}
+            value={formData.allergyDetails}
+            onChange={(e) => onChange("allergyDetails", e.target.value)}
             placeholder={
-              hasAllergy === "yes"
+              formData.hasAllergy
                 ? "Enter allergy details"
                 : "Enable by selecting Yes above"
             }
           />
+          {showAllergyError && (
+            <HelperText>Allergy details are required.</HelperText>
+          )}
         </FieldWrapper>
 
         <FieldWrapper>
           <FieldLabel>Any Prolong Details</FieldLabel>
-          <FieldInput type="text" />
+          <FieldInput
+            type="text"
+            value={formData.prolongedDisease}
+            onChange={(e) => onChange("prolongedDisease", e.target.value)}
+            placeholder="Enter prolonged disease details"
+          />
         </FieldWrapper>
 
         <UploadRow>
           <div>
             <FieldLabel>Profile Image</FieldLabel>
-            <UploadSubTitle>Upload image Within size of 5MB</UploadSubTitle>
+            <UploadSubTitle>Upload image within size of 5MB</UploadSubTitle>
+            {formData.profileImage?.name && (
+              <FileName>{formData.profileImage.name}</FileName>
+            )}
           </div>
 
           <UploadButton>
             UPLOAD
-            <HiddenFileInput type="file" />
+            <HiddenFileInput
+              type="file"
+              accept="image/*"
+              onChange={(e) => onFileChange(e.target.files?.[0] || null)}
+            />
           </UploadButton>
         </UploadRow>
       </FormWrapper>
 
-      <NextButton onClick={next}>Next</NextButton>
+      <NextButton onClick={next} disabled={nextDisabled}>
+        Next
+      </NextButton>
     </PageWrapper>
   );
 };

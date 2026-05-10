@@ -1,5 +1,5 @@
 import { keyframes, styled } from "@mui/material/styles";
-import ChildrenFrom from "../ChildrenForm.jsx/ChildrenForm";
+import ChildrenForm from "../ChildrenForm.jsx/ChildrenForm";
 import SchoolForm from "../SchoolForm/SchoolForm";
 import WaiverForm from "../WaiverForm/WaiverForm";
 import ProgramForm from "../ProgramForm/ProgramForm";
@@ -21,13 +21,56 @@ const StepContent = styled("div")({
   willChange: "transform, opacity",
 });
 
-function FormStepper({ step, next, back }) {
+function FormStepper({
+  step,
+  next,
+  back,
+  formData,
+  onChange,
+  onFileChange,
+  onLocationRequest,
+  onSubmit,
+  nextDisabled,
+  isSubmitting,
+}) {
   return (
     <StepContent key={step}>
-      {step === 1 && <ChildrenFrom next={next} />}
-      {step === 2 && <SchoolForm next={next} back={back} />}
-      {step === 3 && <WaiverForm next={next} back={back} />}
-      {step === 4 && <ProgramForm back={back} />}
+      {step === 1 && (
+        <ChildrenForm
+          next={next}
+          formData={formData}
+          onChange={onChange}
+          onFileChange={onFileChange}
+          onLocationRequest={onLocationRequest}
+          nextDisabled={nextDisabled}
+        />
+      )}
+      {step === 2 && (
+        <SchoolForm
+          next={next}
+          back={back}
+          formData={formData}
+          onChange={onChange}
+          onLocationRequest={onLocationRequest}
+          nextDisabled={nextDisabled}
+        />
+      )}
+      {step === 3 && (
+        <WaiverForm
+          next={next}
+          back={back}
+          formData={formData}
+          onChange={onChange}
+          nextDisabled={nextDisabled}
+        />
+      )}
+      {step === 4 && (
+        <ProgramForm
+          back={back}
+          onSubmit={onSubmit}
+          isSubmitting={isSubmitting}
+        />
+      )}
     </StepContent>
   );
 }

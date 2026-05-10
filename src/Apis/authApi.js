@@ -53,3 +53,8 @@ export const getMe = async () => {
     const res = await axiosInstance.get(authEndpoints.ME);
     return res?.data;
 }
+
+export const createChildren = async (payload) => {
+    const res = await axiosInstance.post(authEndpoints.CHILDREN, payload);
+    return res?.data;
+}

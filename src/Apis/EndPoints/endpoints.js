@@ -8,6 +8,12 @@ export const authEndpoints = {
   FORGOT_PASSWORD: "api/v1/auth/forgotPassword",
   RESEND_OTP: "api/v1/auth/resendOtp",
   ME: "api/v1/auth/me",
+  CHILDREN: "api/v1/auth/children",
+};
+
+export const subscriptionEndpoints = {
+  CREATE_CHECKOUT_SESSION: "api/v1/subs/create-checkout-session",
+  CONFIRM_SESSION: "api/v1/subs/confirm-session",
 };
 
 export const homeEndpoints = {

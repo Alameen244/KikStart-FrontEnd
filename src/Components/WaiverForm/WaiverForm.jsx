@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import { styled } from "@mui/material/styles";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 
 const PageWrapper = styled("div")({
   width: "650px",
@@ -13,7 +13,7 @@ const HeaderWrapper = styled("div")({
   paddingTop: "40px",
   h2: {
     fontFamily: "PT Sans",
-    fontSize: "20px", 
+    fontSize: "20px",
     fontWeight: "700",
     color: "#2B2B2B",
   },
@@ -22,11 +22,11 @@ const HeaderWrapper = styled("div")({
     fontSize: "15px",
     fontWeight: "400",
     color: "#494949",
-  },  
+  },
 });
 
 const TextWrapper = styled("div")({
-    p: {
+  p: {
     fontFamily: "Noto Sans",
     fontSize: "15px",
     fontWeight: "400",
@@ -36,16 +36,26 @@ const TextWrapper = styled("div")({
   },
 });
 
-const CheckboxWrapper = styled("div")({
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "20px",
-    span: {
-        fontFamily: "Noto Sans",
-        fontSize: "15px",
-        fontWeight: "400",
-        color: "#494949",
-    }
+const CheckboxWrapper = styled("label")({
+  display: "flex",
+  alignItems: "center",
+  marginBottom: "20px",
+  cursor: "pointer",
+  span: {
+    fontFamily: "Noto Sans",
+    fontSize: "15px",
+    fontWeight: "400",
+    color: "#494949",
+  },
+});
+
+const HelperText = styled("p")({
+  fontFamily: "Noto Sans",
+  fontSize: "13px",
+  fontWeight: "400",
+  color: "#ED1C24",
+  marginTop: "-8px",
+  marginBottom: "20px",
 });
 
 const NextButton = styled("button")({
@@ -58,8 +68,14 @@ const NextButton = styled("button")({
   borderRadius: "50px",
   marginBottom: "40px",
   border: "0",
+  transition: "opacity 180ms ease, background-color 180ms ease",
   "&:hover": {
     backgroundColor: "#DC2626",
+  },
+  "&:disabled": {
+    opacity: 0.5,
+    cursor: "not-allowed",
+    backgroundColor: "#EF4444",
   },
 });
 
@@ -79,8 +95,13 @@ const BackButton = styled("button")({
   },
 });
 
-
-export default function WaiverForm({ next, back }) {
+export default function WaiverForm({
+  next,
+  back,
+  formData,
+  onChange,
+  nextDisabled,
+}) {
   return (
     <PageWrapper>
       <HeaderWrapper>
@@ -88,20 +109,52 @@ export default function WaiverForm({ next, back }) {
         <p>Lorem ipsum dolor sit amet consectetur</p>
       </HeaderWrapper>
 
-        <TextWrapper>
-            <p>Quam in non velit malesuada arcu eget id. Id ut turpis tempor semper et in nunc aliquet. Orci cras faucibus aliquam eget orci egestas. Ut congue ut amet commodo eget. Nam eu duis imperdiet morbi orci ac tellus aenean. A pharetra at sodales praesent commodo nibh. At ac lacus morbi consectetur nisi. Vel pharetra viverra hendrerit odio eu amet elementum quam dui. Tincidunt sit ac ac interdum.<br /><br />
-                Velit auctor eros egestas nunc suspendisse amet fermentum lectus. Sed tellus nulla elit proin. Sit nibh urna elit amet netus nam convallis. Diam id auctor fermentum aliquam aliquet elit in suspendisse pellentesque. Quam fusce nec enim turpis nisl. Ac nec dictumst aliquet vivamus vel orci. Iaculis aenean accumsan tortor in et id ullamcorper aenean enim. At gravida nibh ornare commodo luctus gravida pretium fermentum volutpat. Eget integer sed nunc sit.
-                Lorem faucibus egestas tortor id nibh hendrerit massa tortor mi. Scelerisque nunc quis risus nunc in. Vitae at purus sit nec suspendisse donec enim senectus scelerisque. In sed risus nisl posuere molestie. Vel massa augue in fermentum.
-            </p>
-        </TextWrapper>
+      <TextWrapper>
+        <p>
+          Quam in non velit malesuada arcu eget id. Id ut turpis tempor semper
+          et in nunc aliquet. Orci cras faucibus aliquam eget orci egestas. Ut
+          congue ut amet commodo eget. Nam eu duis imperdiet morbi orci ac
+          tellus aenean. A pharetra at sodales praesent commodo nibh. At ac
+          lacus morbi consectetur nisi. Vel pharetra viverra hendrerit odio eu
+          amet elementum quam dui. Tincidunt sit ac ac interdum.
+          <br />
+          <br />
+          Velit auctor eros egestas nunc suspendisse amet fermentum lectus. Sed
+          tellus nulla elit proin. Sit nibh urna elit amet netus nam convallis.
+          Diam id auctor fermentum aliquam aliquet elit in suspendisse
+          pellentesque. Quam fusce nec enim turpis nisl. Ac nec dictumst aliquet
+          vivamus vel orci. Iaculis aenean accumsan tortor in et id ullamcorper
+          aenean enim. At gravida nibh ornare commodo luctus gravida pretium
+          fermentum volutpat. Eget integer sed nunc sit. Lorem faucibus egestas
+          tortor id nibh hendrerit massa tortor mi. Scelerisque nunc quis risus
+          nunc in. Vitae at purus sit nec suspendisse donec enim senectus
+          scelerisque. In sed risus nisl posuere molestie. Vel massa augue in
+          fermentum.
+        </p>
+      </TextWrapper>
 
-        <CheckboxWrapper>
-            <Checkbox />
-            <span>Accept the conditions of the waiver</span>
-        </CheckboxWrapper>
+      <CheckboxWrapper>
+        <Checkbox
+          checked={formData.waiverAcceptance}
+          onChange={(e) => onChange("waiverAcceptance", e.target.checked)}
+          sx={{
+            color: "#ED1C24",
+            "&.Mui-checked": {
+              color: "#ED1C24",
+            },
+          }}
+        />
+        <span>Accept the conditions of the waiver</span>
+      </CheckboxWrapper>
+
+      {nextDisabled && (
+        <HelperText>Please accept the waiver to continue.</HelperText>
+      )}
 
       <BackButton onClick={back}>Back</BackButton>
-      <NextButton onClick={next}>Next</NextButton>
+      <NextButton onClick={next} disabled={nextDisabled}>
+        Next
+      </NextButton>
     </PageWrapper>
-  )
+  );
 }

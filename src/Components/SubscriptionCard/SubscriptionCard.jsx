@@ -6,30 +6,24 @@ import { styled } from "@mui/material/styles";
 import tick from "../../assets/tick.png";
 import Line from "../Line/Line";
 import RedButton from "../RedButton/RedButton";
-// import Button from "@mui/material/Button";
-
 
 const StyledCard = styled(Card)({
-  maxWidth: 345,
+  width: "100%",
+  maxWidth: 364,
   borderRadius: "30px",
   transition: "all 300ms",
   "&:hover": {
     boxShadow:
       "0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%)",
   },
-
-
-
 });
 
 const TopCardContent = styled(CardContent)({
   padding: 0,
-
 });
 
 const MiddleCardContent = styled(CardContent)({
   padding: "40.3px 0 22.83px",
-
 });
 
 const BottomCardContent = styled(CardContent)({
@@ -39,18 +33,16 @@ const BottomCardContent = styled(CardContent)({
   },
 });
 
-const  LevelTypography = styled(Typography)({
- /* basic */
-
-fontFamily: 'Noto Sans',
-fontStyle: 'normal',
-fontWeight: 500,
-fontSize: 15,
-padding:"9px 13px",
-textTransform: 'uppercase',
-backgroundColor:"#FFF8F8",
-color: '#ED1C24',
-borderRadius: "5px",
+const LevelTypography = styled(Typography)({
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 500,
+  fontSize: 15,
+  padding: "9px 13px",
+  textTransform: "uppercase",
+  backgroundColor: "#FFF8F8",
+  color: "#ED1C24",
+  borderRadius: "5px",
   display: "inline-block",
   position: "relative",
   overflow: "hidden",
@@ -79,39 +71,23 @@ borderRadius: "5px",
 });
 
 const DividerTextTypography = styled(Typography)({
- /* Lorem ipsum dolor sit amet consectetur. Pharetra et ac vitae. */
-
-
-fontFamily: 'Noto Sans',
-fontStyle: 'normal',
-fontWeight: 400,
-fontSize: 15,
-
-
-color: '#494949',
-
-
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: 15,
+  color: "#494949",
 });
 
 const PriceTypography = styled(Typography)({
-/* $19 */
-
-
-fontFamily: 'Noto Sans',
-fontStyle: 'normal',
-fontWeight: 700,
-fontSize: 66,
-
-/* or 111% */
-/* leading-trim and text-edge are draft CSS properties.
-
-Read: 'more: https://drafts.csswg.org/css-inline-3/#leading-trim',
-*/
-leadingTrim: 'both',
-textEdge: 'cap',
-letterSpacing: '-0.461586px',
-lineHeight:"1",
-color: '#ED1C24',
+  fontFamily: "Noto Sans",
+  fontStyle: "normal",
+  fontWeight: 700,
+  fontSize: 66,
+  leadingTrim: "both",
+  textEdge: "cap",
+  letterSpacing: "-0.461586px",
+  lineHeight: "1",
+  color: "#ED1C24",
   marginBottom: "10px",
   display: "inline-block",
   position: "relative",
@@ -141,9 +117,11 @@ color: '#ED1C24',
     opacity: 1,
   },
 });
+
 const FeatureTypoWrapper = styled(Box)({
   padding: "34px 0px 38px",
 });
+
 const FeatureTypography = styled(Typography)({
   fontFamily: "Noto Sans",
   fontStyle: "normal",
@@ -156,7 +134,6 @@ const FeatureTypography = styled(Typography)({
   paddingBottom: "14px",
 });
 
-
 const TickIcon = styled(Box)({
   display: "block",
   flexShrink: 0,
@@ -167,117 +144,114 @@ const CardContentWrapper = styled(Box)({
   margin: "41px auto 34px",
 });
 
-// const PayButton = styled(Button)({
-//   /* Subscribe */
+const ActivePlanText = styled(Typography)({
+  fontFamily: "Noto Sans",
+  fontSize: "13px",
+  fontWeight: 500,
+  color: "#16A34A",
+  textAlign: "center",
+  paddingTop: "10px",
+});
 
-
-// padding:"18px 95px",
-// fontFamily: 'Noto Sans',
-// fontStyle: 'normal',
-// fontWeight: 500,
-// fontSize: 16,
-// /* identical to box height */
-// textTransform: 'uppercase',
-// borderRadius: "50px",
-// color: '#FFFFFF',
-
-
-// });
-const SubscriptionCard = (props) => {
-  // props -> level , desc , price , duration , t1 ,t2 ,t3 ,t4 ,t5 ,t6
+const ActionWrapper = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const SubscriptionCard = ({
+  level,
+  desc,
+  price,
+  duration,
+  t1,
+  t2,
+  t3,
+  t4,
+  t5,
+  t6,
+  isCurrentPlan = false,
+  isLoading = false,
+  onSubscribe,
+}) => {
   return (
     <StyledCard elevation={1}>
       <CardContentWrapper>
+        <TopCardContent>
+          <LevelTypography>{level}</LevelTypography>
+          <DividerTextTypography sx={{ padding: "17px 0 20.7px" }}>
+            {desc}
+          </DividerTextTypography>
+        </TopCardContent>
+        <Line linemaxwidth="275.7px" />
 
-      {/* //1st part */}
-
-      <TopCardContent >
-        <LevelTypography>
-          {props.level}
-        </LevelTypography>
-        <DividerTextTypography sx={{padding:"17px 0 20.7px"}}>
-          {props.desc}
-        </DividerTextTypography>
-      </TopCardContent>
-        <Line linemaxwidth="275.7px"/>
-      {/* 2nd part */}
-
-      <MiddleCardContent>
-        <PriceTypography variant="body2">
-          {props.price}
-        </PriceTypography>
-        <DividerTextTypography sx={{padding:""}}>
-          {props.duration}
-        </DividerTextTypography>
-      </MiddleCardContent>
-        <Line linemaxwidth="275.7px"/>
-
-      {/* 3rd part */}
+        <MiddleCardContent>
+          <PriceTypography variant="body2">{price}</PriceTypography>
+          <DividerTextTypography sx={{ padding: "" }}>{duration}</DividerTextTypography>
+        </MiddleCardContent>
+        <Line linemaxwidth="275.7px" />
 
         <BottomCardContent>
           <FeatureTypoWrapper>
-
-        <FeatureTypography>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t1}
-        </FeatureTypography>
-        <FeatureTypography>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t2}
-        </FeatureTypography>
-        <FeatureTypography>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t3}
-        </FeatureTypography>
-        <FeatureTypography>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t4}
-        </FeatureTypography>
-        <FeatureTypography>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t5}
-        </FeatureTypography>
-        <FeatureTypography sx={{paddingBottom:"0px"}}>
-          <TickIcon
-            component="img"
-            src={tick}
-            alt="tick"
-          />
-          {props.t6}
-        </FeatureTypography>
+            <FeatureTypography>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t1}
+            </FeatureTypography>
+            <FeatureTypography>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t2}
+            </FeatureTypography>
+            <FeatureTypography>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t3}
+            </FeatureTypography>
+            <FeatureTypography>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t4}
+            </FeatureTypography>
+            <FeatureTypography>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t5}
+            </FeatureTypography>
+            <FeatureTypography sx={{ paddingBottom: "0px" }}>
+              <TickIcon component="img" src={tick} alt="tick" />
+              {t6}
+            </FeatureTypography>
           </FeatureTypoWrapper>
-          {/* <PayButton variant="contained" color="secondary">
-suscribe
- </PayButton> */}
-          <RedButton text="Subscribe" color="secondary" py="18px" px="95px"/>
 
-
-      </BottomCardContent>
+          <ActionWrapper>
+            <RedButton
+              text={
+                isCurrentPlan
+                  ? "CURRENT PLAN"
+                  : isLoading
+                    ? "Redirecting..."
+                    : "Subscribe"
+              }
+              color="secondary"
+              py="18px"
+              px="95px"
+              fontSize="16px"
+              onClick={onSubscribe}
+              disabled={isCurrentPlan || isLoading}
+              sx={{
+                minWidth: "286px",
+                whiteSpace: "nowrap",
+                "&.Mui-disabled": {
+                  color: "#FFFFFF",
+                  opacity: 1,
+                  background: "linear-gradient(135deg, #0f766e, #14b8a6)",
+                },
+              }}
+            />
+            {isCurrentPlan && (
+              <ActivePlanText>Already active on your account</ActivePlanText>
+            )}
+          </ActionWrapper>
+        </BottomCardContent>
       </CardContentWrapper>
     </StyledCard>
   );
 };
 
 export default SubscriptionCard;
-
-

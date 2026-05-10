@@ -16,6 +16,8 @@ import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
+import PaymentSuccess from "./Pages/PaymentSuccess";
+import PaymentCancel from "./Pages/PaymentCancel";
 import OTP from "./Components/Auth/OTP/OTP";
 import ProtectedRoute from "./Components/Auth/ProtectedRoute";
 
@@ -49,6 +51,10 @@ function App() {
             />
             <Route path="/why-us" element={<WhyUs />} />
             <Route path="/faqs" element={<FAQs />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-cancel" element={<PaymentCancel />} />
+            <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/cancel" element={<PaymentCancel />} />
           </Route>
           <Route element={<AuthLayout />}>
             <Route path="/signup" element={<SignUp />} />
