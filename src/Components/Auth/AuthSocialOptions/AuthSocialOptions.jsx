@@ -3,7 +3,13 @@ import { Box, IconButton, Typography, styled } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import XIcon from "@mui/icons-material/X";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
+import { googleAuth } from "../../../Apis/authApi";
+import { useAuth } from "../../../Context/AuthContext";
 const Wrap = styled(Box)({
   width: "100%",
   marginTop: "22px",
@@ -163,7 +169,46 @@ const SocialButton = styled(IconButton)({
 });
 
 const AuthSocialOptions = ({ sx = {} }) => {
-  const { loginWithRedirect , user , logout } = useAuth0();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { refreshAuth } = useAuth();
+
+  const googleAuthMutation = useMutation({
+    mutationFn: googleAuth,
+  });
+
+  const handleGoogleLogin = useGoogleLogin({
+    flow: "auth-code",
+    onSuccess: async (tokenResponse) => {
+      const googlePromise = googleAuthMutation
+        .mutateAsync(tokenResponse?.code)
+        .then(async (res) => {
+          Cookies.set("token", res?.token, { expires: 7 });
+          localStorage.setItem("loginName", res?.data?.name || "");
+          await refreshAuth();
+          navigate(location.state?.from || "/");
+          return res;
+        });
+
+      toast.promise(googlePromise, {
+        pending: "Signing in with Google...",
+        success: {
+          render({ data }) {
+            return data?.message || "Login successful";
+          },
+        },
+        error: {
+          render({ data }) {
+            return data?.response?.data?.message || "Google login failed. Please try again.";
+          },
+        },
+      });
+    },
+    onError: () => {
+      toast.error("Google login failed. Please try again.");
+    },
+  });
+
   return (
     <Wrap sx={sx}>
       <DividerWrap>
@@ -175,9 +220,10 @@ const AuthSocialOptions = ({ sx = {} }) => {
       <SocialRow>
         <SocialButton
           aria-label="Continue with Google"
-          data-tooltip="Continue with Google"
+          data-tooltip={googleAuthMutation.isPending ? "Signing in with Google" : "Continue with Google"}
           data-brand="google"
-          onClick={() => loginWithRedirect()}
+          onClick={() => handleGoogleLogin()}
+          disabled={googleAuthMutation.isPending}
         >
           <GoogleIcon fontSize="medium" />
         </SocialButton>

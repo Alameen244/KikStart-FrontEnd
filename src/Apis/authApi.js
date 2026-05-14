@@ -6,6 +6,13 @@ export const login = async (payload) => {
     return res?.data;
 }
 
+export const googleAuth = async (code) => {
+    const res = await axiosInstance.get(authEndpoints.GOOGLE_AUTH, {
+        params: { code }
+    });
+    return res?.data;
+}
+
 export const register = async (payload) => {
     const normalizedPayload = {
         ...payload,

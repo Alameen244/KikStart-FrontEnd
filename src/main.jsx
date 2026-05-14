@@ -9,17 +9,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./Context/AuthContext.jsx";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme={theme}>
-      <Auth0Provider
-        domain="dev-2yibojpzhpritks2.us.auth0.com"
-        clientId="zGPH7YsSUOEQP4011jieSdZc5TX8R0sz"
-        authorizationParams={{ redirect_uri: "http://localhost:5100" }}
-      >
+       <GoogleOAuthProvider
+         clientId={import.meta.env.VITE_GA_CLIENT_ID}
+       >
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
             <App />
@@ -38,7 +36,7 @@ createRoot(document.getElementById("root")).render(
             />
           </QueryClientProvider>
         </AuthProvider>
-      </Auth0Provider>
+      </GoogleOAuthProvider>
     </ThemeProvider>
   </StyledEngineProvider>,
 );

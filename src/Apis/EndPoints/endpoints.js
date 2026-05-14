@@ -1,6 +1,7 @@
 export const authEndpoints = {
   SIGN_UP: "api/v1/auth/signUp",
   LOGIN: "api/v1/auth/login",
+  GOOGLE_AUTH: "api/v1/auth/google",
   RESET_PASSWORD: "api/v1/auth/resetPassword",
   SEND_OTP: "api/v1/auth/sendOTP",
   VERIFY_FORGOT_OTP: "api/v1/auth/verifyForgotOTP",
