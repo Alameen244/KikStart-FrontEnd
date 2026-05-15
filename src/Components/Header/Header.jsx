@@ -5,12 +5,14 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
-import { Link, NavLink  } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
 import kikstart from "../../assets/KIKSTART.png";
 import RedButton from "../RedButton/RedButton";
@@ -92,7 +94,7 @@ const DesktopMenu = styled(Box)(({ theme }) => ({
   marginRight: "32px",
   display: "none",
   alignItems: "center",
-  gap:4,
+  gap: 4,
   [theme.breakpoints.up("lg")]: {
     display: "flex",
   },
@@ -105,7 +107,7 @@ const DesktopButton = styled(Button)(({ theme }) => ({
   fontWeight: "400",
   textTransform: "none",
   fontStyle: "normal",
- gap:2,
+  gap: 2,
   "&.active": {
     color: theme.palette.myRed,
   },
@@ -130,11 +132,70 @@ const ActionButtons = styled(Box)(() => ({
   gap: "16px",
 }));
 
+const AccountButton = styled(Box)(({ theme }) => ({
+  minHeight: "50px",
+  borderRadius: "50px",
+  padding: "13px 23px",
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  fontFamily: "Noto Sans",
+  fontWeight: 500,
+  fontSize: "16px",
+  color: theme.palette.secondary.contrastText,
+  backgroundColor: theme.palette.secondary.main,
+  backgroundImage: `linear-gradient(
+    to right,
+    ${theme.palette.secondary.dark} 50%,
+    ${theme.palette.secondary.main} 50%
+  )`,
+  backgroundSize: "200% 100%",
+  backgroundPosition: "right",
+  textDecoration: "none",
+  transition: "background-position 360ms ease, box-shadow 260ms ease",
+  "&:hover": {
+    backgroundPosition: "left",
+  },
+}));
+
+const AvatarWrap = styled(Box)({
+  position: "relative",
+  flexShrink: 0,
+});
+
+const AccountAvatar = styled(Avatar)({
+  fontFamily: "Noto Sans",
+  fontSize: "24px",
+  fontWeight: 500,
+  backgroundColor: "#1B2A41",
+  color: "#FFFFFF",
+});
+
+const getAccountInitial = (name = "", email = "") => {
+  const source = name || email || "A";
+  const parts = source.trim().split(/\s+/).filter(Boolean);
+
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+
+  return parts
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("");
+};
+
 function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
-  const { isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
 
+  const isGoogleAuthUser = user?.profileImage?.public_id === "google-oauth";
+
+  const googleProfileImage = isGoogleAuthUser
+    ? user?.profileImage?.url
+    : undefined;
+  const accountInitial = getAccountInitial(user?.name, user?.email);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -152,7 +213,7 @@ function Header() {
 
   return (
     <StyledAppBar>
-      <Container maxWidth="xl" >
+      <Container maxWidth="xl">
         <StyledToolbar disableGutters>
           {/* LEFT → LOGO */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -183,15 +244,31 @@ function Header() {
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <ActionButtons>
               {isAuthenticated ? (
-                <RedButton text="LOGOUT" color="primary" onClick={handleLogout} />
+                <RedButton
+                  text="LOGOUT"
+                  color="primary"
+                  onClick={handleLogout}
+                />
               ) : (
                 <Box component={Link} to="/login">
                   <RedButton text="LOGIN" color="primary" />
                 </Box>
               )}
-              <Box component={Link} to="#">
-                <RedButton text="REQUEST A FREE DEMO" color="secondary" />
-              </Box>
+              <AccountButton
+                component={Link}
+                to={isAuthenticated ? "/user-dashboard" : "/login"}
+              >
+                <AvatarWrap>
+                  <AccountAvatar
+                    key={googleProfileImage}
+                    src={googleProfileImage}
+                    alt={user?.name || "Your account"}
+                  >
+                    {accountInitial}
+                  </AccountAvatar>
+                </AvatarWrap>
+                YOUR ACCOUNT
+              </AccountButton>
             </ActionButtons>
 
             <MobileMenuBox>

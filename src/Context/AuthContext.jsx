@@ -22,8 +22,9 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const res = await getMe();
-      setUser(res?.data || null);
+      setUser(res?.data|| null);
       setIsAuthenticated(Boolean(res?.data?.isVerified));
+      console.log(res.data)
     } catch (_) {
       Cookies.remove("token");
       Cookies.remove("adminToken");
