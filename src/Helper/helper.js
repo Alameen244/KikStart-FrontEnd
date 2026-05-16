@@ -15,7 +15,7 @@ const isProtectedPath = (pathname) =>
 axiosInstance.interceptors.request.use(
     (config) => {
         // Read login token from cookie before each outgoing request.
-        const token = Cookies.get("token") || Cookies.get("adminToken");
+        const token = Cookies.get("token");
         // const token = localStorage.getItem("token")
 
         if (token) {
@@ -36,9 +36,8 @@ axiosInstance.interceptors.response.use(
     (error) => {
         const status = error?.response?.status;
         if (status === 401) {
-            const hadToken = Boolean(Cookies.get("token") || Cookies.get("adminToken"));
+            const hadToken = Boolean(Cookies.get("token"));
             Cookies.remove("token");
-            Cookies.remove("adminToken");
             window.dispatchEvent(new CustomEvent("auth:session-expired"));
 
             if (hadToken && !window.__sessionToastShown) {

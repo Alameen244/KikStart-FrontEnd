@@ -110,11 +110,13 @@ export default function Header() {
     <HeaderWrapper position="fixed">
       <Toolbar sx={{ gap: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", mr: 2 }}>
-          <img
-            src={kikstartLogo}
-            alt="KikStart"
-            style={{ height: "50px", cursor: "pointer" }}
-          />
+          <Link to={"/"}>
+            <img
+              src={kikstartLogo}
+              alt="KikStart"
+              style={{ height: "50px", cursor: "pointer" }}
+            />
+          </Link>
         </Box>
 
         <RightSection>
@@ -224,7 +226,7 @@ export default function Header() {
                 >
                   {isLoading
                     ? "Fetching your profile"
-                    : "Access your dashboard, roles and permissions"}
+                    : "Access your dashboar and children profiles"}
                 </Typography>
               </AccountMeta>
             </AccountCard>

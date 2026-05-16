@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const refreshAuth = useCallback(async () => {
-    const token = Cookies.get("token") || Cookies.get("adminToken");
+    const token = Cookies.get("token");
     if (!token) {
       setUser(null);
       setIsAuthenticated(false);
@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }) => {
       console.log(res.data)
     } catch (_) {
       Cookies.remove("token");
-      Cookies.remove("adminToken");
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -52,7 +51,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(({ redirectTo = "/login", showToast = false } = {}) => {
     Cookies.remove("token");
-    Cookies.remove("adminToken");
     setUser(null);
     setIsAuthenticated(false);
     if (showToast) {
