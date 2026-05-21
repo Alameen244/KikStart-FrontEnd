@@ -4,20 +4,17 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { styled } from "@mui/material/styles";
-import { getInitials } from "../../utils/messageUtils.js";
+import { getInitials, getProfileImageUrl } from "../../utils/messageUtils.js";
 
 const ChatHeader = ({ selectedUser, conversationSid }) => (
   <HeaderWrap>
     {selectedUser ? (
       <>
         <Avatar
-          key={selectedUser?.profileImage?.public_id}
-          src={
-            selectedUser?.profileImage?.public_id === "google-oauth"
-              ? selectedUser?.profileImage?.url
-              : undefined
-          }
+          key={getProfileImageUrl(selectedUser) || selectedUser?.profileImage?.public_id}
+          src={getProfileImageUrl(selectedUser)}
           alt={selectedUser?.name}
+          imgProps={{ referrerPolicy: "no-referrer" }}
           className="header-avatar"
         >
           {getInitials(selectedUser?.name, selectedUser?.email)}
@@ -54,23 +51,25 @@ const ChatHeader = ({ selectedUser, conversationSid }) => (
 export default ChatHeader;
 
 const HeaderWrap = styled(Box)(({ theme }) => ({
-  height: "78px",
-  padding: "16px 22px",
+  height: "84px",
+  padding: "18px 24px",
   display: "flex",
   alignItems: "center",
-  gap: "12px",
-  borderBottom: `1px solid ${theme.palette.divider}`,
+  gap: "14px",
+  borderBottom: "1px solid rgba(237, 28, 36, 0.08)",
+  backgroundColor: "#fff",
   ".header-avatar": {
-    width: 48,
-    height: 48,
-    border: `2px solid ${theme.palette.myRed}`,
+    width: 50,
+    height: 50,
+    border: "3px solid #fff",
     backgroundColor: "#202020",
     fontSize: "0.9rem",
     fontWeight: 800,
+    boxShadow: `0 0 0 2px ${theme.palette.myRed}, 0 12px 22px rgba(237, 28, 36, 0.14)`,
   },
   ".header-name": {
     color: "#1f1f1f",
-    fontSize: "0.92rem",
+    fontSize: "0.98rem",
     fontWeight: 800,
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -80,6 +79,14 @@ const HeaderWrap = styled(Box)(({ theme }) => ({
     color: "#00a35c",
     fontSize: "0.76rem",
     fontWeight: 600,
-    marginTop: "2px",
+    marginTop: "3px",
+  },
+  ".MuiIconButton-root": {
+    backgroundColor: "#fff8f8",
+    border: "1px solid #f1dddd",
+    color: "#777",
+  },
+  ".MuiIconButton-root:hover": {
+    backgroundColor: "#fff0f0",
   },
 }));

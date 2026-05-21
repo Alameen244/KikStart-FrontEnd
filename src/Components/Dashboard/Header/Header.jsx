@@ -10,6 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../../frontEnd/src/Context/AuthContext";
 import kikstartLogo from "../../../assets/KIKSTART.png";
+import { getProfileImageUrl } from "../../../utils/messageUtils";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -103,9 +104,7 @@ export default function Header() {
       : user?.role === "subAdmin"
         ? "Sub Admin"
         : "Administrator";
-  const isGoogleUser = user?.profileImage?.public_id === "google-oauth";
 
-  const profileImage = isGoogleUser ? user?.profileImage?.url : undefined;
   return (
     <HeaderWrapper position="fixed">
       <Toolbar sx={{ gap: 2 }}>
@@ -134,8 +133,10 @@ export default function Header() {
             <>
               <AccountCard component={Link} to="/">
                 <Avatar
-                  src={profileImage || undefined}
-                  alt={displayName}
+                  key={getProfileImageUrl(user) || user?.profileImage?.public_id}
+                  src={getProfileImageUrl(user)}
+                  alt={user?.name}
+                  imgProps={{ referrerPolicy: "no-referrer" }}
                   sx={{
                     width: 48,
                     height: 48,

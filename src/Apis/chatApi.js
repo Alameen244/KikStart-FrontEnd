@@ -21,6 +21,13 @@ export const getConversationMessages = async (conversationSid) => {
   return res?.data;
 };
 
+export const findConversationByParticipants = async (identity1, identity2) => {
+  const res = await axiosInstance.get(chatEndpoints.FIND_CONVERSATION, {
+    params: { identity1, identity2 },
+  });
+  return res?.data;
+};
+
 export const deleteConversation = async (conversationSid) => {
   const res = await axiosInstance.delete(chatEndpoints.DELETE_CONVERSATION(conversationSid));
   return res?.data;

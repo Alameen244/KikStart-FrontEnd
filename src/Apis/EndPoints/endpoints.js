@@ -43,6 +43,7 @@ export const chatEndpoints = {
   CREATE_CONVERSATION: "/api/v1/chat/create",
   ADD_PARTICIPANT: "/api/v1/chat/participant",
   SEND_MESSAGE: "/api/v1/chat/message",
+  FIND_CONVERSATION: "/api/v1/chat/find",
   GET_MESSAGES: (conversationSid) => `/api/v1/chat/messages/${conversationSid}`,
   DELETE_CONVERSATION: (conversationSid) => `/api/v1/chat/${conversationSid}`,
   GENERATE_TOKEN: "/api/v1/chat/token",

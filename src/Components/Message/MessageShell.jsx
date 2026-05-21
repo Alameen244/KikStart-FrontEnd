@@ -12,6 +12,10 @@ const MessageShell = ({
   messages,
   currentIdentity,
   messageDraft,
+  unreadCounts,
+  lastMessages,
+  lastMessageAuthors,
+  lastMessageTimes,
   isUsersLoading,
   usersError,
   isConversationLoading,
@@ -29,6 +33,11 @@ const MessageShell = ({
       users={users}
       selectedUser={selectedUser}
       searchTerm={searchTerm}
+      unreadCounts={unreadCounts}
+      lastMessages={lastMessages}
+      lastMessageAuthors={lastMessageAuthors}
+      lastMessageTimes={lastMessageTimes}
+      currentIdentity={currentIdentity}
       isLoading={isUsersLoading}
       error={usersError}
       onSearch={onSearch}
@@ -63,10 +72,10 @@ const ShellWrap = styled(Box)(({ theme }) => ({
   minHeight: "560px",
   display: "flex",
   overflow: "hidden",
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: "8px",
+  border: "1px solid rgba(237, 28, 36, 0.08)",
+  borderRadius: "18px",
   backgroundColor: "#fff",
-  boxShadow: "0 16px 36px rgba(32, 24, 24, 0.05)",
+  boxShadow: "0 22px 60px rgba(43, 43, 43, 0.08)",
   [theme.breakpoints.down("lg")]: {
     height: "auto",
     minHeight: 0,
@@ -79,7 +88,7 @@ const ChatPanel = styled(Box)(({ theme }) => ({
   minWidth: 0,
   display: "flex",
   flexDirection: "column",
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: "#fffdfd",
   [theme.breakpoints.down("lg")]: {
     minHeight: "620px",
   },

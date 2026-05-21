@@ -24,6 +24,19 @@ export const getInitials = (name = "", email = "") => {
     .toUpperCase();
 };
 
+export const getProfileImageUrl = (user) => {
+  const profileImage = user?.profileImage;
+  const url = profileImage?.url;
+
+  if (!url || profileImage?.public_id === "noImage") return undefined;
+
+  const isGoogleImage =
+    profileImage?.public_id === "google-oauth" ||
+    url.includes("googleusercontent.com");
+
+  return isGoogleImage ? url : undefined;
+};
+
 export const formatMessageTime = (dateValue) => {
   if (!dateValue) return "";
 
@@ -42,4 +55,4 @@ export const normalizeMessages = (messages = []) =>
     author: message.author,
     body: message.body || message.message || "",
     dateCreated: message.dateCreated || message.createdAt || new Date().toISOString(),
-  }));
+  })).sort((a, b) => new Date(a.dateCreated) - new Date(b.dateCreated));
